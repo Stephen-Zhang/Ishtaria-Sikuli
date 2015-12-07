@@ -78,12 +78,15 @@ myPath = os.path.dirname(getBundlePath())
 <span class="kw">import</span> BotRunner
 reload(BotRunner)
 
+<span class="kw">import</span> Constants
+reload(Constants)
+
 <span class="kw">def</span> main():
     bot = BotRunner.BotObject()
 
-    bot.battleMenu.do_battle();
-
+    bot.battleMenu.do_battles()
     <span class="kw">while</span>(True):
+        <span class="kw">return</span>
         <span class="kw">if</span> exists(<img src="sikuli_stop.png" />):
             <span class="kw">break</span>
         <span class="cmt"># bot.run()</span>

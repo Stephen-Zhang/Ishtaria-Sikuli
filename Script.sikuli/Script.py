@@ -6,12 +6,15 @@ import time
 import BotRunner
 reload(BotRunner)
 
+import Constants
+reload(Constants)
+
 def main():
     bot = BotRunner.BotObject()
 
-    bot.battleMenu.do_battle();
-    
+    bot.battleMenu.do_battles()
     while(True):
+        return
         if exists("sikuli_stop.png"):
             break
         # bot.run()
