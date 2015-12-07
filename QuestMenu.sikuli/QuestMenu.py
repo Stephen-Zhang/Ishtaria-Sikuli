@@ -1,0 +1,8 @@
+level5 = "level5.png"
+level6 = "level6.png"
+review_notice = "review_notice.png"
+play_store_wait = "play_store_wait.png"
+back_button = "back_button.png"
+ishtaria_icon = "ishtaria_icon.png"
+deploy = "deploy.png"
+level_up = "level_up.png"
