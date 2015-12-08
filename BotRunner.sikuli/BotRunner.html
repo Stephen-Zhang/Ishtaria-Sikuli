@@ -78,23 +78,39 @@ reload(MainMenu)
 <span class="kw">import</span> BattleMenu
 reload(BattleMenu)
 
+<span class="kw">import</span> QuestMenu
+reload(QuestMenu)
+
 <span class="kw">class</span> BotObject(object):
     <span class="kw">def</span> __init__(self):
-        self.current_level = <span class="dig">0</span>
         self.copiedDeck = False
         self.battlesDone = False
+        self.leveledUp = False
+        self.finished = False
 
         self.mainMenu = MainMenu.MainMenu(self)
         self.battleMenu = BattleMenu.BattleMenu(self)
+        self.questMenu = QuestMenu.QuestMenu(self)
 
     <span class="kw">def</span> run(self):
+        <span class="kw">while</span> <span class="kw">not</span> self.finished:
+            self.questMenu.start_quests()
+
+    <span class="kw">def</span> do_level_up_actions(self):
         self.mainMenu.check()
+        self.battleMenu.do_battles()
 
-        <span class="skw">sleep</span>(<span class="dig">5</span>)
-        self.mainMenu.battle_open()
+        <span class="cmt"># TODO: If at 3000+ crowns, set self.finished.</span>
+        <span class="cmt"># Perform Save of the xml.</span>
 
-    <span class="kw">def</span> perform_level_up_actions(self):
-        self.do_battles
+    <span class="kw">def</span> do_level_5_actions(self):
+        <span class="cmt"># Grab Review Card</span>
+        <span class="cmt"># Set Leader</span>
+        <span class="cmt"># Sell Units</span>
+        <span class="cmt"># Spend Medals</span>
+        <span class="cmt"># Enhance Units</span>
+        <span class="cmt"># Do normal level up actions</span>
+        <span class="kw">pass</span>
 </pre>
 </body>
 </html>

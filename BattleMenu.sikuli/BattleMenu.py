@@ -20,7 +20,7 @@ class BattleMenu(object):
         while Constants.MAIN_WINDOW.exists("has_bp.png", 2):
             if self.botInfo.battlesDone:
                 return
-            while not Constants.MAIN_WINDOW.exists(Pattern("rank_c.png").similar(0.60), .25):
+            for i in range(4):
                 dragDrop(Constants.REGION_BOT, Constants.REGION_TOP)
 
             sleep(.25)
@@ -35,11 +35,10 @@ class BattleMenu(object):
         Constants.MAIN_WINDOW.wait(Pattern("battle_button.png").similar(0.54))
         if Constants.MAIN_WINDOW.exists("50_wins.png"):
             self.botInfo.battlesDone = True
+            click(Constants.HOME)
             return
         Constants.MAIN_WINDOW.click(Pattern("battle_button.png").similar(0.54))
         Constants.MAIN_WINDOW.click("battle_normal.png")
-        while (not Constants.MAIN_WINDOW.exists("1449473832450.png")):
+        while (not Constants.MAIN_WINDOW.exists("victory_points.png")):
             click(Constants.REGION_TOP)
         Constants.MAIN_WINDOW.click("next_battle.png")
-        
-        Constants.MAIN_WINDOW.wait("battle_bar.png")

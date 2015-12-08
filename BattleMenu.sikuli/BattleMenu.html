@@ -92,7 +92,7 @@ reload(Constants)
         <span class="kw">while</span> Constants.MAIN_WINDOW.exists(<img src="has_bp.png" />, <span class="dig">2</span>):
             <span class="kw">if</span> self.botInfo.battlesDone:
                 <span class="kw">return</span>
-            <span class="kw">while</span> <span class="kw">not</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="rank_c.png" />).similar(<span class="dig">0.60</span>), <span class="dig">.25</span>):
+            <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">4</span>):
                 <span class="skw">dragDrop</span>(Constants.REGION_BOT, Constants.REGION_TOP)
 
             <span class="skw">sleep</span>(<span class="dig">.25</span>)
@@ -107,14 +107,13 @@ reload(Constants)
         Constants.MAIN_WINDOW.<span class="skw">wait</span>(Pattern(<img src="battle_button.png" />).similar(<span class="dig">0.54</span>))
         <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="50_wins.png" />):
             self.botInfo.battlesDone = True
+            <span class="skw">click</span>(Constants.HOME)
             <span class="kw">return</span>
         Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="battle_button.png" />).similar(<span class="dig">0.54</span>))
         Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="battle_normal.png" />)
-        <span class="kw">while</span> (<span class="kw">not</span> Constants.MAIN_WINDOW.exists(<img src="1449473832450.png" />)):
+        <span class="kw">while</span> (<span class="kw">not</span> Constants.MAIN_WINDOW.exists(<img src="victory_points.png" />)):
             <span class="skw">click</span>(Constants.REGION_TOP)
         Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="next_battle.png" />)
-
-        Constants.MAIN_WINDOW.<span class="skw">wait</span>(<img src="battle_bar.png" />)
 </pre>
 </body>
 </html>

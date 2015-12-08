@@ -73,8 +73,6 @@
 myPath = os.path.dirname(getBundlePath())
 <span class="kw">if</span> <span class="kw">not</span> myPath <span class="kw">in</span> sys.path: sys.path.append(myPath)
 
-<span class="kw">import</span> time
-
 <span class="kw">import</span> BotRunner
 reload(BotRunner)
 
@@ -82,14 +80,14 @@ reload(BotRunner)
 reload(Constants)
 
 <span class="kw">def</span> main():
-    bot = BotRunner.BotObject()
+    <span class="kw">while</span> <span class="kw">not</span> exists(<img src="sikuli_stop.png" />, <span class="dig">.25</span>):
+        bot = BotRunner.BotObject()
+        bot.battleMenu.do_battles()
 
-    bot.battleMenu.do_battles()
-    <span class="kw">while</span>(True):
         <span class="kw">return</span>
-        <span class="kw">if</span> exists(<img src="sikuli_stop.png" />):
-            <span class="kw">break</span>
         <span class="cmt"># bot.run()</span>
+
+        <span class="cmt"># Save File. The Cycle begins again.</span>
 
 <span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
     Settings.MinSimilarity = <span class="dig">.95</span>
