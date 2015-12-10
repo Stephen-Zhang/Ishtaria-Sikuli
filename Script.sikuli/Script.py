@@ -8,14 +8,12 @@ import Constants
 reload(Constants)
 
 def main():
-    while not exists("sikuli_stop.png", .25):
-        bot = BotRunner.BotObject()
-        bot.battleMenu.do_battles()
-
-        return
-        # bot.run()
+    bot = BotRunner.BotObject()
         
-        # Save File. The Cycle begins again.
+    while not(exists("sikuli_stop.png", .25) or bot.state == 'Finished'):
+        bot.run()
+        
+    # Save File. The Cycle begins again.
 
 if __name__ == "__main__":
     Settings.MinSimilarity = .95

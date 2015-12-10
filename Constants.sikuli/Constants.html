@@ -84,8 +84,29 @@ RECEIVE_ALL = <img src="RECEIVE_ALL.png" />
 NEXT = <img src="NEXT.png" />
 SELECT = <img src="SELECT.png" />
 DETAILS = <img src="DETAILS.png" />
+SKIP = <img src="SKIP.png" />
 REGION_TOP = Region(<span class="dig">1579</span>,<span class="dig">214</span>,<span class="dig">38</span>,<span class="dig">35</span>)
 REGION_BOT = Region(<span class="dig">1583</span>,<span class="dig">706</span>,<span class="dig">39</span>,<span class="dig">25</span>)
+
+State = {
+    <span class="str">'MainMenu'</span> : <span class="dig">0</span>,
+    <span class="str">'Quests'</span> : <span class="dig">1</span>,
+    <span class="str">'Battle'</span> : <span class="dig">2</span>
+}
+
+MainMenu_State = {
+    <span class="str">'Leveled'</span> : <span class="dig">0</span>,
+    <span class="str">'NotLeveled'</span> : <span class="dig">1</span>
+}
+
+Quests_State = {
+    <span class="str">'Start'</span> : <span class="dig">0</span>,
+    <span class="str">'Pick'</span> : <span class="dig">1</span>,
+    <span class="str">'Select'</span> : <span class="dig">2</span>,
+    <span class="str">'Wait'</span> : <span class="dig">3</span>,
+    <span class="str">'Attack'</span> : <span class="dig">4</span>,
+    <span class="str">'End'</span> : <span class="dig">5</span>
+}
 </pre>
 </body>
 </html>

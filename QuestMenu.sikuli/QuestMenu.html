@@ -81,74 +81,141 @@ reload(Constants)
     third_unit = Region(<span class="dig">1543</span>,<span class="dig">587</span>,<span class="dig">119</span>,<span class="dig">330</span>)
     fourth_unit = Region(<span class="dig">1668</span>,<span class="dig">588</span>,<span class="dig">118</span>,<span class="dig">330</span>)
     fifth_unit = Region(<span class="dig">1792</span>,<span class="dig">588</span>,<span class="dig">119</span>,<span class="dig">332</span>)
-    normal_monsters = [Pattern(<img src="savage_tribe.png" />).similar(<span class="dig">0.35</span>),
-            Pattern(<img src="skeleton.png" />).similar(<span class="dig">0.40</span>),
-            Pattern(<img src="little_devil.png" />).similar(<span class="dig">0.40</span>),
-            Pattern(<img src="wolf.png" />).similar(<span class="dig">0.40</span>),
-            Pattern(<img src="bat.png" />).similar(<span class="dig">0.35</span>),
-            Pattern(<img src="wizard.png" />).similar(<span class="dig">0.40</span>),
-            Pattern(<img src="cat.png" />).similar(<span class="dig">0.40</span>),
-            Pattern(<img src="bee.png" />).similar(<span class="dig">0.40</span>),
-           Pattern(<img src="frog.png" />).similar(<span class="dig">0.40</span>),
-           Pattern(<img src="snake.png" />).similar(<span class="dig">0.40</span>)]
-    strong_monsters = [Pattern(<img src="cerberus.png" />).similar(<span class="dig">0.40</span>)]
-    armored_monsters = [Pattern(<img src="armor.png" />).similar(<span class="dig">0.40</span>),
-            Pattern(<img src="crab.png" />).similar(<span class="dig">0.41</span>),
-            Pattern(<img src="scorpion.png" />).similar(<span class="dig">0.40</span>)]
-    boss = [Pattern(<img src="purity_boss.png" />).similar(<span class="dig">0.35</span>),
-            Pattern(<img src="purity_boss_2.png" />).similar(<span class="dig">0.35</span>),
-            Pattern(<img src="peace_boss_1.png" />).similar(<span class="dig">0.35</span>)]
+    attack = <img src="attack.png" />
+    normal_monsters = [Pattern(<img src="savage_tribe.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="skeleton.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="little_devil.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="wolf.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="bat.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="wizard.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="cat.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="bee.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="frog.png" />).similar(<span class="dig">0.50</span>),
+                       Pattern(<img src="snake.png" />).similar(<span class="dig">0.50</span>)]
+    strong_monsters = [Pattern(<img src="cerberus.png" />).similar(<span class="dig">0.50</span>)]
+    armored_monsters = [Pattern(<img src="armor.png" />).similar(<span class="dig">0.50</span>), Pattern(<img src="crab.png" />).similar(<span class="dig">0.50</span>), Pattern(<img src="scorpion.png" />).similar(<span class="dig">0.50</span>)]
+    boss = [Pattern(<img src="purity_boss.png" />).similar(<span class="dig">0.35</span>), Pattern(<img src="purity_boss_2.png" />).similar(<span class="dig">0.35</span>), Pattern(<img src="peace_boss_1.png" />).similar(<span class="dig">0.35</span>), Pattern(<img src="1449633028821.png" />).similar(<span class="dig">0.35</span>)]
+
+    states = [
+        <span class="str">'Start'</span>,
+        <span class="str">'PickMap'</span>,
+        <span class="str">'Select'</span>,
+        <span class="str">'Waiting'</span>,
+        <span class="str">'Attacking'</span>,
+        <span class="str">'StatsScreen'</span>,
+        <span class="str">'End'</span>,
+        <span class="str">'Idle'</span>
+    ]
+
     <span class="kw">def</span> __init__(self, botRunner):
         self.botRunner = botRunner
+        self.state = <span class="str">'Start'</span>
+        self.mapCleared = False
 
-    <span class="kw">def</span> start_quests(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="quest_icon.png" />)
-        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Constants.SKIP):
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SKIP)
-        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">188</span>,<span class="dig">54</span>)):
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">188</span>, <span class="dig">54</span>))
-        <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">190</span>,<span class="dig">47</span>)):
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">197</span>,<span class="dig">43</span>))
-        self.do_quest()
-
-    <span class="kw">def</span> do_quest(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SELECT)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="deploy.png" />)
-
-        <span class="cmt"># TODO: If Out of AP, DRINK POTS</span>
-
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.CONFIRM)
-
-        <span class="cmt"># TODO Find all types of enemies</span>
-        <span class="kw">while</span> <span class="kw">not</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />):
-            <span class="kw">for</span> arm_enemy <span class="kw">in</span> self.armored_monsters:
-                <span class="kw">if</span> exists(arm_enemy):
-                    <span class="skw">click</span>(arm_enemy)
-                    rend_single()
-                    <span class="kw">break</span>
-            <span class="kw">for</span> norm_enemy <span class="kw">in</span> self.normal_monsters:
-                <span class="kw">if</span> exists(norm_enemy):
-                    <span class="skw">click</span>(enemy)
-                    norm_aoe()
-                    <span class="kw">break</span>
-            norm_single()
-
-        <span class="skw">click</span>(Constants.REGION_TOP)
-        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="level_up.png" />):
-            <span class="kw">while</span> <span class="kw">not</span> Constants.MAIN_WINDOW.exists(<img src="finish_quest.png" />):
-                <span class="skw">click</span>(Constants.REGION_TOP)
-            self.botRunner.leveledUp = True
-            <span class="kw">if</span> (Constants.MAIN_WINDOW.exists(<img src="level5.png" />) <span class="kw">or</span>
-                    Constants.MAIN_WINDOW.exists(<img src="level6.png" />)):
-                self.botRunner.do_level_5_actions()
+    <span class="kw">def</span> run(self):
+        <span class="kw">print</span> self.state
+        <span class="kw">if</span> self.state == <span class="str">'Start'</span>:
+            <span class="kw">if</span> self.state == <span class="str">'Idle'</span>:
+                <span class="kw">return</span>
             <span class="kw">else</span>:
-                self.botRunner.do_level_up_actions()
-        <span class="kw">else</span>:
-            <span class="skw">wait</span>(<img src="finish_quest.png" />)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.NEXT)
+                Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="quest_icon.png" />)
+                self.state = <span class="str">'PickMap'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'PickMap'</span>:
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Constants.SKIP):
+                Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SKIP)
+            <span class="kw">else</span>:
+                <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="pride_of_the_gryffin.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">50</span>), <span class="dig">.1</span>):
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="pride_of_the_gryffin.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">50</span>))
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SELECT)
+                    self.state = <span class="str">'Select'</span>
+                <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="the_lair_of_fire.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">47</span>), <span class="dig">.1</span>):
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="the_lair_of_fire.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">47</span>))
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SELECT)
+                    self.state = <span class="str">'Select'</span>
+                <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">188</span>,<span class="dig">54</span>), <span class="dig">.1</span>):
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">188</span>,<span class="dig">54</span>))
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SELECT)
+                    self.state = <span class="str">'Select'</span>
+                <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">190</span>,<span class="dig">47</span>), <span class="dig">.1</span>):
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">197</span>,<span class="dig">43</span>))
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.SELECT)
+                    self.state = <span class="str">'Select'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'Select'</span>:
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="mini_ap_pot.png" />).targetOffset(<span class="dig">196</span>,<span class="dig">9</span>), <span class="dig">.25</span>):
+                <span class="skw">click</span>(<img src="mini_ap_pot.png" />)
+                <span class="skw">click</span>(Constants.CONFIRM)
+                <span class="skw">sleep</span>(<span class="dig">.25</span>)
+                <span class="skw">click</span>(Constants.CLOSE)
+                <span class="skw">sleep</span>(<span class="dig">.25</span>)
+                <span class="skw">click</span>(Constants.SELECT)
+            <span class="kw">else</span>:
+                Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="deploy.png" />)
+                Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.CONFIRM)
+                self.state = <span class="str">'Waiting'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'Waiting'</span>:
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="quest_clear.png" />).similar(<span class="dig">0.50</span>), <span class="dig">.1</span>):
+                <span class="skw">sleep</span>(<span class="dig">1</span>)
+                <span class="skw">click</span>(Constants.REGION_TOP)
+                self.state = <span class="str">'StatsScreen'</span>
+            <span class="kw">elif</span> exists(<img src="back.png" />, <span class="dig">.1</span>):
+                self.state = <span class="str">'Attacking'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'Attacking'</span>:
+            self.state = <span class="str">'Waiting'</span>
+            <span class="kw">for</span> arm_enemy <span class="kw">in</span> self.armored_monsters:
+                <span class="kw">if</span> exists(arm_enemy, <span class="dig">.1</span>):
+                    <span class="skw">click</span>(arm_enemy)
+                    self.rend_single()
+                    <span class="kw">return</span>
+            <span class="kw">for</span> norm_enemy <span class="kw">in</span> self.normal_monsters:
+                <span class="kw">if</span> exists(norm_enemy, <span class="dig">.1</span>):
+                    <span class="skw">click</span>(norm_enemy)
+                    self.norm_aoe()
+                    <span class="kw">return</span>
+            <span class="kw">for</span> boss <span class="kw">in</span> self.boss:
+                <span class="kw">if</span> exists(boss, <span class="dig">.1</span>):
+                    <span class="skw">click</span>(boss)
+                    <span class="kw">if</span> self.has_burst():
+                        self.burst()
+                    self.norm_single()
+                    <span class="kw">return</span>
+            self.norm_single()
+        <span class="kw">elif</span> self.state == <span class="str">'StatsScreen'</span>:
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="map_clear.png" />).similar(<span class="dig">0.60</span>), <span class="dig">.1</span>):
+                <span class="kw">print</span> <span class="str">"map cleared!"</span>
+                self.mapCleared = True
+                <span class="skw">click</span>(Constants.REGION_TOP)
+            <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="level_up.png" />).similar(<span class="dig">0.60</span>), <span class="dig">.1</span>):
+                <span class="kw">print</span> <span class="str">"leveled up!"</span>
+                self.botRunner.leveledUp = True
+                <span class="skw">click</span>(Constants.REGION_TOP)
+            <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(<img src="finish_quest.png" />, <span class="dig">.1</span>):
+                <span class="kw">print</span> <span class="str">"finished quest. looking for Next!"</span>
+                <span class="kw">if</span> (Constants.MAIN_WINDOW.exists(<img src="level5.png" />) <span class="kw">or</span>
+                        Constants.MAIN_WINDOW.exists(<img src="level6.png" />)):
+                    self.botRunner.review = True
 
-            <span class="cmt"># TODO: If End of map, Skip necessary.</span>
-
+                <span class="kw">if</span> Constants.MENU_BAR.exists(Constants.NEXT, <span class="dig">.1</span>):
+                    Constants.MENU_BAR.<span class="skw">click</span>(Constants.NEXT)
+                    self.state = <span class="str">'End'</span>
+            <span class="kw">else</span>:
+                <span class="kw">print</span> <span class="str">"NOTHING!"</span>
+        <span class="kw">elif</span> self.state == <span class="str">'End'</span>:
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="enemy_appears.png" />).similar(<span class="dig">0.45</span>), <span class="dig">.25</span>):
+                <span class="skw">click</span>(Constants.REGION_TOP)
+                <span class="skw">wait</span>(Constants.HOME)
+                self.state = <span class="str">'Start'</span>
+                <span class="skw">click</span>(Constants.HOME)
+            <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Constants.SKIP, <span class="dig">.25</span>):
+                <span class="skw">click</span>(Constants.SKIP)
+            <span class="kw">elif</span> self.botRunner.leveledUp:
+                self.botRunner.state = <span class="str">'MainMenu'</span>
+                Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
+                self.state = <span class="str">'Idle'</span>
+            <span class="kw">else</span>:
+                self.state = <span class="str">'Select'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'Idle'</span>:
+            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
+            <span class="kw">pass</span>
 
     <span class="kw">def</span> norm_aoe(self):
         <span class="skw">click</span>(self.fifth_unit)
@@ -156,6 +223,7 @@ reload(Constants)
         <span class="skw">click</span>(self.third_unit)
         <span class="skw">click</span>(self.second_unit)
         <span class="skw">click</span>(self.first_unit)
+        <span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> rend_aoe(self):
         <span class="skw">click</span>(self.first_unit)
@@ -163,6 +231,7 @@ reload(Constants)
         <span class="skw">click</span>(self.fifth_unit)
         <span class="skw">click</span>(self.third_unit)
         <span class="skw">click</span>(self.second_unit)
+        <span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> norm_single(self):
         <span class="skw">click</span>(self.second_unit)
@@ -170,6 +239,7 @@ reload(Constants)
         <span class="skw">click</span>(self.fourth_unit)
         <span class="skw">click</span>(self.fifth_unit)
         <span class="skw">click</span>(self.first_unit)
+        <span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> rend_single(self):
         <span class="skw">click</span>(self.first_unit)
@@ -177,15 +247,43 @@ reload(Constants)
         <span class="skw">click</span>(self.second_unit)
         <span class="skw">click</span>(self.third_unit)
         <span class="skw">click</span>(self.fourth_unit)
+        <span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> burst(self):
-        <span class="cmt"># TODO: Write some burst logic revolving around saved leader</span>
-        <span class="kw">pass</span>
+        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="idun.png" />, <span class="dig">.25</span>):
+            <span class="skw">click</span>(<img src="burst.png" />)
+            <span class="skw">click</span>(self.first_unit)
+            <span class="skw">click</span>(self.fifth_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.attack)
+        <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(<img src="hel.png" />, <span class="dig">.25</span>):
+            <span class="skw">click</span>(<img src="burst.png" />)
+            <span class="skw">click</span>(self.first_unit)
+            <span class="skw">click</span>(self.fifth_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.second_unit)
+            <span class="skw">click</span>(self.first_unit)
+            <span class="skw">click</span>(self.first_unit)
+            <span class="skw">click</span>(self.first_unit)
+            <span class="skw">click</span>(self.first_unit)
+            <span class="skw">click</span>(self.attack)
+
+    <span class="kw">def</span> has_burst(self):
+        <span class="kw">if</span> exists(Pattern(<img src="burst.png" />).targetOffset(-<span class="dig">155</span>,-<span class="dig">13</span>), <span class="dig">.25</span>):
+            <span class="kw">return</span> True
+        <span class="kw">return</span> False
+
 review_notice = <img src="review_notice.png" />
 play_store_wait = <img src="play_store_wait.png" />
 back_button = <img src="back_button.png" />
 ishtaria_icon = <img src="ishtaria_icon.png" />
 map_clear = <img src="map_clear.png" />
+quest_end = <img src="quest_end.png" />
 </pre>
 </body>
 </html>

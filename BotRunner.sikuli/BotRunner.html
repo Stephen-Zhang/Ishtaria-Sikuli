@@ -81,26 +81,47 @@ reload(BattleMenu)
 <span class="kw">import</span> QuestMenu
 reload(QuestMenu)
 
+<span class="kw">import</span> Constants
+reload(Constants)
+
 <span class="kw">class</span> BotObject(object):
+    states = [
+        <span class="str">'MainMenu'</span>,
+        <span class="str">'Battle'</span>,
+        <span class="str">'Quest'</span>
+    ]
+
     <span class="kw">def</span> __init__(self):
         self.copiedDeck = False
         self.battlesDone = False
         self.leveledUp = False
         self.finished = False
 
+        self.state = <span class="str">'Battle'</span> <span class="cmt"># Start as Quest</span>
+
         self.mainMenu = MainMenu.MainMenu(self)
         self.battleMenu = BattleMenu.BattleMenu(self)
         self.questMenu = QuestMenu.QuestMenu(self)
 
     <span class="kw">def</span> run(self):
-        <span class="kw">while</span> <span class="kw">not</span> self.finished:
-            self.questMenu.start_quests()
+        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="3k_crowns.png" />, <span class="dig">.25</span>):
+            self.state = <span class="str">'Finished'</span>
+        <span class="kw">if</span> self.state == <span class="str">'MainMenu'</span>:
+            self.mainMenu.run()
+        <span class="kw">if</span> self.state == <span class="str">'Battle'</span>:
+            self.battleMenu.run()
+        <span class="kw">if</span> self.state == <span class="str">'Quest'</span>:
+            self.questMenu.run()
 
     <span class="kw">def</span> do_level_up_actions(self):
         self.mainMenu.check()
         self.battleMenu.do_battles()
 
-        <span class="cmt"># TODO: If at 3000+ crowns, set self.finished.</span>
+        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="3k_crowns.png" />, <span class="dig">.25</span>):
+            self.finished = True
+
+        <span class="skw">click</span>(Constants.HOME)
+
         <span class="cmt"># Perform Save of the xml.</span>
 
     <span class="kw">def</span> do_level_5_actions(self):

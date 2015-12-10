@@ -12,5 +12,26 @@ RECEIVE_ALL = "RECEIVE_ALL.png"
 NEXT = "NEXT.png"
 SELECT = "SELECT.png"
 DETAILS = "DETAILS.png"
+SKIP = "SKIP.png"
 REGION_TOP = Region(1579,214,38,35)
 REGION_BOT = Region(1583,706,39,25)
+
+State = {
+    'MainMenu' : 0,
+    'Quests' : 1,
+    'Battle' : 2
+}
+
+MainMenu_State = {
+    'Leveled' : 0,
+    'NotLeveled' : 1
+}
+
+Quests_State = {
+    'Start' : 0,
+    'Pick' : 1,
+    'Select' : 2,
+    'Wait' : 3,
+    'Attack' : 4,
+    'End' : 5
+}

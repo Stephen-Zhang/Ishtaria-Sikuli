@@ -76,8 +76,47 @@
 reload(Constants)
 
 <span class="kw">class</span> MainMenu(object):
+    states = [
+        <span class="str">'Start'</span>,
+        <span class="str">'MailStart'</span>,
+        <span class="str">'MailCollect'</span>,
+        <span class="str">'ChallengesStart'</span>,
+        <span class="str">'ChallengesCollect'</span>,
+        <span class="str">'End'</span>
+    ]
+
     <span class="kw">def</span> __init__(self, botInfo):
         self.botInfo = botInfo;
+        self.state = <span class="str">'Start'</span>
+
+    <span class="kw">def</span> run(self):
+        <span class="kw">if</span> self.state == <span class="str">'Start'</span>:
+            <span class="kw">if</span> self.botInfo.leveledUp:
+                self.state = <span class="str">'Mail'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'MailStart'</span>:
+            <span class="kw">if</span> exists(<img src="mail_found.png" />, <span class="dig">.25</span>):
+                <span class="skw">click</span>(<img src="mail_found.png" />)
+                self.state = <span class="str">'MailCollect'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'MailCollect'</span>:
+            <span class="kw">if</span> exists(Constants.RECEIVE_ALL, <span class="dig">.1</span>):
+                <span class="skw">click</span>(Constants.RECEIVE_ALL)
+                <span class="skw">click</span>(Constants.CONFIRM)
+                <span class="skw">click</span>(Constants.CLOSE)
+            <span class="kw">if</span>
+        <span class="kw">elif</span> self.state == <span class="str">'Challenges'</span>:
+            <span class="kw">pass</span>
+        <span class="kw">elif</span> self.state == <span class="str">'End'</span>:
+            <span class="kw">pass</span>
+
+            self.botInfo.leveledUp = False
+            self.check()
+            self.botInfo.state = <span class="str">'Battle'</span>
+            self.botInfo.battleMenu.state = <span class="str">'Start'</span>
+            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
+        <span class="kw">else</span>:
+            self.botInfo.state = <span class="str">'Quest'</span>
+            self.botInfo.questMenu.state = <span class="str">'Start'</span>
+            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
 
     <span class="kw">def</span> check(self):
         self.check_challenges()
@@ -91,13 +130,9 @@ reload(Constants)
             <span class="cmt"># Found a screenshot with challenges</span>
             <span class="skw">click</span>(<img src="challenge_found.png" />)
             <span class="skw">click</span>(Constants.DETAILS)
-            self.collect_challenges()
+            self._collect_challenges()
 
     <span class="kw">def</span> _collect_challenges(self):
-        <span class="kw">print</span> <span class="str">"Collecting Challenges"</span>
-        <span class="cmt"># First Time accessing... Salix Face</span>
-        <span class="kw">while</span> exists(<img src="salix_face.png" />, <span class="dig">.25</span>):
-            <span class="skw">click</span>(Region(<span class="dig">1593</span>,<span class="dig">814</span>,<span class="dig">48</span>,<span class="dig">59</span>))
         <span class="skw">click</span>(Constants.RECEIVE_ALL)
         <span class="skw">wait</span>(Constants.CLOSE)
         <span class="skw">click</span>(Constants.CLOSE)
@@ -105,10 +140,8 @@ reload(Constants)
 
     <span class="kw">def</span> check_mailbox(self):
         <span class="kw">if</span> exists(<img src="mail_found.png" />, <span class="dig">.25</span>):
-            <span class="kw">print</span> <span class="str">"Checking mailbox!"</span>
-            <span class="cmt"># Found a screenshot with challenges</span>
             <span class="skw">click</span>(<img src="mail_found.png" />)
-            self.collect_mail()
+            self._collect_mail()
 
     <span class="kw">def</span> _collect_mail(self):
         <span class="skw">wait</span>(Constants.RECEIVE_ALL, <span class="dig">3</span>)
@@ -129,6 +162,8 @@ reload(Constants)
         <span class="skw">click</span>(Constants.CONFIRM)
         <span class="skw">wait</span>(<img src="copy_deck.png" />)
         <span class="skw">click</span>(Constants.HOME)
+
+no_more_mail = <img src="no_more_mail.png" />
 </pre>
 </body>
 </html>
