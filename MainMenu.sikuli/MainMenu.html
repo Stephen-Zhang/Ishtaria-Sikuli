@@ -78,9 +78,9 @@ reload(Constants)
 <span class="kw">class</span> MainMenu(object):
     states = [
         <span class="str">'Start'</span>,
-        <span class="str">'MailStart'</span>,
+        <span class="str">'CollectStart'</span>,
         <span class="str">'MailCollect'</span>,
-        <span class="str">'ChallengesStart'</span>,
+        <span class="str">'ChallengesCollect'</span>,
         <span class="str">'ChallengesCollect'</span>,
         <span class="str">'End'</span>
     ]
@@ -90,69 +90,60 @@ reload(Constants)
         self.state = <span class="str">'Start'</span>
 
     <span class="kw">def</span> run(self):
+        <span class="kw">print</span> self.state
         <span class="kw">if</span> self.state == <span class="str">'Start'</span>:
+            <span class="kw">if</span> exists(<img src="2800_crowns.png" />, <span class="dig">.1</span>):
+                self.state = <span class="str">'Purify'</span>
+            <span class="kw">if</span> exists(<img src="finished_crowns.png" />, <span class="dig">.1</span>):
+                self.botInfo.finished = True
+                self.state = <span class="str">'End'</span>
             <span class="kw">if</span> self.botInfo.leveledUp:
-                self.state = <span class="str">'Mail'</span>
-        <span class="kw">elif</span> self.state == <span class="str">'MailStart'</span>:
+                self.state = <span class="str">'CollectStart'</span>
+            <span class="kw">else</span>:
+                self.state = <span class="str">'End'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'CollectStart'</span>:
             <span class="kw">if</span> exists(<img src="mail_found.png" />, <span class="dig">.25</span>):
                 <span class="skw">click</span>(<img src="mail_found.png" />)
                 self.state = <span class="str">'MailCollect'</span>
+            <span class="kw">elif</span> exists(<img src="challenge_found.png" />, <span class="dig">.25</span>):
+                self.state = <span class="str">'ChallengesCollect'</span>
+                <span class="skw">click</span>(<img src="challenge_found.png" />)
+                <span class="skw">sleep</span>(<span class="dig">.25</span>)
+                <span class="skw">click</span>(Constants.DETAILS)
+            <span class="kw">else</span>:
+                self.state = <span class="str">'End'</span>
         <span class="kw">elif</span> self.state == <span class="str">'MailCollect'</span>:
-            <span class="kw">if</span> exists(Constants.RECEIVE_ALL, <span class="dig">.1</span>):
+            <span class="kw">if</span> exists(<img src="receive.png" />, <span class="dig">.1</span>):
                 <span class="skw">click</span>(Constants.RECEIVE_ALL)
+                <span class="skw">sleep</span>(<span class="dig">.25</span>)
                 <span class="skw">click</span>(Constants.CONFIRM)
+                <span class="skw">sleep</span>(<span class="dig">.25</span>)
                 <span class="skw">click</span>(Constants.CLOSE)
-            <span class="kw">if</span>
-        <span class="kw">elif</span> self.state == <span class="str">'Challenges'</span>:
-            <span class="kw">pass</span>
+            <span class="kw">elif</span> exists(<img src="no_more_mail.png" />, <span class="dig">.1</span>):
+                self.state = <span class="str">'CollectStart'</span>
+                Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
+            <span class="skw">sleep</span>(<span class="dig">.25</span>)
+        <span class="kw">elif</span> self.state == <span class="str">'ChallengesCollect'</span>:
+            <span class="skw">click</span>(Constants.RECEIVE_ALL)
+            <span class="skw">sleep</span>(<span class="dig">.25</span>)
+            <span class="skw">click</span>(Constants.CLOSE)
+            self.state = <span class="str">'ChallengesPage2'</span>
+        <span class="kw">elif</span> self.state == <span class="str">'ChallengesPage2'</span>:
+            <span class="kw">if</span> exists(<img src="page_2.png" />, <span class="dig">.1</span>):
+                <span class="skw">click</span>(<img src="page_2.png" />)
+                <span class="skw">sleep</span>(<span class="dig">.25</span>)
+                self.state = <span class="str">'ChallengesCollect'</span>
+            <span class="kw">else</span>:
+                self.state = <span class="str">'End'</span>
+                Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
         <span class="kw">elif</span> self.state == <span class="str">'End'</span>:
-            <span class="kw">pass</span>
-
+            self.state = <span class="str">'Start'</span>
             self.botInfo.leveledUp = False
-            self.check()
-            self.botInfo.state = <span class="str">'Battle'</span>
-            self.botInfo.battleMenu.state = <span class="str">'Start'</span>
-            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
-        <span class="kw">else</span>:
             self.botInfo.state = <span class="str">'Quest'</span>
             self.botInfo.questMenu.state = <span class="str">'Start'</span>
-            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
-
-    <span class="kw">def</span> check(self):
-        self.check_challenges()
-        self.check_mailbox()
 
     <span class="kw">def</span> review_gold_card(self):
         <span class="kw">pass</span>
-
-    <span class="kw">def</span> check_challenges(self):
-        <span class="kw">if</span> exists(<img src="challenge_found.png" />, <span class="dig">.25</span>):
-            <span class="cmt"># Found a screenshot with challenges</span>
-            <span class="skw">click</span>(<img src="challenge_found.png" />)
-            <span class="skw">click</span>(Constants.DETAILS)
-            self._collect_challenges()
-
-    <span class="kw">def</span> _collect_challenges(self):
-        <span class="skw">click</span>(Constants.RECEIVE_ALL)
-        <span class="skw">wait</span>(Constants.CLOSE)
-        <span class="skw">click</span>(Constants.CLOSE)
-        <span class="skw">click</span>(Constants.HOME)
-
-    <span class="kw">def</span> check_mailbox(self):
-        <span class="kw">if</span> exists(<img src="mail_found.png" />, <span class="dig">.25</span>):
-            <span class="skw">click</span>(<img src="mail_found.png" />)
-            self._collect_mail()
-
-    <span class="kw">def</span> _collect_mail(self):
-        <span class="skw">wait</span>(Constants.RECEIVE_ALL, <span class="dig">3</span>)
-        <span class="kw">while</span> exists(Constants.RECEIVE_ALL, <span class="dig">.25</span>):
-            <span class="skw">click</span>(Constants.RECEIVE_ALL)
-            <span class="skw">wait</span>(Constants.CONFIRM)
-            <span class="skw">click</span>(Constants.CONFIRM)
-            <span class="skw">wait</span>(Constants.CLOSE)
-            <span class="skw">click</span>(Constants.CLOSE)
-
-        <span class="skw">click</span>(Constants.HOME)
 
     <span class="kw">def</span> copy_deck(self):
         <span class="skw">click</span>(Constants.MENU)
@@ -163,7 +154,13 @@ reload(Constants)
         <span class="skw">wait</span>(<img src="copy_deck.png" />)
         <span class="skw">click</span>(Constants.HOME)
 
-no_more_mail = <img src="no_more_mail.png" />
+hello_world = <img src="2800_crowns.png" />
+finished_crowns = <img src="finished_crowns.png" />
+attack_aura = <img src="attack_aura.png" />
+life_aura = <img src="life_aura.png" />
+skill_aura = <img src="skill_aura.png" />
+prep_aura = <img src="prep_aura.png" />
+purified = <img src="purified.png" />
 </pre>
 </body>
 </html>

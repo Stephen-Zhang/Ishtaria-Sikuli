@@ -21,9 +21,8 @@ class BattleMenu(object):
         if self.state == 'Start':
             if self.botInfo.battlesDone:
                 self.state = 'End'
-                return
             self.state = 'Join'
-            Constants.MENU_BAR.click(Constants.BATTLE)
+            Constants.MENU_BAR.click(Constants.BATTLE_CHRISTMAS)
         elif self.state == 'Join':
             if Constants.MAIN_WINDOW.exists(Constants.NEXT):
                 Constants.MAIN_WINDOW.click(Constants.NEXT)
@@ -59,5 +58,7 @@ class BattleMenu(object):
             if Constants.MAIN_WINDOW.exists("battle_bar.png", .1):
                 self.state = 'Scroll'
         elif self.state == 'End':
-            Constants.MENU_BAR.click(Constants.HOME)
-            self.botInfo.state = 'Quest'
+            Constants.MENU_BAR.click(Constants.HOME_CHRISTMAS)
+            self.botInfo.state = 'MainMenu'
+            self.botInfo.leveledUp = False
+            self.botInfo.mainMenu.state = 'Start'

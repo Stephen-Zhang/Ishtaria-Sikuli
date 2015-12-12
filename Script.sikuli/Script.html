@@ -70,6 +70,9 @@
 <h2>Script.sikuli</h2> <a href="Script.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">import</span> os
+<span class="kw">from</span> sikuli.Sikuli <span class="kw">import</span> *
+
 myPath = os.path.dirname(getBundlePath())
 <span class="kw">if</span> <span class="kw">not</span> myPath <span class="kw">in</span> sys.path: sys.path.append(myPath)
 
@@ -79,13 +82,17 @@ reload(BotRunner)
 <span class="kw">import</span> Constants
 reload(Constants)
 
+<span class="kw">import</span> Images
+reload(Images)
+
 <span class="kw">def</span> main():
-    bot = BotRunner.BotObject()
-
-    <span class="kw">while</span> <span class="kw">not</span>(exists(<img src="sikuli_stop.png" />, <span class="dig">.25</span>) <span class="kw">or</span> bot.state == <span class="str">'Finished'</span>):
-        bot.run()
-
-    <span class="cmt"># Save File. The Cycle begins again.</span>
+    <span class="cmt">#bluestacks = App("BlueStacks App Player")</span>
+    <span class="cmt">#bluestacks.focus()</span>
+    <span class="cmt">#app_region = bluestacks.window()</span>
+    <span class="kw">while</span> <span class="kw">not</span> exists(<img src="sikuli_stop.png" />, <span class="dig">.25</span>):
+        bot = BotRunner.BotObject()
+        <span class="kw">while</span> bot.state != <span class="str">'Finished'</span>:
+            bot.run()
 
 <span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
     Settings.MinSimilarity = <span class="dig">.95</span>
