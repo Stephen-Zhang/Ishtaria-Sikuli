@@ -94,16 +94,21 @@ reload(Constants)
     <span class="kw">def</span> __init__(self):
         self.copiedDeck = False
         self.battlesDone = False
-        self.leveledUp = False
+        self.leveledUp = True
         self.finished = False
 
-        self.state = <span class="str">'MainMenu'</span>
+        self.state = <span class="str">'Battle'</span>
 
         self.mainMenu = MainMenu.MainMenu(self)
         self.battleMenu = BattleMenu.BattleMenu(self)
         self.questMenu = QuestMenu.QuestMenu(self)
 
     <span class="kw">def</span> run(self):
+        <span class="kw">if</span> exists(<img src="1449956812274.png" />, <span class="dig">.25</span>):
+            <span class="kw">while</span> <span class="kw">not</span> exists(Constants.HOME_CHRISTMAS):
+                <span class="skw">click</span>(Constants.REGION_TOP)
+        <span class="kw">if</span> exists(<img src="Connect_failed.png" />, <span class="dig">.25</span>):
+            <span class="skw">click</span>(Constants.CONFIRM)
         <span class="kw">if</span> self.state == <span class="str">'MainMenu'</span>:
             self.mainMenu.run()
         <span class="kw">if</span> self.state == <span class="str">'Battle'</span>:

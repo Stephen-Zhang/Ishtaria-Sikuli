@@ -47,7 +47,7 @@ class QuestMenu(object):
                 Constants.MAIN_WINDOW.click(Constants.SKIP)
             else:
                 if Constants.MAIN_WINDOW.exists(Pattern("pride_of_the_gryffin.png").targetOffset(191,50), .1):
-                    self.botInfo.state = 'Finished'
+                    self.botRunner.state = 'Finished'
                     return
                 elif Constants.MAIN_WINDOW.exists(Pattern("the_lair_of_fire.png").targetOffset(191,47), .1):
                     Constants.MAIN_WINDOW.click(Pattern("the_lair_of_fire.png").targetOffset(191,47))
@@ -81,7 +81,7 @@ class QuestMenu(object):
                 self.state = 'StatsScreen'
             elif Constants.MAIN_WINDOW.exists(Pattern("quest_end.png"), .1):
                 self.state = 'StatsScreen'
-            elif exists(Pattern("back.png").similar(.98), .1):
+            elif exists(Pattern("back.png").similar(0.98), .1):
                 self.state = 'Attacking'
         elif self.state == 'Attacking':
             self.state = 'Waiting'
@@ -129,7 +129,7 @@ class QuestMenu(object):
             else:
                 print "NOTHING!"
         elif self.state == 'End':
-            if Constants.MAIN_WINDOW.exists(Constants.SKIP, 1):
+            if Constants.MAIN_WINDOW.exists(Constants.SKIP, 2):
                 click(Constants.SKIP)
             elif self.botRunner.leveledUp:
                 self.botRunner.state = 'Battle'
@@ -206,26 +206,44 @@ class QuestMenu(object):
 
     def burst(self):
         if Constants.MAIN_WINDOW.exists("idun.png", .25):
-            click("burst.png")
+            click(Pattern("burst.png").targetOffset(-151,-12))
+            sleep(.1)
             click(self.first_unit)
+            sleep(.1)
             click(self.fifth_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.attack)
         elif Constants.MAIN_WINDOW.exists("hel.png", .25):
-            click("burst.png")
+            click(Pattern("burst.png").targetOffset(-160,2))
+            sleep(.1)
             click(self.first_unit)
+            sleep(.1)
             click(self.fifth_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.second_unit)
+            sleep(.1)
             click(self.first_unit)
+            sleep(.1)
             click(self.first_unit)
+            sleep(.1)
             click(self.first_unit)
+            sleep(.1)
             click(self.first_unit)
+            sleep(.1)
             click(self.attack)
 
     def has_burst(self):
