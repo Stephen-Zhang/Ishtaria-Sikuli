@@ -14,16 +14,22 @@ import Images
 reload(Images)
 
 def main():
-    #bluestacks = App("BlueStacks App Player")
-    #bluestacks.focus()
-    #app_region = bluestacks.window()
-    #while not exists("sikuli_stop.png", .25):
+    '''
+    while True:
+        matched = findAll()
+        if matched:
+            for match in matched:
+                match.highlight(True)
+    return
+    '''
+    
     bot = BotRunner.BotObject()
+    
     while bot.state != 'Finished':
         bot.run()
     
 if __name__ == "__main__":
-    Settings.MinSimilarity = .95
-    Settings.WaitScanRate = 2
+    Settings.MinSimilarity = .90
+    Settings.WaitScanRate = 10
     setFindFailedResponse(SKIP)
     main()

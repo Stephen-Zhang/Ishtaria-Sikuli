@@ -62,72 +62,67 @@ class QuestMenu(object):
         elif self.state == 'Select':
             if Constants.MAIN_WINDOW.exists(Pattern("mini_ap_pot.png").targetOffset(196,9), .25):
                 click(Pattern("mini_ap_pot.png").targetOffset(196,9))
-                sleep(.25)
+                wait(Constants.CONFIRM)
                 click(Constants.CONFIRM)
-                sleep(.25)
+                wait(Constants.CLOSE)
                 click(Constants.CLOSE)
-                sleep(.25)
+                wait(Constants.SELECT)
                 click(Constants.SELECT)
             elif Constants.MAIN_WINDOW.exists("deploy.png", .1):
                 Constants.MAIN_WINDOW.click("deploy.png")
+                wait(.5)
                 Constants.MAIN_WINDOW.click(Constants.CONFIRM)
                 self.state = 'Waiting'
             elif Constants.MAIN_WINDOW.exists(Constants.SELECT, .1):
                 Constants.MAIN_WINDOW.click(Constants.SELECT)
         elif self.state == 'Waiting':
-            if Constants.MAIN_WINDOW.exists(Pattern("quest_clear.png").similar(0.50), .1):
-                sleep(1)
+            if Constants.MAIN_WINDOW.exists("1450071819288.png", .1):
+                wait(1)
                 click(Constants.REGION_TOP)
                 self.state = 'StatsScreen'
-            elif Constants.MAIN_WINDOW.exists(Pattern("quest_end.png"), .1):
+            elif Constants.MAIN_WINDOW.exists("quest_end.png", .1):
                 self.state = 'StatsScreen'
             elif exists(Pattern("back.png").similar(0.98), .1):
                 self.state = 'Attacking'
         elif self.state == 'Attacking':
             self.state = 'Waiting'
-            for armored_enemy in self.currentMap.armored:
-                if exists(Pattern(armored_enemy).similar(.70), .1):
-                    click(Pattern(armored_enemy).similar(.70))
-                    self.rend_single()
+            for norm_enemy in self.currentMap.normal:
+                if exists(norm_enemy, .1):
+                    click(norm_enemy)
+                    self.norm_aoe()
                     return
             for boss in self.currentMap.boss:
-                if exists(Pattern(boss).similar(.70), .1):
-                    click(Pattern(boss).similar(.70))
+                if exists(boss, .1):
+                    click(boss)
                     if self.has_burst():
                         self.burst()
                         return
+                    self.attack_boss()
+                    return
+            for armored_enemy in self.currentMap.armored:
+                if exists(armored_enemy, .1):
+                    click(armored_enemy)
                     self.rend_single()
                     return
             for strong_enemy in self.currentMap.strong:
-                if exists(Pattern(strong_enemy).similar(.70), .1):
-                    click(Pattern(strong_enemy).similar(.70))
+                if exists(strong_enemy, .1):
+                    click(strong_enemy)
                     self.norm_single()
-                    return
-            for norm_enemy in self.currentMap.normal:
-                if exists(Pattern(norm_enemy).similar(.70), .1):
-                    click(Pattern(norm_enemy).similar(.70))
-                    self.norm_aoe()
                     return
             self.norm_single()
         elif self.state == 'StatsScreen':
-            if Constants.MAIN_WINDOW.exists(Pattern("map_clear.png").similar(0.60), .1):
-                print "map cleared!"
-                click(Constants.REGION_TOP)
-            elif Constants.MAIN_WINDOW.exists(Pattern("level_up.png").similar(0.60), .1):
-                print "leveled up!"
-                self.botRunner.leveledUp = True
-                click(Constants.REGION_TOP)
-            elif Constants.MAIN_WINDOW.exists("quest_end.png", .1):
+            if Constants.MAIN_WINDOW.exists("quest_end.png", .1):
                 print "finished quest. looking for Next!"
-                if (Constants.MAIN_WINDOW.exists("level5.png") or
-                        Constants.MAIN_WINDOW.exists("level6.png")):
-                    self.botRunner.review = True
-
+                if Constants.MAIN_WINDOW.exists("1450072743996.png", .1):
+                    self.botRunner.leveledUp = True
+                    if (Constants.MAIN_WINDOW.exists("level5.png") or
+                            Constants.MAIN_WINDOW.exists("level6.png")):
+                        self.botRunner.review = True
                 if Constants.MENU_BAR.exists(Constants.NEXT, .1):
                     Constants.MENU_BAR.click(Constants.NEXT)
                     self.state = 'End'
             else:
-                print "NOTHING!"
+                click(Constants.REGION_TOP)
         elif self.state == 'End':
             if Constants.MAIN_WINDOW.exists(Constants.SKIP, 2):
                 click(Constants.SKIP)
@@ -141,36 +136,31 @@ class QuestMenu(object):
         elif self.state == 'Idle':
             Constants.MENU_BAR.click(Constants.HOME_CHRISTMAS)
             pass
-        # elif self.state == 'Purify':
-        #     Constants.MAIN_WINDOW.click("quest_icon.png")
-        #     wait("select_area.png", 3)
-        #     dragDrop(Constants.REGION_BOT, Constants.REGION_TOP)
-        #     Constants.MAIN_WINDOW.click(Pattern("ruins_of_purity.png").targetOffset(197,43))
-        #     wait("purify_button.png", 3)
-        #     click("purify_button.png")
-        #     for aura in ["attack_aura.png", "life_aura.png", "prep_aura.png", "skill_aura.png"]:
-        #         for j in range(3):
-        #             click(aura)
-        #             wait(Constants.CONFIRM)
-        #             click(Constants.CONFIRM)
-        #             wait("purified.png", 10)
-        #             click(Constants.CLOSE)
-        #     click("back_button.png")
-        #     sleep(1)
-        #     click("back_button.png")
-        #     dragDrop(Constants.REGION_BOT, Constants.REGION_TOP)
-        #     Constants.MAIN_WINDOW.click(Pattern("stronghold_of_peace.png").targetOffset(188,54))
-        #     wait("purify_button.png", 3)
-        #     click("purify_button.png")
-        #     for aura in ["attack_aura.png", "life_aura.png", "prep_aura.png", "skill_aura.png"]:
-        #         for j in range(3):
-        #             click(aura)
-        #             wait(Constants.CONFIRM)
-        #             click(Constants.CONFIRM)
-        #             wait("purified.png", 10)
-        #             click(Constants.CLOSE)
-        #     self.state = 'Idle'
-        #     self.botInfo.state = 'MainMenu'
+
+    def purify_start(self):
+        Constants.MAIN_WINDOW.click("quest_icon.png")
+        wait("select_area.png", 3)
+
+        self.purify(Pattern("ruins_of_purity.png").targetOffset(197,43))
+
+        click("back_button.png")
+        wait(1)
+        click("back_button.png")
+
+        self.purify(Pattern("stronghold_of_peace.png").targetOffset(188,54))
+
+    def purify(self, pattern):
+        dragDrop(Constants.REGION_BOT, Constants.REGION_TOP)
+        Constants.MAIN_WINDOW.click(pattern)
+        wait("purify_button.png", 3)
+        click("purify_button.png")
+        for aura in ["attack_aura.png", "life_aura.png", "prep_aura.png", "skill_aura.png"]:
+            for j in range(3):
+                click(aura)
+                wait(Constants.CONFIRM)
+                click(Constants.CONFIRM)
+                wait("purified.png", 10)
+                click(Constants.CLOSE)
 
     def norm_aoe(self):
         click(self.fifth_unit)
@@ -204,46 +194,57 @@ class QuestMenu(object):
         click(self.fourth_unit)
         click(self.attack)
 
+    def attack_boss(self):
+        map_num = self.currentMap.__class__
+        if map_num is Images.Map1:
+            self.norm_single()
+        elif map_num is Images.Map2:
+            self.norm_single()
+        elif map_num is Images.Map3:
+            self.rend_single()
+        elif map_num is Images.Map4:
+            self.rend_single()
+
     def burst(self):
         if Constants.MAIN_WINDOW.exists("idun.png", .25):
             click(Pattern("burst.png").targetOffset(-151,-12))
-            sleep(.1)
+            wait(.1)
             click(self.first_unit)
-            sleep(.1)
+            wait(.1)
             click(self.fifth_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.attack)
         elif Constants.MAIN_WINDOW.exists("hel.png", .25):
             click(Pattern("burst.png").targetOffset(-160,2))
-            sleep(.1)
+            wait(.1)
             click(self.first_unit)
-            sleep(.1)
+            wait(.1)
             click(self.fifth_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.second_unit)
-            sleep(.1)
+            wait(.1)
             click(self.first_unit)
-            sleep(.1)
+            wait(.1)
             click(self.first_unit)
-            sleep(.1)
+            wait(.1)
             click(self.first_unit)
-            sleep(.1)
+            wait(.1)
             click(self.first_unit)
-            sleep(.1)
+            wait(.1)
             click(self.attack)
 
     def has_burst(self):

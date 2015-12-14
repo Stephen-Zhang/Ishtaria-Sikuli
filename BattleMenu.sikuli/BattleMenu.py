@@ -40,12 +40,13 @@ class BattleMenu(object):
             else:
                 self.state = 'End'
         elif self.state == 'Enter':
-            if Constants.MAIN_WINDOW.exists("50_wins.png"):
+            if Constants.MAIN_WINDOW.exists(Pattern("50_wins.png").similar(0.90)):
                 self.botInfo.battlesDone = True
                 self.state = 'End'
             else:
                 if Constants.MAIN_WINDOW.exists(Pattern("battle_button.png").similar(0.54)):
                     Constants.MAIN_WINDOW.click(Pattern("battle_button.png").similar(0.54))
+                    wait(.5)
                     Constants.MAIN_WINDOW.click("battle_normal.png")
                     self.state = 'During'
         elif self.state == 'During':

@@ -93,9 +93,8 @@ reload(Constants)
         <span class="kw">if</span> self.state == <span class="str">'Start'</span>:
             <span class="kw">if</span> self.botInfo.battlesDone:
                 self.state = <span class="str">'End'</span>
-                <span class="kw">return</span>
             self.state = <span class="str">'Join'</span>
-            Constants.MENU_BAR.<span class="skw">click</span>(Constants.BATTLE)
+            Constants.MENU_BAR.<span class="skw">click</span>(Constants.BATTLE_CHRISTMAS)
         <span class="kw">elif</span> self.state == <span class="str">'Join'</span>:
             <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Constants.NEXT):
                 Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.NEXT)
@@ -113,13 +112,13 @@ reload(Constants)
             <span class="kw">else</span>:
                 self.state = <span class="str">'End'</span>
         <span class="kw">elif</span> self.state == <span class="str">'Enter'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="50_wins.png" />):
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="50_wins.png" />).similar(<span class="dig">0.90</span>)):
                 self.botInfo.battlesDone = True
                 self.state = <span class="str">'End'</span>
             <span class="kw">else</span>:
                 <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="battle_button.png" />).similar(<span class="dig">0.54</span>)):
-                    Constants.MAIN_WINDOW.<span class="skw">wait</span>(Pattern(<img src="battle_button.png" />).similar(<span class="dig">0.54</span>))
-
+                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Pattern(<img src="battle_button.png" />).similar(<span class="dig">0.54</span>))
+                    <span class="skw">wait</span>(<span class="dig">.5</span>)
                     Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="battle_normal.png" />)
                     self.state = <span class="str">'During'</span>
         <span class="kw">elif</span> self.state == <span class="str">'During'</span>:
@@ -130,10 +129,12 @@ reload(Constants)
                 <span class="skw">click</span>(Constants.REGION_TOP)
         <span class="kw">elif</span> self.state == <span class="str">'Next'</span>:
             <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="battle_bar.png" />, <span class="dig">.1</span>):
-                self.state = <span class="str">'End'</span>
+                self.state = <span class="str">'Scroll'</span>
         <span class="kw">elif</span> self.state == <span class="str">'End'</span>:
-            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME)
-            self.botInfo.state = <span class="str">'Quest'</span>
+            Constants.MENU_BAR.<span class="skw">click</span>(Constants.HOME_CHRISTMAS)
+            self.botInfo.state = <span class="str">'MainMenu'</span>
+            self.botInfo.leveledUp = False
+            self.botInfo.mainMenu.state = <span class="str">'Start'</span>
 </pre>
 </body>
 </html>

@@ -70,6 +70,8 @@
 <h2>Images.sikuli</h2> <a href="Images.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
+
 <span class="kw">class</span> Map(object):
     normal = []
     armored = []
@@ -78,42 +80,42 @@
 
 <span class="kw">class</span> Map1(Map):
     normal = [
-        <img src="skeleton_null.png" />,<img src="skeleton_red.png" />,<img src="skeleton_blue.png" />,<img src="gargoyle_blue.png" />,<img src="gargoyle_null.png" />,<img src="gargoyle_green.png" />,<img src="gargoyle_red.png" />,<img src="cat_null.png" />,<img src="savage_null.png" />,<img src="savage_green.png" />,<img src="wolf_blue.png" />,<img src="wolf_red.png" />,<img src="wolf_null.png" />,<img src="wizard_null.png" />,<img src="bat_null.png" />
+        Pattern(<img src="skeleton_null.png" />).similar(<span class="dig">0.80</span>),<img src="skeleton_red.png" />,<img src="skeleton_blue.png" />,<img src="gargoyle_blue.png" />,<img src="gargoyle_null.png" />,<img src="gargoyle_green.png" />,<img src="gargoyle_red.png" />,Pattern(<img src="cat_null.png" />).similar(<span class="dig">0.80</span>),<img src="savage_null.png" />,<img src="savage_green.png" />,Pattern(<img src="wolf_blue.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="wolf_red.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="wolf_null.png" />).similar(<span class="dig">0.80</span>),<img src="wizard_null.png" />,<img src="wizard_null_2.png" />,<img src="bat_null.png" />
     ]
     armored = [
-        <img src="armored_null.png" />
+        Pattern(<img src="armor_null.png" />).similar(<span class="dig">0.80</span>)
     ]
     strong = [
-        <img src="garm_null.png" />
+        Pattern(<img src="garm_null.png" />).similar(<span class="dig">0.80</span>)
     ]
     boss = [
-        <img src="boss_stage_1.png" />,<img src="boss_stage_2.png" />,<img src="boss_stage_3.png" />,<img src="boss_stage_4.png" />
+        Pattern(<img src="boss_1_stage_1.png" />).similar(<span class="dig">0.69</span>),Pattern(<img src="boss_1_stage_2.png" />).similar(<span class="dig">0.69</span>),Pattern(<img src="boss_1_stage_3.png" />).similar(<span class="dig">0.69</span>),
     ]
 <span class="kw">class</span> Map2(Map):
     normal = [
-        <img src="gargoyle_blue.png" />,<img src="wolf_blue.png" />,<img src="skeleton_blue.png" />,<img src="savage_blue.png" />,<img src="wolf_red.png" />,<img src="cat_blue.png" />,<img src="bat_green.png" />,<img src="bee_blue.png" />,<img src="frog_null.png" />,<img src="savage_red.png" />,<img src="snake_null.png" />,<img src="savage_null.png" />,<img src="savage_green.png" />
+        <img src="gargoyle_blue.png" />,Pattern(<img src="wolf_blue.png" />).similar(<span class="dig">0.80</span>),<img src="skeleton_blue.png" />,<img src="savage_blue.png" />,<img src="wolf_red.png" />,<img src="cat_blue.png" />,<img src="bat_green.png" />,<img src="bee_blue.png" />,<img src="frog_null.png" />,<img src="savage_red.png" />,Pattern(<img src="snake_null.png" />).similar(<span class="dig">0.69</span>),<img src="savage_null.png" />,<img src="savage_green.png" />
     ]
     armored = [
-        <img src="crab_null.png" />,<img src="scorpion_blue.png" />
+        Pattern(<img src="crab_null.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="scorpion_blue.png" />).similar(<span class="dig">0.80</span>)
     ]
     strong = [
-        <img src="garm_null.png" />
+        Pattern(<img src="garm_null.png" />).similar(<span class="dig">0.80</span>)
     ]
     boss = [
-        <img src="boss_2_stage_1.png" />,<img src="boss_2_stage_2.png" />,<img src="boss_2_stage_3.png" />,<img src="boss_2_stage_4.png" />
+        Pattern(<img src="boss_2_stage_1.png" />).similar(<span class="dig">0.60</span>),Pattern(<img src="boss_2_stage_2.png" />).similar(<span class="dig">0.60</span>),Pattern(<img src="boss_2_stage_3.png" />).similar(<span class="dig">0.69</span>),Pattern(<img src="boss_2_stage_4.png" />).similar(<span class="dig">0.69</span>)
     ]
 <span class="kw">class</span> Map3(Map):
     normal = [
-        <img src="savage_red.png" />,<img src="frog_green.png" />,<img src="skeleton_red.png" />,<img src="cat_red.png" />,<img src="wolf_green.png" />,<img src="snake_red.png" />,<img src="bat_green.png" />,<img src="bat_blue.png" />,<img src="chicken_null.png" />,<img src="gargoyle_red.png" />,<img src="frog_blue.png" />,<img src="frog_red.png" />,<img src="frog_null.png" />,<img src="bee_red.png" />,<img src="bat_red.png" />
+        <img src="savage_red.png" />,<img src="frog_green.png" />,<img src="skeleton_red.png" />,<img src="wolf_green.png" />,Pattern(<img src="snake_red.png" />).similar(<span class="dig">0.80</span>),<img src="bat_green.png" />,<img src="bat_blue.png" />,Pattern(<img src="chicken_null.png" />).similar(<span class="dig">0.80</span>),<img src="gargoyle_red.png" />,<img src="frog_blue.png" />,<img src="frog_red.png" />,<img src="frog_null.png" />,Pattern(<img src="bee_red.png" />).similar(<span class="dig">0.80</span>),<img src="bat_red.png" />,<img src="cat_red.png" />
     ]
     armored = [
-        <img src="crab_green.png" />,<img src="crab_null.png" />,<img src="turtle_null.png" />
+        Pattern(<img src="crab_green.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="crab_null.png" />).similar(<span class="dig">0.80</span>),<img src="turtle_null.png" />
     ]
     strong = [
-        <img src="big_dog_red.png" />,<img src="liger_red.png" />
+        Pattern(<img src="big_dog_red.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="liger_red.png" />).similar(<span class="dig">0.80</span>)
     ]
     boss = [
-        <img src="boss_3_stage_1.png" />,<img src="boss_3_stage_2.png" />,<img src="boss_3_stage_3.png" />,<img src="boss_3_stage_4.png" />
+        Pattern(<img src="boss_3_stage_1.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="boss_3_stage_2.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="boss_3_stage_3.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="boss_3_stage_4.png" />).similar(<span class="dig">0.80</span>)
     ]
 <span class="kw">class</span> Map4(Map):
     normal = [

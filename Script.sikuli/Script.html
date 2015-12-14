@@ -86,17 +86,23 @@ reload(Constants)
 reload(Images)
 
 <span class="kw">def</span> main():
-    <span class="cmt">#bluestacks = App("BlueStacks App Player")</span>
-    <span class="cmt">#bluestacks.focus()</span>
-    <span class="cmt">#app_region = bluestacks.window()</span>
-    <span class="cmt">#while not exists("sikuli_stop.png", .25):</span>
+    <span class="str">'''
+    while True:
+        matched = findAll()
+        if matched:
+            for match in matched:
+                match.highlight(True)
+    return
+    '''</span>
+
     bot = BotRunner.BotObject()
+
     <span class="kw">while</span> bot.state != <span class="str">'Finished'</span>:
         bot.run()
 
 <span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
-    Settings.MinSimilarity = <span class="dig">.95</span>
-    Settings.WaitScanRate = <span class="dig">2</span>
+    Settings.MinSimilarity = <span class="dig">.90</span>
+    Settings.WaitScanRate = <span class="dig">10</span>
     setFindFailedResponse(SKIP)
     main()
 </pre>
