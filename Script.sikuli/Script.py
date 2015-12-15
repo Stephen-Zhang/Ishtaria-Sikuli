@@ -16,7 +16,7 @@ reload(Images)
 def main():
     '''
     while True:
-        matched = findAll()
+        matched = findAll(Pattern("boss_2_stage_2.png").similar(0.60))
         if matched:
             for match in matched:
                 match.highlight(True)
@@ -24,12 +24,19 @@ def main():
     '''
     
     bot = BotRunner.BotObject()
+
+    '''
+    bot.questMenu.currentMap = Images.Map2()
+    bot.questMenu.state = 'Attacking'
+    bot.questMenu.run()
+    return
+    '''
     
     while bot.state != 'Finished':
         bot.run()
     
 if __name__ == "__main__":
-    Settings.MinSimilarity = .90
+    Settings.MinSimilarity = .95
     Settings.WaitScanRate = 10
     setFindFailedResponse(SKIP)
     main()

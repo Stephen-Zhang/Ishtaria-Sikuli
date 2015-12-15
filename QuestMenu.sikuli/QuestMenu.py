@@ -83,32 +83,39 @@ class QuestMenu(object):
             elif Constants.MAIN_WINDOW.exists("quest_end.png", .1):
                 self.state = 'StatsScreen'
             elif exists(Pattern("back.png").similar(0.98), .1):
+                print "found back!"
                 self.state = 'Attacking'
         elif self.state == 'Attacking':
             self.state = 'Waiting'
             for norm_enemy in self.currentMap.normal:
                 if exists(norm_enemy, .1):
                     click(norm_enemy)
+                    print "found normal enemy match!"
                     self.norm_aoe()
                     return
             for boss in self.currentMap.boss:
                 if exists(boss, .1):
+                    print "found boss match!"
                     click(boss)
                     if self.has_burst():
+                        "with burst!"
                         self.burst()
                         return
                     self.attack_boss()
                     return
             for armored_enemy in self.currentMap.armored:
                 if exists(armored_enemy, .1):
+                    print "found armored match!"
                     click(armored_enemy)
                     self.rend_single()
                     return
             for strong_enemy in self.currentMap.strong:
                 if exists(strong_enemy, .1):
+                    print "found strong match!"
                     click(strong_enemy)
                     self.norm_single()
                     return
+            print "didnt find any match!"
             self.norm_single()
         elif self.state == 'StatsScreen':
             if Constants.MAIN_WINDOW.exists("quest_end.png", .1):
@@ -196,17 +203,20 @@ class QuestMenu(object):
 
     def attack_boss(self):
         map_num = self.currentMap.__class__
-        if map_num is Images.Map1:
+        if map_num == Images.Map1:
             self.norm_single()
-        elif map_num is Images.Map2:
+        elif map_num == Images.Map2:
             self.norm_single()
-        elif map_num is Images.Map3:
+        elif map_num == Images.Map3:
             self.rend_single()
-        elif map_num is Images.Map4:
+        elif map_num == Images.Map4:
+            self.rend_single()
+        else:
             self.rend_single()
 
     def burst(self):
         if Constants.MAIN_WINDOW.exists("idun.png", .25):
+            print "Idun burst"
             click(Pattern("burst.png").targetOffset(-151,-12))
             wait(.1)
             click(self.first_unit)
@@ -227,6 +237,7 @@ class QuestMenu(object):
             wait(.1)
             click(self.attack)
         elif Constants.MAIN_WINDOW.exists("hel.png", .25):
+            print "Hel burst"
             click(Pattern("burst.png").targetOffset(-160,2))
             wait(.1)
             click(self.first_unit)
@@ -249,6 +260,7 @@ class QuestMenu(object):
 
     def has_burst(self):
         if exists(Pattern("burst.png").targetOffset(-155,-13), 1):
+            print "has burst"
             return True
         return False
 

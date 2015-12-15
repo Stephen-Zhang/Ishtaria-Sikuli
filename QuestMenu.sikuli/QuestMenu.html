@@ -155,32 +155,39 @@ reload(Images)
             <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(<img src="quest_end.png" />, <span class="dig">.1</span>):
                 self.state = <span class="str">'StatsScreen'</span>
             <span class="kw">elif</span> exists(Pattern(<img src="back.png" />).similar(<span class="dig">0.98</span>), <span class="dig">.1</span>):
+                <span class="kw">print</span> <span class="str">"found back!"</span>
                 self.state = <span class="str">'Attacking'</span>
         <span class="kw">elif</span> self.state == <span class="str">'Attacking'</span>:
             self.state = <span class="str">'Waiting'</span>
             <span class="kw">for</span> norm_enemy <span class="kw">in</span> self.currentMap.normal:
                 <span class="kw">if</span> exists(norm_enemy, <span class="dig">.1</span>):
                     <span class="skw">click</span>(norm_enemy)
+                    <span class="kw">print</span> <span class="str">"found normal enemy match!"</span>
                     self.norm_aoe()
                     <span class="kw">return</span>
             <span class="kw">for</span> boss <span class="kw">in</span> self.currentMap.boss:
                 <span class="kw">if</span> exists(boss, <span class="dig">.1</span>):
+                    <span class="kw">print</span> <span class="str">"found boss match!"</span>
                     <span class="skw">click</span>(boss)
                     <span class="kw">if</span> self.has_burst():
+                        <span class="str">"with burst!"</span>
                         self.burst()
                         <span class="kw">return</span>
                     self.attack_boss()
                     <span class="kw">return</span>
             <span class="kw">for</span> armored_enemy <span class="kw">in</span> self.currentMap.armored:
                 <span class="kw">if</span> exists(armored_enemy, <span class="dig">.1</span>):
+                    <span class="kw">print</span> <span class="str">"found armored match!"</span>
                     <span class="skw">click</span>(armored_enemy)
                     self.rend_single()
                     <span class="kw">return</span>
             <span class="kw">for</span> strong_enemy <span class="kw">in</span> self.currentMap.strong:
                 <span class="kw">if</span> exists(strong_enemy, <span class="dig">.1</span>):
+                    <span class="kw">print</span> <span class="str">"found strong match!"</span>
                     <span class="skw">click</span>(strong_enemy)
                     self.norm_single()
                     <span class="kw">return</span>
+            <span class="kw">print</span> <span class="str">"didnt find any match!"</span>
             self.norm_single()
         <span class="kw">elif</span> self.state == <span class="str">'StatsScreen'</span>:
             <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_end.png" />, <span class="dig">.1</span>):
@@ -268,17 +275,18 @@ reload(Images)
 
     <span class="kw">def</span> attack_boss(self):
         map_num = self.currentMap.__class__
-        <span class="kw">if</span> map_num <span class="kw">is</span> Images.Map1:
+        <span class="kw">if</span> map_num == Images.Map1:
             self.norm_single()
-        <span class="kw">elif</span> map_num <span class="kw">is</span> Images.Map2:
+        <span class="kw">elif</span> map_num == Images.Map2:
             self.norm_single()
-        <span class="kw">elif</span> map_num <span class="kw">is</span> Images.Map3:
+        <span class="kw">elif</span> map_num == Images.Map3:
             self.rend_single()
-        <span class="kw">elif</span> map_num <span class="kw">is</span> Images.Map4:
+        <span class="kw">elif</span> map_num == Images.Map4:
             self.rend_single()
 
     <span class="kw">def</span> burst(self):
         <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="idun.png" />, <span class="dig">.25</span>):
+            <span class="kw">print</span> <span class="str">"Idun burst"</span>
             <span class="skw">click</span>(Pattern(<img src="burst.png" />).targetOffset(-<span class="dig">151</span>,-<span class="dig">12</span>))
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             <span class="skw">click</span>(self.first_unit)
@@ -299,6 +307,7 @@ reload(Images)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             <span class="skw">click</span>(self.attack)
         <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(<img src="hel.png" />, <span class="dig">.25</span>):
+            <span class="kw">print</span> <span class="str">"Hel burst"</span>
             <span class="skw">click</span>(Pattern(<img src="burst.png" />).targetOffset(-<span class="dig">160</span>,<span class="dig">2</span>))
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             <span class="skw">click</span>(self.first_unit)
@@ -321,6 +330,7 @@ reload(Images)
 
     <span class="kw">def</span> has_burst(self):
         <span class="kw">if</span> exists(Pattern(<img src="burst.png" />).targetOffset(-<span class="dig">155</span>,-<span class="dig">13</span>), <span class="dig">1</span>):
+            <span class="kw">print</span> <span class="str">"has burst"</span>
             <span class="kw">return</span> True
         <span class="kw">return</span> False
 

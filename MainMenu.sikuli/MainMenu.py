@@ -20,12 +20,6 @@ class MainMenu(object):
     def run(self):
         print self.state
         if self.state == 'Start':
-            if exists("2800_crowns.png", .1):
-                #self.botInfo.questMenu.state = 'Purify'
-                self.botInfo.state = 'Quest'
-            if exists("finished_crowns.png", .1):
-                self.botInfo.finished = True
-                self.state = 'End'
             if self.botInfo.leveledUp:
                 self.state = 'CollectStart'
             else:
