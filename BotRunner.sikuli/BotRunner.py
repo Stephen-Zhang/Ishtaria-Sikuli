@@ -32,7 +32,7 @@ class BotObject(object):
         self.questMenu = QuestMenu.QuestMenu(self)
 
     def run(self):
-        if exists("1450092330089.png", .25):
+        if exists(Pattern("login.png").similar(0.60), .25):
             while not exists(Constants.HOME_CHRISTMAS):
                 click(Constants.REGION_TOP)
         if exists("Connect_failed.png", .25):

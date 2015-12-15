@@ -112,7 +112,7 @@ reload(Constants)
             <span class="kw">else</span>:
                 self.state = <span class="str">'End'</span>
         <span class="kw">elif</span> self.state == <span class="str">'Enter'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="50_wins.png" />).similar(<span class="dig">0.90</span>)):
+            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="50_wins.png" />).similar(<span class="dig">0.95</span>)):
                 self.botInfo.battlesDone = True
                 self.state = <span class="str">'End'</span>
             <span class="kw">else</span>:

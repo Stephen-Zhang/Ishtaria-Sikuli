@@ -75,6 +75,7 @@ class QuestMenu(object):
                 self.state = 'Waiting'
             elif Constants.MAIN_WINDOW.exists(Constants.SELECT, .1):
                 Constants.MAIN_WINDOW.click(Constants.SELECT)
+                wait(.5)
         elif self.state == 'Waiting':
             if Constants.MAIN_WINDOW.exists("1450071819288.png", .1):
                 wait(1)
@@ -88,7 +89,7 @@ class QuestMenu(object):
         elif self.state == 'Attacking':
             self.state = 'Waiting'
             for norm_enemy in self.currentMap.normal:
-                if exists(norm_enemy, .1):
+                if exists(Pattern(norm_enemy).similar(.8), .1):
                     click(norm_enemy)
                     print "found normal enemy match!"
                     self.norm_aoe()
@@ -104,13 +105,13 @@ class QuestMenu(object):
                     self.attack_boss()
                     return
             for armored_enemy in self.currentMap.armored:
-                if exists(armored_enemy, .1):
+                if exists(Pattern(armored_enemy).similar(.8), .1):
                     print "found armored match!"
                     click(armored_enemy)
                     self.rend_single()
                     return
             for strong_enemy in self.currentMap.strong:
-                if exists(strong_enemy, .1):
+                if exists(Pattern(strong_enemy).similar(.8), .1):
                     print "found strong match!"
                     click(strong_enemy)
                     self.norm_single()
@@ -133,6 +134,7 @@ class QuestMenu(object):
         elif self.state == 'End':
             if Constants.MAIN_WINDOW.exists(Constants.SKIP, 2):
                 click(Constants.SKIP)
+                wait(.75)
             elif self.botRunner.leveledUp:
                 self.botRunner.state = 'Battle'
                 self.botRunner.battleMenu.state = 'Start'
@@ -203,13 +205,13 @@ class QuestMenu(object):
 
     def attack_boss(self):
         map_num = self.currentMap.__class__
-        if map_num == Images.Map1:
+        if isinstance(map_num, Images.Map1):
             self.norm_single()
-        elif map_num == Images.Map2:
+        elif isinstance(map_num, Images.Map2):
             self.norm_single()
-        elif map_num == Images.Map3:
+        elif isinstance(map_num, Images.Map3):
             self.rend_single()
-        elif map_num == Images.Map4:
+        elif isinstance(map_num, Images.Map4):
             self.rend_single()
         else:
             self.rend_single()
