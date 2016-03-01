@@ -5,7 +5,7 @@ myPath = os.path.dirname(getBundlePath())
 if not myPath in sys.path: sys.path.append(myPath)
 
 import BotRunner
-reload(BotRunner)
+reload(BotRunner) 
 
 import Constants
 reload(Constants)
@@ -14,27 +14,19 @@ import Images
 reload(Images)
 
 def main():
-    '''
-    while True:
-        matched = findAll()
-        if matched:
-            for match in matched:
-                match.highlight(True)
-    return
-    '''
-    
     bot = BotRunner.BotObject()
 
-    #'''
-    bot.questMenu.purify_start()
-    return
-    #'''
+    '''
+    bot.state = 'Quest'
+    bot.questMenu.currentMap = Images.Map4()
+    bot.questMenu.state = 'Waiting'
+    '''
     
     while bot.state != 'Finished':
         bot.run()
     
 if __name__ == "__main__":
     Settings.MinSimilarity = .95
-    Settings.WaitScanRate = 10
+    Settings.WaitScanRate = 20
     setFindFailedResponse(SKIP)
     main()

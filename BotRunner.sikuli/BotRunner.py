@@ -32,11 +32,13 @@ class BotObject(object):
         self.questMenu = QuestMenu.QuestMenu(self)
 
     def run(self):
-        if exists(Pattern("login.png").similar(0.60), .25):
-            while not exists(Constants.HOME_CHRISTMAS):
-                click(Constants.REGION_TOP)
-        if exists("Connect_failed.png", .25):
-            click(Constants.CONFIRM)
+        login_screen = Constants.FULL_SCREEN.exists(Pattern('login.png').similar(0.50), .25)
+        if login_screen:
+            while not Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, 0):
+                Constants.FULL_SCREEN.click(Constants.REGION_TOP)
+            Constants.MENU_BAR.click(Constants.HOME_CHRISTMAS)
+        if Constants.FULL_SCREEN.exists("Connect_failed.png", 0):
+            Constants.MAIN_WINDOW.click(Constants.CONFIRM)
         if self.state == 'MainMenu':
             self.mainMenu.run()
         if self.state == 'Battle':

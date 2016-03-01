@@ -77,58 +77,235 @@
     armored = []
     strong = []
     boss = []
+    lions = [
+        <img src="blue_lion.png" />, <img src="green_lion.png" />, <img src="null_lion.png" />, <img src="red_lion.png" />
+    ]
 
 <span class="kw">class</span> Map1(Map):
     normal = [
-        Pattern(<img src="skeleton_null.png" />).similar(<span class="dig">0.80</span>),<img src="skeleton_red.png" />,<img src="skeleton_blue.png" />,<img src="gargoyle_blue.png" />,<img src="gargoyle_null.png" />,<img src="gargoyle_green.png" />,<img src="gargoyle_red.png" />,Pattern(<img src="cat_null.png" />).similar(<span class="dig">0.80</span>),<img src="savage_null.png" />,<img src="savage_green.png" />,Pattern(<img src="wolf_blue.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="wolf_red.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="wolf_null.png" />).similar(<span class="dig">0.80</span>),<img src="wizard_null.png" />,<img src="wizard_null_2.png" />,<img src="bat_null.png" />
+        <img src="skeleton_null.png" />,
+        <img src="skeleton_red.png" />,
+        <img src="skeleton_blue.png" />,
+        <img src="gargoyle_blue.png" />,
+        <img src="gargoyle_null.png" />,
+        <img src="gargoyle_green.png" />,
+        <img src="gargoyle_red.png" />,
+        <img src="cat_null.png" />,
+        <img src="savage_null.png" />,
+        <img src="savage_green.png" />,
+        <img src="wolf_blue.png" />,
+        <img src="wolf_red.png" />,
+        <img src="wolf_null.png" />,
+        <img src="wizard_null.png" />,
+        <img src="wizard_null_2.png" />,
+        <img src="bat_null.png" />
     ]
     armored = [
-        Pattern(<img src="armor_null.png" />).similar(<span class="dig">0.80</span>)
+        <img src="armor_null.png" />
     ]
     strong = [
-        Pattern(<img src="garm_null.png" />).similar(<span class="dig">0.80</span>)
+        <img src="garm_red.png" />
     ]
     boss = [
-        Pattern(<img src="boss_1_stage_1.png" />).similar(<span class="dig">0.69</span>),Pattern(<img src="boss_1_stage_2.png" />).similar(<span class="dig">0.69</span>),Pattern(<img src="boss_1_stage_3.png" />).similar(<span class="dig">0.69</span>),
+        Pattern(<img src="boss_1_stage_1.png" />).similar(<span class="dig">0.69</span>),
+        Pattern(<img src="boss_1_stage_2.png" />).similar(<span class="dig">0.69</span>),
+        Pattern(<img src="boss_1_stage_3.png" />).similar(<span class="dig">0.69</span>)
     ]
 <span class="kw">class</span> Map2(Map):
     normal = [
-        <img src="gargoyle_blue.png" />,Pattern(<img src="wolf_blue.png" />).similar(<span class="dig">0.80</span>),<img src="skeleton_blue.png" />,<img src="savage_blue.png" />,<img src="wolf_red.png" />,<img src="cat_blue.png" />,<img src="bat_green.png" />,<img src="bee_blue.png" />,<img src="frog_null.png" />,<img src="savage_red.png" />,Pattern(<img src="snake_null.png" />).similar(<span class="dig">0.69</span>),<img src="savage_null.png" />,<img src="savage_green.png" />
+        <img src="gargoyle_blue.png" />,
+        <img src="wolf_blue.png" />,
+        <img src="skeleton_blue.png" />,
+        <img src="savage_blue.png" />,
+        <img src="wolf_red.png" />,
+        <img src="cat_blue.png" />,
+        <img src="bat_green.png" />,
+        <img src="bee_blue.png" />,
+        <img src="frog_null.png" />,
+        <img src="savage_red.png" />,
+        <img src="snake_null.png" />,
+        <img src="savage_null.png" />,
+        <img src="savage_green.png" />
     ]
     armored = [
-        Pattern(<img src="crab_null.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="scorpion_blue.png" />).similar(<span class="dig">0.80</span>)
+        <img src="crab_null.png" />,
+        <img src="scorpion_blue.png" />
     ]
     strong = [
-        Pattern(<img src="garm_null.png" />).similar(<span class="dig">0.80</span>)
+        <img src="garm_red.png" />
     ]
     boss = [
-        Pattern(<img src="boss_2_stage_1.png" />).similar(<span class="dig">0.60</span>),Pattern(<img src="boss_2_stage_2.png" />).similar(<span class="dig">0.60</span>),Pattern(<img src="boss_2_stage_3.png" />).similar(<span class="dig">0.69</span>),Pattern(<img src="boss_2_stage_4.png" />).similar(<span class="dig">0.69</span>)
+        Pattern(<img src="boss_2_stage_1.png" />).similar(<span class="dig">0.60</span>),
+        Pattern(<img src="boss_2_stage_2.png" />).similar(<span class="dig">0.60</span>),
+        Pattern(<img src="boss_2_stage_3.png" />).similar(<span class="dig">0.69</span>),
+        Pattern(<img src="boss_2_stage_4.png" />).similar(<span class="dig">0.69</span>)
     ]
 <span class="kw">class</span> Map3(Map):
     normal = [
-        <img src="savage_red.png" />,<img src="frog_green.png" />,<img src="skeleton_red.png" />,<img src="wolf_green.png" />,Pattern(<img src="snake_red.png" />).similar(<span class="dig">0.80</span>),<img src="bat_green.png" />,<img src="bat_blue.png" />,Pattern(<img src="chicken_null.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="gargoyle_red.png" />).similar(<span class="dig">.8</span>),<img src="frog_blue.png" />,<img src="frog_red.png" />,<img src="frog_null.png" />,Pattern(<img src="bee_red.png" />).similar(<span class="dig">0.80</span>),<img src="bat_red.png" />,<img src="cat_red.png" />
+        <img src="savage_red.png" />,
+        <img src="frog_green.png" />,
+        <img src="skeleton_red.png" />,
+        <img src="wolf_green.png" />,
+        <img src="snake_red.png" />,
+        <img src="bat_green.png" />,
+        <img src="bat_blue.png" />,
+        <img src="chicken_null.png" />,
+        <img src="gargoyle_red.png" />,
+        <img src="frog_blue.png" />,
+        <img src="frog_red.png" />,
+        <img src="frog_null.png" />,
+        <img src="bee_red.png" />,
+        <img src="bat_red.png" />,
+        <img src="cat_red.png" />
     ]
     armored = [
-        Pattern(<img src="crab_green.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="crab_null.png" />).similar(<span class="dig">0.80</span>),<img src="turtle_null.png" />
+        <img src="crab_green.png" />,
+        <img src="crab_null.png" />,
+        <img src="turtle_null.png" />
     ]
     strong = [
-        Pattern(<img src="big_dog_red.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="liger_red.png" />).similar(<span class="dig">0.80</span>)
+        <img src="big_dog_red.png" />,
+        <img src="liger_red.png" />
     ]
     boss = [
-        Pattern(<img src="boss_3_stage_1.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="boss_3_stage_2.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="boss_3_stage_3.png" />).similar(<span class="dig">0.80</span>),Pattern(<img src="boss_3_stage_4.png" />).similar(<span class="dig">0.80</span>)
+        Pattern(<img src="boss_3_stage_1.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_3_stage_2.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_3_stage_3.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_3_stage_4.png" />).similar(<span class="dig">0.80</span>)
     ]
 <span class="kw">class</span> Map4(Map):
     normal = [
+        <img src="frog_green.png" />,
+        <img src="snake_green.png" />,
+        <img src="bee_null.png" />,
+        <img src="wolf_blue.png" />,
+        <img src="chicken_red.png" />,
+        <img src="chicken_green.png" />,
+        <img src="bee_green.png" />,
+        <img src="savage_green.png" />, <img src="savage_blue.png" />, <img src="cat_green.png" />, <img src="skeleton_green.png" />
 
     ]
     armored = [
-
+        <img src="armor_null.png" />,
+        <img src="turtle_green.png" />, <img src="scorpion_red.png" />, <img src="crab_null.png" />
     ]
     strong = [
-        <img src="big_dog_green.png" />
+        <img src="big_dog_green.png" />, <img src="reaper_null.png" />, <img src="garm_blue.png" />
     ]
     boss = [
+        Pattern(<img src="boss_4_stage_1.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_4_stage_2.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_4_stage_3.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_4_stage_4.png" />).similar(<span class="dig">0.80</span>)
+    ]
 
+<span class="kw">class</span> Map5(Map):
+    normal = [
+        <img src="wolf_red.png" />,
+        <img src="frog_null.png" />,
+        <img src="bee_blue.png" />,
+        <img src="chicken_blue.png" />,
+        <img src="skeleton_blue.png" />,
+        <img src="skeleton_red.png" />
+        <img src="snake_blue.png" />,
+        <img src="cat_blue.png" />,
+        <img src="bat_blue.png" />,
+        <img src="cat_red.png" />, <img src="cat_green.png" />, <img src="cat_null.png" />
+        <img src="boss_5_mob.png" />
+    ]
+    armored = [
+        <img src="crab_blue.png" />, <img src="crab_green.png" />,
+        <img src="turtle_blue.png" />
+        <img src="scorpion_green.png" />
+    ]
+
+    strong = [
+        <img src="big_dog_blue.png" />,
+        <img src="liger_blue.png" />,
+        <img src="garm_green.png" />,
+        <img src="minotaur_red_null.png" />
+    ]
+
+    boss = [
+        Pattern(<img src="boss_5_stage_1.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_5_stage_2.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_5_stage_3.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_5_stage_4.png" />).similar(<span class="dig">0.80</span>)
+    ]
+
+<span class="kw">class</span> Map6(Map):
+    normal = [
+        <img src="snake_green.png" />,
+        <img src="savage_red.png" />,
+        <img src="skeleton_null.png" />,
+        <img src="gargoyle_null.png" />,
+        <img src="bee_green.png" />,
+        <img src="bat_blue.png" />,
+        <img src="gargoyle_blue.png" />,
+        <img src="bat_green.png" />,
+        <img src="gargoyle_green.png" />,
+        <img src="gargoyle_red.png" />
+    ]
+    armored = [
+        <img src="turtle_red.png" />,
+        <img src="armor_null.png" />,
+        <img src="armored_purple_null.png" />,
+        <img src="scorpion_null.png" />,
+        <img src="crab_red.png" />
+    ]
+    strong = [
+        <img src="big_dog_green.png" />,
+        <img src="garm_blue.png" />,
+        <img src="big_dog_null.png" />,
+        <img src="garm_red.png" />,
+        <img src="reaper_null.png" />,
+        <img src="minotaur_blue_null.png" />,
+        <img src="reaper_red_null.png" />,
+        <img src="big_dog_red.png" />,
+        <img src="big_dog_blue.png" />,
+        <img src="garm_null.png" />,
+        <img src="liger_null.png" />
+    ]
+    boss = [
+        Pattern(<img src="boss_6_stage_1.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_6_stage_2.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_6_stage_3.png" />).similar(<span class="dig">0.80</span>),
+        Pattern(<img src="boss_6_stage_4.png" />).similar(<span class="dig">0.80</span>)
+    ]
+
+<span class="kw">class</span> Map7(Map):
+    normal = [
+        <img src="snake_red.png" />,
+        <img src="snake_green.png" />,
+        <img src="chicken_red.png" />,
+        <img src="chicken_null.png" />,
+        <img src="crow_red.png" />,
+        <img src="crow_green.png" />,
+        <img src="savage_null.png" />,
+        <img src="savage_red.png" />,
+        <img src="skeleton_red.png" />,
+        <img src="crow_null.png" />,
+        <img src="wolf_blue.png" />,
+        <img src="wold_red.png" />
+    ]
+    armored = [
+        <img src="scorpion_green.png" />,
+        <img src="scorpion_red.png" />,
+        <img src="scorpion_null.png" />,
+        <img src="turtle_null.png" />
+    ]
+    strong = [
+        <img src="worm_null.png" />,
+        <img src="worm_red.png" />,
+        <img src="liger_red.png" />,
+        <img src="big_dog_null.png" />,
+        <img src="big_dog_red.png" />,
+        <img src="liger_null.png" />,
+        <img src="minotaur_blue_null.png" />,
+        <img src="minotaur_red_null.png" />
+    ]
+    boss = [
+        <img src="stage_7_boss_1.png" />, <img src="stage_7_boss_2.png" />, <img src="stage_7_boss_3.png" />
     ]
 </pre>
 </body>
