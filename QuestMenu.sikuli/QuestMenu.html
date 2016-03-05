@@ -135,10 +135,10 @@ reload(Images)
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                den_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="den_of_the_dragon.png" />).targetOffset(<span class="dig">195</span>,<span class="dig">40</span>), <span class="dig">0</span>)
+                den_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="den_of_the_dragon.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">2</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> den_match:
                     <span class="cmt">#self.botRunner.state = 'Finished'</span>
-                    <span class="cmt">#return</span>
+                    <span class="cmt">#return </span>
 
                     Constants.MAIN_WINDOW.<span class="skw">click</span>(den_match)
                     self.currentMap = self.map6
@@ -239,7 +239,7 @@ reload(Images)
 
         <span class="kw">elif</span> self.state == <span class="str">'Attacking'</span>:
             <span class="kw">for</span> lion <span class="kw">in</span> self.currentMap.lions:
-                lion_match = Constants.MAIN_WINDOW.exists(Pattern(lion).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
+                lion_match = Constants.MAIN_WINDOW.exists(Pattern(lion).similar(<span class="dig">.8</span>), <span class="dig">1</span>)
                 <span class="kw">if</span> lion_match:
                     Constants.MAIN_WINDOW.<span class="skw">click</span>(lion_match)
                     self.rend_single()
@@ -463,13 +463,13 @@ reload(Images)
         <span class="kw">else</span>:
             Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
+            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
+            <span class="skw">wait</span>(<span class="dig">.1</span>)
+            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
+            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
@@ -480,15 +480,6 @@ reload(Images)
             Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
-
-review_notice = <img src="review_notice.png" />
-play_store_wait = <img src="play_store_wait.png" />
-back_button = <img src="back_button.png" />
-ishtaria_icon = <img src="ishtaria_icon.png" />
-map_clear = <img src="map_clear.png" />
-quest_end = <img src="quest_end.png" />
-purify_button = <img src="purify_button.png" />
-back_button = <img src="back_button.png" />
 </pre>
 </body>
 </html>

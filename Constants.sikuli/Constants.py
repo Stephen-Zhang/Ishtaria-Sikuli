@@ -1,7 +1,7 @@
 from sikuli import *
 FULL_SCREEN = Region(1290,30,623,970)
 MENU_BAR = Region(1283,897,637,140)
-HOME = "HOME.png"
+HOME = "HOME.png" 
 HOME_CHRISTMAS = "HOME_CHRISTMAS.png"
 MENU = "MENU.png"
 MENU_CHRISTMAS = "MENU_CHRISTMAS.png"

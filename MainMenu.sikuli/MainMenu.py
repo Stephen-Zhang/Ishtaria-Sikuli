@@ -66,7 +66,7 @@ class MainMenu(object):
             self.botInfo.questMenu.state = 'Start'
 
     def review_gold_card(self):
-        pass
+        pass 
     
     def copy_deck(self):
         click(Constants.MENU)

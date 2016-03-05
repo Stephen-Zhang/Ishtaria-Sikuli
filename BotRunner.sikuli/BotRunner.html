@@ -117,48 +117,6 @@ reload(Constants)
             self.battleMenu.run()
         <span class="kw">if</span> self.state == <span class="str">'Quest'</span>:
             self.questMenu.run()
-
-    <span class="kw">def</span> save(self):
-        <span class="cmt"># TODO:</span>
-        <span class="skw">click</span>(Pattern(<img src="open_apps.png" />).exact())
-        <span class="skw">dragDrop</span>(<img src="ishtaria_face.png" />, bottom_delete = Region(<span class="dig">1214</span>,<span class="dig">823</span>,<span class="dig">60</span>,<span class="dig">58</span>))
-        <span class="skw">click</span>(<img src="file_explorer_app.png" />)
-        <span class="skw">click</span>(<img src="folder.png" />)
-        <span class="kw">while</span> <span class="kw">not</span> exists(<img src="rename.png" />):
-            mouseDown(<img src="current_file.png" />)
-        <span class="skw">click</span>(<img src="rename.png" />)
-        <span class="skw">wait</span>(<img src="dialog.png" />)
-        <span class="skw">type</span>(self.name + str(self.num))
-        <span class="skw">click</span>(<img src="okay.png" />)
-
-        <span class="cmt"># Rename file next to you</span>
-        <span class="kw">while</span> <span class="kw">not</span> exists(<img src="rename.png" />):
-            mouseDown(<img src="current_file.png" />)
-        <span class="cmt"># Click ES Explorer</span>
-        <span class="cmt"># Click</span>
-
-    <span class="kw">def</span> do_level_5_actions(self):
-        <span class="cmt"># Grab Review Card</span>
-        <span class="cmt"># Set Leader</span>
-        <span class="cmt"># Sell Units</span>
-        <span class="cmt"># Spend Medals</span>
-        <span class="cmt"># Enhance Units</span>
-        <span class="cmt"># Do normal level up actions</span>
-        <span class="kw">pass</span>
-
-ishtaria_app = <img src="ishtaria_app.png" />
-folder = <img src="folder.png" />
-next_file = <img src="next_file.png" />
-dialog = <img src="dialog.png" />
-okay = <img src="okay.png" />
-scroll_lo = Region(<span class="dig">944</span>,<span class="dig">241</span>,<span class="dig">34</span>,<span class="dig">30</span>)
-scroll_hi = Region(<span class="dig">947</span>,<span class="dig">132</span>,<span class="dig">33</span>,<span class="dig">25</span>)
-tab_home = <img src="tab_home.png" />
-left = Region(<span class="dig">622</span>,<span class="dig">501</span>,<span class="dig">125</span>,<span class="dig">78</span>)
-down = Region(<span class="dig">467</span>,<span class="dig">588</span>,<span class="dig">147</span>,<span class="dig">76</span>)
-current_file2 = <img src="current_file2.png" />
-view = <img src="view_button.png" />
-medium_list = <img src="medium_list.png" />
 </pre>
 </body>
 </html>

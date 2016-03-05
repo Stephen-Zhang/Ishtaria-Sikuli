@@ -6,8 +6,8 @@ class Map(object):
     strong = []
     boss = []
     lions = [
-        "blue_lion.png", "green_lion.png", "null_lion.png", "red_lion.png"
-    ]
+        "blue_lion_2.png", "red_lion_2.png", "green_lion_2.png", "null_lion_2.png"
+    ] 
 
 class Map1(Map):
     normal = [

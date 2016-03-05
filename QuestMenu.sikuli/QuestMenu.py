@@ -63,10 +63,10 @@ class QuestMenu(object):
                     self.state = 'Select'
                     return
 
-                den_match = Constants.MAIN_WINDOW.exists(Pattern("den_of_the_dragon.png").targetOffset(195,40), 0)
+                den_match = Constants.MAIN_WINDOW.exists(Pattern("den_of_the_dragon.png").targetOffset(191,2), 0)
                 if den_match:
                     #self.botRunner.state = 'Finished'
-                    #return
+                    #return 
 
                     Constants.MAIN_WINDOW.click(den_match)
                     self.currentMap = self.map6
@@ -167,7 +167,7 @@ class QuestMenu(object):
 
         elif self.state == 'Attacking':
             for lion in self.currentMap.lions:
-                lion_match = Constants.MAIN_WINDOW.exists(Pattern(lion).similar(.8), .1)
+                lion_match = Constants.MAIN_WINDOW.exists(Pattern(lion).similar(.8), 1)
                 if lion_match:
                     Constants.MAIN_WINDOW.click(lion_match)
                     self.rend_single()
@@ -391,13 +391,13 @@ class QuestMenu(object):
         else:
             Constants.MAIN_WINDOW.click(burst_match)
             wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
+            Constants.MAIN_WINDOW.click(self.second_unit)
+            wait(.1)
+            Constants.MAIN_WINDOW.click(self.second_unit)
             wait(.1)
             Constants.MAIN_WINDOW.click(self.fourth_unit)
             wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
+            Constants.MAIN_WINDOW.click(self.fourth_unit)
             wait(.1)
             Constants.MAIN_WINDOW.click(self.fourth_unit)
             wait(.1)
@@ -408,12 +408,3 @@ class QuestMenu(object):
             Constants.MAIN_WINDOW.click(self.fourth_unit)
             wait(.1)
             Constants.MENU_BAR.click(self.attack)
-
-review_notice = "review_notice.png"
-play_store_wait = "play_store_wait.png"
-back_button = "back_button.png"
-ishtaria_icon = "ishtaria_icon.png"
-map_clear = "map_clear.png"
-quest_end = "quest_end.png"
-purify_button = "purify_button.png"
-back_button = "back_button.png"
