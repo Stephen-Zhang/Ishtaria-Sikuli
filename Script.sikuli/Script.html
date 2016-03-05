@@ -88,11 +88,11 @@ reload(Images)
 <span class="kw">def</span> main():
     bot = BotRunner.BotObject()
 
-    <span class="str">'''
-    bot.state = 'Quest'
-    bot.questMenu.currentMap = Images.Map4()
-    bot.questMenu.state = 'Waiting'
-    '''</span>
+    <span class="cmt">#'''</span>
+    bot.state = <span class="str">'Quest'</span>
+    bot.questMenu.currentMap = Images.Map3()
+    bot.questMenu.state = <span class="str">'Waiting'</span>
+    <span class="cmt">#'''</span>
 
     <span class="kw">while</span> bot.state != <span class="str">'Finished'</span>:
         bot.run()

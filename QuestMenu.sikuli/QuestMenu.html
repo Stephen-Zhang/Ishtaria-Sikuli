@@ -461,6 +461,7 @@ reload(Images)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
             Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
         <span class="kw">else</span>:
+            <span class="kw">print</span> isinstance(self.currentMap, Images.Map3)
             <span class="kw">if</span> isinstance(self.currentMap, Images.Map3):
                 Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
                 <span class="skw">wait</span>(<span class="dig">.1</span>)
@@ -480,6 +481,7 @@ reload(Images)
                 <span class="skw">wait</span>(<span class="dig">.1</span>)
                 Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
                 <span class="skw">wait</span>(<span class="dig">.1</span>)
+                Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
             <span class="kw">else</span>:
                 Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
                 <span class="skw">wait</span>(<span class="dig">.1</span>)

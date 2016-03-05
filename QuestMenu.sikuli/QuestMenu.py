@@ -389,6 +389,7 @@ class QuestMenu(object):
             wait(.1)
             Constants.MENU_BAR.click(self.attack)
         else:
+            print isinstance(self.currentMap, Images.Map3)
             if isinstance(self.currentMap, Images.Map3):
                 Constants.MAIN_WINDOW.click(burst_match)
                 wait(.1)
@@ -408,6 +409,7 @@ class QuestMenu(object):
                 wait(.1)
                 Constants.MAIN_WINDOW.click(self.fourth_unit)
                 wait(.1)
+                Constants.MENU_BAR.click(self.attack)
             else:
                 Constants.MAIN_WINDOW.click(burst_match)
                 wait(.1)

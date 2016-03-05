@@ -96,10 +96,10 @@ class Map3(Map):
         "liger_red.png"
     ]
     boss = [
-        Pattern("boss_3_stage_1.png").similar(0.80),
-        Pattern("boss_3_stage_2.png").similar(0.80),
-        Pattern("boss_3_stage_3.png").similar(0.80),
-        Pattern("boss_3_stage_4.png").similar(0.80)
+        Pattern("boss_3_stage_1.png").similar(0.69),
+        Pattern("boss_3_stage_2.png").similar(0.69),
+        Pattern("boss_3_stage_3.png").similar(0.69),
+        Pattern("boss_3_stage_4.png").similar(0.69)
     ]
 class Map4(Map):
     normal = [
@@ -133,17 +133,17 @@ class Map5(Map):
         "frog_null.png",
         "bee_blue.png",
         "chicken_blue.png",
-        "skeleton_blue.png",    
-        "skeleton_red.png"
+        "skeleton_blue.png",
+        "skeleton_red.png",
         "snake_blue.png",
         "cat_blue.png",
         "bat_blue.png",
-        "cat_red.png", "cat_green.png", "cat_null.png"
+        "cat_red.png", "cat_green.png", "cat_null.png",
         "boss_5_mob.png"
     ]
     armored = [
         "crab_blue.png", "crab_green.png",
-        "turtle_blue.png"
+        "turtle_blue.png",
         "scorpion_green.png"
     ]
     
