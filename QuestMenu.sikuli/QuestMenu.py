@@ -4,8 +4,6 @@ import Images
 reload(Images)
 
 class QuestMenu(object):
-    attack = "attack.png"
-
     def __init__(self, botRunner):
         self.bot = botRunner
         self.state = 'Start'
@@ -107,14 +105,14 @@ class QuestMenu(object):
                 return
 
         elif self.state == 'Pot':
-            confirm_match = r.exists(Pattern(self.bot.constants.CONFIRM).similar(.8), 2)
+            confirm_match = r.exists(Pattern(self.bot.constants.CONFIRM).similar(self.bot.constants.enemy_similarity), 2)
             r.click(confirm_match)
 
-            r.waitVanish(Pattern(self.bot.constants.CONFIRM).similar(.8), 2)
+            r.waitVanish(Pattern(self.bot.constants.CONFIRM).similar(self.bot.constants.enemy_similarity), 2)
 
             wait(1)
 
-            close_match = r.exists(Pattern(self.bot.constants.CLOSE).similar(.8), 2)
+            close_match = r.exists(Pattern(self.bot.constants.CLOSE).similar(self.bot.constants.enemy_similarity), 2)
             r.click(close_match)
 
             select_match_pot = r.exists(self.bot.constants.SELECT, 2)
@@ -122,34 +120,34 @@ class QuestMenu(object):
             self.state = 'Select'
 
         elif self.state == 'Waiting':
-            if r.exists("quest_clear.png", .1):
+            if r.exists(self.bot.constants.QUEST_CLEAR, .1):
                 wait(1)
                 click(self.bot.constants.REGION_TOP)
                 self.state = 'StatsScreen'
                 return
-            elif r.exists("quest_end.png", .1):
+            elif r.exists(self.bot.constants.QUEST_END, .1):
                 self.state = 'StatsScreen'
                 return
 
-            if r.exists(Pattern("back.png").similar(0.98), .1):
+            if r.exists(self.bot.constants.BACK, .1):
                 self.state = 'Attacking'
 
         elif self.state == 'Attacking':
             for lion in self.currentMap.lions:
-                lion_match = r.exists(Pattern(lion).similar(.8), .25)
+                lion_match = r.exists(Pattern(lion).similar(self.bot.constants.enemy_similarity), .25)
                 if lion_match:
                     r.click(lion_match)
-                    self.rend_single()
+                    self.attack(type='REND_MULTI')
                     self.state = 'Waiting'
                     return
             for boss in self.currentMap.boss:
                 boss_match = r.exists(boss, .1)
                 if boss_match:
-                    print "found boss match!"
+                    print "Boss Match: {}".format(boss)
                     r.click(boss_match)
-                    burst_match = r.exists("burst.png", .1)
+                    burst_match = r.exists(self.bot.constants.BURST, .1)
                     if burst_match:
-                        "with burst!"
+                        "Bursting Boss"
                         self.burst(burst_match)
                     else:
                         self.attack_boss()
@@ -157,39 +155,41 @@ class QuestMenu(object):
                     return
 
             for norm_enemy in self.currentMap.normal:
-                norm_enemy_match = r.exists(Pattern(norm_enemy).similar(.8), .1)
+                norm_enemy_match = r.exists(Pattern(norm_enemy).similar(self.bot.constants.enemy_similarity), .1)
                 if norm_enemy_match:
                     r.click(norm_enemy_match)
-                    print "found normal enemy match!"
-                    self.norm_aoe()
+                    print "Normal Enemy Match: {}".format(norm_enemy)
+                    self.attack(type='NORMAL_MULTI')
                     self.state = 'Waiting'
                     return
 
             for armored_enemy in self.currentMap.armored:
-                armored_enemy_match = r.exists(Pattern(armored_enemy).similar(.8), .1)
+                armored_enemy_match = r.exists(Pattern(armored_enemy).similar(self.bot.constants.enemy_similarity), .1)
                 if armored_enemy_match:
-                    print "found armored match!"
+                    print "Armored Enemy Match: {}".format(armored_enemy)
                     r.click(armored_enemy_match)
-                    self.rend_single()
+                    self.attack(type='REND_RUSH')
                     self.state = 'Waiting'
                     return
 
             for strong_enemy in self.currentMap.strong:
-                strong_enemy_match = r.exists(Pattern(strong_enemy).similar(.8), .1)
+                strong_enemy_match = r.exists(Pattern(strong_enemy).similar(self.bot.constants.enemy_similarity), .1)
                 if strong_enemy_match:
-                    print "found strong match!"
+                    print "Strong Enemy Match: {}".format(strong_enemy)
                     r.click(strong_enemy_match)
-                    self.norm_single()
+                    self.attack(type='NORMAL_RUSH')
                     self.state = 'Waiting'
                     return
 
-            print "didnt find any match!"
-            self.rend_single()
+            print "No Match Found."
+            self.attack(type='REND_RUSH')
             self.state = 'Waiting'
+
         elif self.state == 'StatsScreen':
-            if r.exists("quest_end.png", .1):
-                print "finished quest. looking for Next!"
-                if r.exists("level_up.png", .1):
+            if r.exists(self.bot.constants.QUEST_END, .1):
+                print "Quest Ended"
+                if r.exists(self.bot.constants.LEVEL_UP, .1):
+                    print "Leveled Up"
                     self.bot.leveledUp = True
 
                 next_match = r.exists(self.bot.constants.NEXT, .1)
@@ -204,8 +204,8 @@ class QuestMenu(object):
                 r.click(skip_match)
                 wait(.75)
                 return
-            elif r.exists(Pattern("an_enemy_appears.png").similar(0.50), .1) or r.exists("bottom_raid_area.png", .1):
-                while not r.exists("raid_battles.png", .1):
+            elif r.exists(self.bot.constants.ENEMY_APPEARS, .1) or r.exists(self.bot.constants.RAID_AREA, .1):
+                while not r.exists(self.bot.constants.RAID_BANNER, .1):
                     r.click(self.bot.constants.REGION_TOP)
                 home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, .1)
                 if home_match:
@@ -222,44 +222,45 @@ class QuestMenu(object):
                 self.state = 'Select'
                 return
 
-    def norm_aoe(self):
+    def attack(self, type):
         r = self.bot.region
-        self.clickSequence([5, 4, 3, 2, 1])
-        r.click(self.attack)
-
-    def rend_aoe(self):
-        r = self.bot.region
-        self.clickSequence([1, 4, 5, 3, 2])
-        r.click(self.attack)
-
-    def norm_single(self):
-        r = self.bot.region
-        self.clickSequence([2, 3, 4, 5, 1])
-        r.click(self.attack)
-
-    def rend_single(self):
-        r = self.bot.region
-        self.clickSequence([1, 4, 2, 3, 5])
-        r.click(self.attack)
+        if type == 'NORMAL_RUSH':
+            self.clickSequence([2, 3, 4, 5, 1])
+            r.click(self.bot.constants.ATTACK)
+        elif type == 'NORMAL_MULTI':
+            self.clickSequence([5, 4, 3, 2, 1])
+            r.click(self.bot.constants.ATTACK)
+        elif type == 'REND_RUSH':
+            self.clickSequence([1, 4, 2, 3, 5])
+            r.click(self.bot.constants.ATTACK)
+        elif type == 'REND_MULTI':
+            self.clickSequence([1, 4, 5, 3, 2])
+            r.click(self.bot.constants.ATTACK)
+        else:
+            print "Attack with no type, using default RUSH"
+            self.clickSequence([2, 3, 4, 5, 1])
+            r.click(self.bot.constants.ATTACK)
 
     def attack_boss(self):
         map_num = self.currentMap
+        attack_type = ''
         if isinstance(map_num, Images.Map1):
-            self.norm_aoe()
+            attack_type = 'NORMAL_MULTI'
         elif isinstance(map_num, Images.Map2):
-            self.norm_single()
+            attack_type = 'NORMAL_RUSH'
         elif isinstance(map_num, Images.Map3):
-            self.rend_single()
+            attack_type = 'REND_RUSH'
         elif isinstance(map_num, Images.Map4):
-            self.norm_single()
+            attack_type = 'NORMAL_RUSH'
         elif isinstance(map_num, Images.Map5):
-            self.norm_single()
+            attack_type = 'NORMAL_RUSH'
         elif isinstance(map_num, Images.Map6):
-            self.norm_single()
+            attack_type = 'NORMAL_RUSH'
         elif isinstance(map_num, Images.Map7):
-            self.norm_single()
+            attack_type = 'NORMAL_RUSH'
         else:
-            self.norm_single()
+            attack_type = 'NORMAL_RUSH'
+        self.attack(type=attack_type)
 
     def burst(self, burst_match):
         r = self.bot.region
@@ -279,7 +280,7 @@ class QuestMenu(object):
                 self.clickSequence([2, 2, 2, 2, 2, 2, 2, 2])
             elif self.bot.strong_unit == 1:
                 self.clickSequence([2, 2, 1, 1, 1, 1, 1, 1])
-        r.click(self.attack)
+        r.click(self.bot.constants.ATTACK)
 
     def createUnitRegion(self, x_mod, y_mod):
         width = self.bot.region.getW()

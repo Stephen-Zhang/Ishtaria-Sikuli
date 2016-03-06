@@ -51,8 +51,18 @@ class ConstantsManager(object):
         self.RUINS = Pattern("RUINS_OF_PURITY.png").targetOffset(190,-9)
 
     def init_quest_menu_images(self):
+        self.enemy_similarity = .8
         self.MINI_POT = Pattern("MINI_POT.png").targetOffset(196,9)
-        self.DEPLOY = "deploy.png"
+        self.DEPLOY = "DEPLOY.png"
+        self.QUEST_CLEAR = "QUEST_CLEAR.png"
+        self.QUEST_END = "QUEST_END.png"
+        self.BACK = Pattern("back.png").similar(0.98)
+        self.ATTACK = "ATTACK.png"
+        self.BURST = "BURST.png"
+        self.LEVEL_UP = "LEVEL_UP.png"
+        self.ENEMY_APPEARS = Pattern("ENEMY_APPEARS.png").similar(0.50)
+        self.RAID_AREA = "RAID_AREA.png"
+        self.RAID_BANNER = "RAID_BANNER.png"
 
     def create_click_region(self, x_mod, y_mod):
         width = self.region.getW()
