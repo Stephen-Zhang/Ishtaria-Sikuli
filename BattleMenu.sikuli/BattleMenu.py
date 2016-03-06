@@ -31,7 +31,7 @@ class BattleMenu(object):
         if next_exists:
             r.click(next_exists)
             return
-        join_battle_match = r.exists('join_battle.png', 0)
+        join_battle_match = r.exists(self.bot.constants.JOIN_BATTLE, 0)
         if join_battle_match:
             r.click(join_battle_match)
             return
@@ -39,47 +39,47 @@ class BattleMenu(object):
             if self.bot.battlesDone:
                 self.state = 'End'
                 return
-            battle_button_exists = r.exists(self.bot.constants.BATTLE, 0)
+            battle_button_exists = r.exists(self.bot.constants.BATTLE_MENU, 0)
             if battle_button_exists:
                 self.state = 'Scroll'
                 r.click(battle_button_exists)
                 return
         elif self.state == 'Scroll':
-            if r.exists("battle_select_screen.png", 0):
-                if r.exists('has_bp.png', .1):
+            if r.exists(self.bot.constants.BATTLE_SELECT, 0):
+                if r.exists(self.bot.constants.HAS_BP, .1):
                     for i in range(4):
                         r.dragDrop(self.bot.constants.REGION_BOT, self.bot.constants.REGION_TOP)
-                    next_battle_match = r.exists(Pattern('battle_button.png').similar(0.89), 0)
+                    next_battle_match = r.exists(self.bot.constants.BATTLE_BUTTON_SMALL, 0)
                     if next_battle_match:
                         r.click(next_battle_match)
-                        r.waitVanish("battle_select_screen.png")
+                        r.waitVanish(self.bot.constants.BATTLE_SELECT)
                         self.state = 'Enter'
                         return
                 else:
                     self.state = 'End'
         elif self.state == 'Enter':
-            if r.exists(Pattern('50_wins.png').similar(0.95), 0):
+            if r.exists(self.bot.constants.WINS_MET, 0):
                 self.bot.battlesDone = True
                 self.state = 'End'
             else:
-                fancy_battle_match = r.exists('battle_normal.png', 0)
-                if fancy_battle_match:
-                    r.click(fancy_battle_match)
+                normal_battle_match = r.exists(self.bot.constants.BATTLE_NORMAL, 0)
+                if normal_battle_match:
+                    r.click(normal_battle_match)
                     self.state = 'During'
                     return
-                last_battle_match = r.exists(Pattern('battle_button.png').similar(0.54), 0)
+                last_battle_match = r.exists(self.bot.constants.BATTLE_BUTTON_BIG, 0)
                 if last_battle_match:
                     r.click(last_battle_match)
         elif self.state == 'During':
-            if r.exists('victory_points.png', 0):
-                next_match = r.exists(Pattern('next_battle.png').similar(.8), 0)
+            if r.exists(self.bot.constants.VICTORY_POINTS, 0):
+                next_match = r.exists(self.bot.constants.NEXT_BATTLE, 0)
                 if next_match:
                     r.click(next_match)
                     self.state = 'Next'
             else:
                 r.click(self.bot.constants.REGION_TOP)
         elif self.state == 'Next':
-            if r.exists('battle_bar.png', 0):
+            if r.exists(self.bot.constants.BATTLE_BAR, 0):
                 self.state = 'Scroll'
         elif self.state == 'End':
             home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, 0)

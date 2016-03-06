@@ -28,12 +28,12 @@ class BotObject(object):
 
     def run(self):
         r = self.region
-        login_screen = r.exists(Pattern('login.png').similar(0.50), 0)
+        login_screen = r.exists(self.constants.LOGIN, 0)
         if login_screen:
             while not r.exists(self.constants.HOME_CHRISTMAS, 0):
                 r.click(self.constants.REGION_TOP)
             r.click(self.constants.HOME_CHRISTMAS)
-        if r.exists("Connect_failed.png", 0):
+        if r.exists(self.constants.CONNECT_FAILED, 0):
             r.click(self.constants.CONFIRM)
         if self.state == 'MainMenu':
             self.mainMenu.run()

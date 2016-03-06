@@ -70,6 +70,15 @@
 <h2>BattleMenu.sikuli</h2> <a href="BattleMenu.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="str">"""
+Pictures To Move:
+"join_battle.png"
+battle_select_screen.png
+has_bp.png
+battle_button.png
+
+"""</span>
+
 <span class="kw">from</span> sikuli <span class="kw">import</span> *
 
 <span class="kw">import</span> Constants
@@ -84,72 +93,73 @@ reload(Constants)
         <span class="str">'End'</span>
     ]
     <span class="kw">def</span> __init__(self, botInfo):
-        self.botInfo = botInfo
+        self.bot = botInfo
         self.state = <span class="str">'Start'</span>
 
     <span class="kw">def</span> run(self):
+        r = self.bot.region
         <span class="kw">print</span>(self.state)
-        next_exists = Constants.MAIN_WINDOW.exists(Constants.NEXT, <span class="dig">0</span>)
+        next_exists = r.exists(self.bot.constants.NEXT, <span class="dig">0</span>)
         <span class="kw">if</span> next_exists:
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(next_exists)
+            r.<span class="skw">click</span>(next_exists)
             <span class="kw">return</span>
-        join_battle_match = Constants.MAIN_WINDOW.exists(<span class="str">'join_battle.png'</span>, <span class="dig">0</span>)
+        join_battle_match = r.exists(self.bot.constants.JOIN_BATTLE, <span class="dig">0</span>)
         <span class="kw">if</span> join_battle_match:
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(join_battle_match)
+            r.<span class="skw">click</span>(join_battle_match)
             <span class="kw">return</span>
         <span class="kw">if</span> self.state == <span class="str">'Start'</span>:
-            <span class="kw">if</span> self.botInfo.battlesDone:
+            <span class="kw">if</span> self.bot.battlesDone:
                 self.state = <span class="str">'End'</span>
                 <span class="kw">return</span>
-            battle_button_exists = Constants.MENU_BAR.exists(Constants.BATTLE, <span class="dig">0</span>)
+            battle_button_exists = r.exists(self.bot.constants.BATTLE_MENU, <span class="dig">0</span>)
             <span class="kw">if</span> battle_button_exists:
                 self.state = <span class="str">'Scroll'</span>
-                Constants.MENU_BAR.<span class="skw">click</span>(battle_button_exists)
+                r.<span class="skw">click</span>(battle_button_exists)
                 <span class="kw">return</span>
         <span class="kw">elif</span> self.state == <span class="str">'Scroll'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="battle_select_screen.png" />, <span class="dig">0</span>):
-                <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<span class="str">'has_bp.png'</span>, <span class="dig">.1</span>):
+            <span class="kw">if</span> r.exists(<img src="BATTLE_SELECT.png" />, <span class="dig">0</span>):
+                <span class="kw">if</span> r.exists(<img src="HAS_BP.png" />, <span class="dig">.1</span>):
                     <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">4</span>):
-                        <span class="skw">dragDrop</span>(Constants.REGION_BOT, Constants.REGION_TOP)
-                    next_battle_match = Constants.MAIN_WINDOW.exists(Pattern(<span class="str">'battle_button.png'</span>).similar(<span class="dig">0.89</span>), <span class="dig">0</span>)
+                        r.<span class="skw">dragDrop</span>(self.bot.constants.REGION_BOT, self.bot.constants.REGION_TOP)
+                    next_battle_match = r.exists(Pattern(<img src="BATTLE_BUTTON_SMALL.png" />).similar(<span class="dig">0.89</span>), <span class="dig">0</span>)
                     <span class="kw">if</span> next_battle_match:
-                        Constants.MAIN_WINDOW.<span class="skw">click</span>(next_battle_match)
-                        Constants.MAIN_WINDOW.waitVanish(<img src="battle_select_screen.png" />)
+                        r.<span class="skw">click</span>(next_battle_match)
+                        r.waitVanish(<img src="BATTLE_SELECT.png" />)
                         self.state = <span class="str">'Enter'</span>
                         <span class="kw">return</span>
                 <span class="kw">else</span>:
                     self.state = <span class="str">'End'</span>
         <span class="kw">elif</span> self.state == <span class="str">'Enter'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(Pattern(<span class="str">'50_wins.png'</span>).similar(<span class="dig">0.95</span>), <span class="dig">0</span>):
-                self.botInfo.battlesDone = True
+            <span class="kw">if</span> r.exists(Pattern(<img src="WINS_MET.png" />).similar(<span class="dig">0.95</span>), <span class="dig">0</span>):
+                self.bot.battlesDone = True
                 self.state = <span class="str">'End'</span>
             <span class="kw">else</span>:
-                fancy_battle_match = Constants.MAIN_WINDOW.exists(<span class="str">'battle_normal.png'</span>, <span class="dig">0</span>)
+                fancy_battle_match = r.exists(<img src="BATTLE_NORMAL.png" />, <span class="dig">0</span>)
                 <span class="kw">if</span> fancy_battle_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(fancy_battle_match)
+                    r.<span class="skw">click</span>(fancy_battle_match)
                     self.state = <span class="str">'During'</span>
                     <span class="kw">return</span>
-                last_battle_match = Constants.MAIN_WINDOW.exists(Pattern(<span class="str">'battle_button.png'</span>).similar(<span class="dig">0.54</span>), <span class="dig">0</span>)
+                last_battle_match = r.exists(<img src="BATTLE_BUTTON_BIG.png" />, <span class="dig">0</span>)
                 <span class="kw">if</span> last_battle_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(last_battle_match)
+                    r.<span class="skw">click</span>(last_battle_match)
         <span class="kw">elif</span> self.state == <span class="str">'During'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<span class="str">'victory_points.png'</span>, <span class="dig">0</span>):
-                next_match = Constants.MAIN_WINDOW.exists(Pattern(<span class="str">'next_battle.png'</span>).similar(<span class="dig">.8</span>), <span class="dig">0</span>)
+            <span class="kw">if</span> r.exists(<img src="VICTORY_POINTS.png" />, <span class="dig">0</span>):
+                next_match = r.exists(Pattern(<img src="NEXT_BATTLE.png" />).similar(<span class="dig">0.80</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> next_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(next_match)
+                    r.<span class="skw">click</span>(next_match)
                     self.state = <span class="str">'Next'</span>
             <span class="kw">else</span>:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.REGION_TOP)
+                r.<span class="skw">click</span>(self.bot.constants.REGION_TOP)
         <span class="kw">elif</span> self.state == <span class="str">'Next'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<span class="str">'battle_bar.png'</span>, <span class="dig">0</span>):
+            <span class="kw">if</span> r.exists(<img src="BATTLE_BAR.png" />, <span class="dig">0</span>):
                 self.state = <span class="str">'Scroll'</span>
         <span class="kw">elif</span> self.state == <span class="str">'End'</span>:
-            home_match = Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, <span class="dig">0</span>)
+            home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, <span class="dig">0</span>)
             <span class="kw">if</span> home_match:
-                Constants.MENU_BAR.<span class="skw">click</span>(home_match)
-                self.botInfo.state = <span class="str">'MainMenu'</span>
-                self.botInfo.leveledUp = False
-                self.botInfo.mainMenu.state = <span class="str">'Start'</span>
+                r.<span class="skw">click</span>(home_match)
+                self.bot.state = <span class="str">'MainMenu'</span>
+                self.bot.leveledUp = False
+                self.bot.mainMenu.state = <span class="str">'Start'</span>
 </pre>
 </body>
 </html>
