@@ -21,6 +21,9 @@ class BotObject(object):
         self.constants = Constants.ConstantsManager(self.region)
         self.questMenu = LevelQuestMenu.LevelQuestMenu(self)
 
+        self.region.click(self.constants.HOME)
+
+
     def run(self):
         r = self.region
         login_screen = r.exists(self.constants.LOGIN, 0)
@@ -35,7 +38,7 @@ class BotObject(object):
 
     def selectStrong(self):
         choices = ("Unit 1", "Unit 2", "Unit 3", "Unit 4", "Unit 5")
-        selected = select("Which unit is your strongest unit?", options=choices)
+        selected = select("Which unit do you want to rush burst with?", options=choices)
         if selected == choices[0]:
             self.strong_unit = 1
         elif selected == choices[1]:

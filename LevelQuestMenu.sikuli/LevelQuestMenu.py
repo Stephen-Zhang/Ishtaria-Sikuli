@@ -15,21 +15,14 @@ class LevelQuestMenu(object):
         self.fourth_unit = self.createUnitRegion(.7, .73)
         self.fifth_unit = self.createUnitRegion(.9, .73)
 
-        self.count = 0
-        
-
     def run(self):
         r = self.bot.region
         print self.state
         if self.state == 'Start':
-            self.count = 0
-            if self.state == 'Idle':
-                return
-            else:
-                quest_icon_match = r.exists(self.bot.constants.QUEST_MENU, .1)
-                if quest_icon_match:
-                    r.click(quest_icon_match)
-                    self.state = 'PickMap'
+            quest_icon_match = r.exists(self.bot.constants.QUEST_MENU, .1)
+            if quest_icon_match:
+                r.click(quest_icon_match)
+                self.state = 'PickMap'
 
         elif self.state == 'PickMap':
             skip_match = r.exists(self.bot.constants.SKIP, .1)
@@ -39,14 +32,9 @@ class LevelQuestMenu(object):
                 den_match = r.exists(self.bot.constants.DEN, 0)
                 if den_match:
                     r.click(den_match)
-                    self.currentMap = Images.Map6()
                     self.state = 'Find Standing'
                     return
                 r.dragDrop(self.bot.constants.REGION_BOT, self.bot.constants.REGION_TOP)
-                self.count += 1
-
-                if self.count > 4:
-                    self.bot.finished = True
 
         elif self.state == 'Find Standing':
             standing_match = r.exists(self.bot.constants.STANDING_IN_WAY_2, .25)
