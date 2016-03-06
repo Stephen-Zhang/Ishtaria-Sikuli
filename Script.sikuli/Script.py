@@ -12,6 +12,8 @@ def main():
     region = Region(App.focusedWindow())
     print region
     bot = BotRunner.BotObject(region)
+
+    bot.selectStrong()
     
     while bot.state != 'Finished':
         bot.run()

@@ -24,7 +24,7 @@ class QuestMenu(object):
             if self.state == 'Idle':
                 return
             else:
-                quest_icon_match = r.exists("quest_icon.png", .1)
+                quest_icon_match = r.exists(self.bot.constants.QUEST_MENU, .1)
                 if quest_icon_match:
                     r.click(quest_icon_match)
                     self.state = 'PickMap'
@@ -34,61 +34,49 @@ class QuestMenu(object):
             if skip_match:
                 r.click(skip_match)
             else:
-                dunes_match = r.exists(Pattern("western_wind_dunes.png").targetOffset(194,50), 0)
+                dunes_match = r.exists(self.bot.constants.DUNE, 0)
                 if dunes_match:
-                    #self.bot.state = 'Finished'
-                    #return
-
                     r.click(dunes_match)
                     self.currentMap = Images.Map7()
                     self.state = 'Select'
                     return
 
-                den_match = r.exists(Pattern("den_of_the_dragon.png").targetOffset(191,2), 0)
+                den_match = r.exists(self.bot.constants.DEN, 0)
                 if den_match:
-                    #self.bot.state = 'Finished'
-                    #return 
-
                     r.click(den_match)
                     self.currentMap = Images.Map6()
                     self.state = 'Select'
                     return
 
-                cave_match = r.exists(Pattern("cave_of_temptation.png").targetOffset(195,16), 0)
+                cave_match = r.exists(self.bot.constants.CAVE, 0)
                 if cave_match:
-                    #self.bot.state = 'Finished'
-                    #return
-
                     r.click(cave_match)
                     self.currentMap = Images.Map5()
                     self.state = 'Select'
                     return
 
-                pride_match = r.exists(Pattern("pride_of_the_gryffin.png").targetOffset(186,-8), 0)
+                pride_match = r.exists(self.bot.constants.PRIDE, 0)
                 if pride_match:
-                    #self.bot.state = 'Finished'
-                    #return
-
                     r.click(pride_match)
                     self.currentMap = Images.Map4()
                     self.state = 'Select'
                     return
 
-                lair_match = r.exists(Pattern("the_lair_of_fire.png").targetOffset(181,2), 0)
+                lair_match = r.exists(self.bot.constants.LAIR, 0)
                 if lair_match:
                     r.click(lair_match)
                     self.currentMap = Images.Map3()
                     self.state = 'Select'
                     return
 
-                tower_match = r.exists(Pattern("stronghold_of_peace.png").targetOffset(187,-5), 0)
+                tower_match = r.exists(self.bot.constants.TOWER, 0)
                 if tower_match:
                     r.click(tower_match)
                     self.currentMap = Images.Map2()
                     self.state = 'Select'
                     return
 
-                ruins_match = r.exists(Pattern("ruins_of_purity.png").targetOffset(190,-9), .1)
+                ruins_match = r.exists(self.bot.constants.RUINS, 0)
                 if ruins_match:
                     r.click(ruins_match)
                     self.currentMap = Images.Map1()
@@ -96,19 +84,19 @@ class QuestMenu(object):
                     return
 
         elif self.state == 'Select':
-            mini_pot = r.exists(Pattern("mini_ap_pot.png").targetOffset(196,9), .1)
+            mini_pot = r.exists(self.bot.constants.MINI_POT, 0)
             if mini_pot:
                 r.click(mini_pot)
                 self.state = 'Pot'
                 return
 
-            confirm_match = r.exists(self.bot.constants.CONFIRM, .1)
+            confirm_match = r.exists(self.bot.constants.CONFIRM, 0)
             if confirm_match:
                 r.click(confirm_match)
                 self.state = 'Waiting'
                 return
 
-            deploy_match = r.exists("deploy.png", .1)
+            deploy_match = r.exists(self.bot.constants.DEPLOY, 0)
             if deploy_match:
                 r.click(deploy_match)
                 return
@@ -282,10 +270,21 @@ class QuestMenu(object):
             self.clickSequence([1, 4, 2, 2, 4, 4, 4, 4])
             r.click(self.attack)
         else:
-            r.click(burst_match)
-            wait(.1)
-            self.clickSequence([2, 2, 4, 4, 4, 4, 4, 4])
-            r.click(self.attack)
+            if self.bot.strong_unit == 4:
+                r.click(burst_match)
+                wait(.1)
+                self.clickSequence([2, 2, 4, 4, 4, 4, 4, 4])
+                r.click(self.attack)
+            elif self.bot.strong_unit == 2:
+                r.click(burst_match)
+                wait(.1)
+                self.clickSequence([2, 2, 2, 2, 2, 2, 2, 2])
+                r.click(self.attack)
+            elif self.bot.strong_unit == 1:
+                r.click(burst_match)
+                wait(.1)
+                self.clickSequence([2, 2, 1, 1, 1, 1, 1, 1])
+                r.click(self.attack)
 
     def createUnitRegion(self, x_mod, y_mod):
         width = self.bot.region.getW()
