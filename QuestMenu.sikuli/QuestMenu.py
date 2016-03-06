@@ -263,28 +263,23 @@ class QuestMenu(object):
 
     def burst(self, burst_match):
         r = self.bot.region
-        print isinstance(self.currentMap, Images.Map3)
+        r.click(burst_match)
+        wait(.1)
         if isinstance(self.currentMap, Images.Map3):
-            r.click(burst_match)
-            wait(.1)
-            self.clickSequence([1, 4, 2, 2, 4, 4, 4, 4])
-            r.click(self.attack)
+            if self.bot.strong_unit == 4:
+                self.clickSequence([1, 4, 2, 2, 4, 4, 4, 4])
+            elif self.bot.strong_unit == 2:
+                self.clickSequence([1, 4, 2, 2, 2, 2, 2, 2])
+            elif self.bot.strong_unit == 1:
+                self.clickSequence([1, 4, 2, 2, 1, 1, 1, 1])
         else:
             if self.bot.strong_unit == 4:
-                r.click(burst_match)
-                wait(.1)
                 self.clickSequence([2, 2, 4, 4, 4, 4, 4, 4])
-                r.click(self.attack)
             elif self.bot.strong_unit == 2:
-                r.click(burst_match)
-                wait(.1)
                 self.clickSequence([2, 2, 2, 2, 2, 2, 2, 2])
-                r.click(self.attack)
             elif self.bot.strong_unit == 1:
-                r.click(burst_match)
-                wait(.1)
                 self.clickSequence([2, 2, 1, 1, 1, 1, 1, 1])
-                r.click(self.attack)
+        r.click(self.attack)
 
     def createUnitRegion(self, x_mod, y_mod):
         width = self.bot.region.getW()
