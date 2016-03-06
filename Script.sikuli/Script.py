@@ -19,7 +19,7 @@ def main():
 
     bot = None
 
-    bot_options = ('3k Crowns', 'Level To 50', 'Beat Defto')
+    bot_options = ('3k Crowns', 'Level To 50', 'Deftwo')
     selected = select('What do you want to do?', options=bot_options)
     if selected == bot_options[0]:
         bot = BotRunner.BotObject(region)
