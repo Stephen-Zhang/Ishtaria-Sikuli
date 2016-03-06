@@ -44,11 +44,13 @@ class BotObject(object):
             self.questMenu.run()
 
     def selectStrong(self):
-        choices = (1, 2, 4)
-        selected = select("Which unit is your strongest unit?", choices)
+        choices = ("Pound", "Slice", "Flurry")
+        selected = select("Which unit is your strongest unit?", options=choices)
         if selected == choices[0]:
             self.strong_unit = 1
         elif selected == choices[1]:
             self.strong_unit = 2
         elif selected == choices[2]:
             self.strong_unit = 4
+        else:
+            self.finished = True

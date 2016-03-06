@@ -60,9 +60,4 @@ class ConstantsManager(object):
         x = self.region.getX()
         y = self.region.getY()
 
-        print "x: {}".format(x)
-        print "y: {}".format(y)
-        print "width: {}".format(width)
-        print "height: {}".format(height)
-
         return Region(int(x + width * x_mod), int(y + height * y_mod), 2, 2)

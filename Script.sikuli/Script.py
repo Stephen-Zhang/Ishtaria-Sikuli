@@ -10,12 +10,11 @@ reload(BotRunner)
 def main():
     bluestacks = App.focus('BlueStacks App Player')
     region = Region(App.focusedWindow())
-    print region
     bot = BotRunner.BotObject(region)
 
     bot.selectStrong()
     
-    while bot.state != 'Finished':
+    while not bot.finished:
         bot.run()
     
 if __name__ == "__main__":
