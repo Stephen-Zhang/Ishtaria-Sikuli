@@ -16,11 +16,11 @@ reload(Images)
 def main():
     bot = BotRunner.BotObject()
     
-    #'''
+    '''
     bot.state = 'Quest'
     bot.questMenu.currentMap = Images.Map3()
     bot.questMenu.state = 'Waiting'
-    #'''
+    '''
     
     while bot.state != 'Finished':
         bot.run()
