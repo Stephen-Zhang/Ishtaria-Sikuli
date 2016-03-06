@@ -13,32 +13,28 @@ import Constants
 reload(Constants)
 
 class BotObject(object):
-    states = [
-        'MainMenu',
-        'Battle',
-        'Quest'
-    ]
-
-    def __init__(self):
-        self.copiedDeck = False
+    def __init__(self, region):
+        self.region = region
         self.battlesDone = False
         self.leveledUp = True
         self.finished = False
 
         self.state = 'Battle'
 
+        self.constants = Constants.ConstantsManager(self.region)
         self.mainMenu = MainMenu.MainMenu(self)
         self.battleMenu = BattleMenu.BattleMenu(self)
         self.questMenu = QuestMenu.QuestMenu(self)
 
     def run(self):
-        login_screen = Constants.FULL_SCREEN.exists(Pattern('login.png').similar(0.50), .25)
+        r = self.region
+        login_screen = r.exists(Pattern('login.png').similar(0.50), 0)
         if login_screen:
-            while not Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, 0):
-                Constants.FULL_SCREEN.click(Constants.REGION_TOP)
-            Constants.MENU_BAR.click(Constants.HOME_CHRISTMAS)
-        if Constants.FULL_SCREEN.exists("Connect_failed.png", 0):
-            Constants.MAIN_WINDOW.click(Constants.CONFIRM)
+            while not r.exists(self.constants.HOME_CHRISTMAS, 0):
+                r.click(self.constants.REGION_TOP)
+            r.click(self.constants.HOME_CHRISTMAS)
+        if r.exists("Connect_failed.png", 0):
+            r.click(self.constants.CONFIRM)
         if self.state == 'MainMenu':
             self.mainMenu.run()
         if self.state == 'Battle':

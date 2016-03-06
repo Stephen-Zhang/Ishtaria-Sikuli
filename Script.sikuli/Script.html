@@ -79,20 +79,11 @@ myPath = os.path.dirname(getBundlePath())
 <span class="kw">import</span> BotRunner
 reload(BotRunner)
 
-<span class="kw">import</span> Constants
-reload(Constants)
-
-<span class="kw">import</span> Images
-reload(Images)
-
 <span class="kw">def</span> main():
-    bot = BotRunner.BotObject()
-
-    <span class="cmt">#'''</span>
-    bot.state = <span class="str">'Quest'</span>
-    bot.questMenu.currentMap = Images.Map3()
-    bot.questMenu.state = <span class="str">'Waiting'</span>
-    <span class="cmt">#'''</span>
+    bluestacks = App.focus(<span class="str">'BlueStacks App Player'</span>)
+    region = Region(App.focusedWindow())
+    <span class="kw">print</span> region
+    bot = BotRunner.BotObject(region)
 
     <span class="kw">while</span> bot.state != <span class="str">'Finished'</span>:
         bot.run()

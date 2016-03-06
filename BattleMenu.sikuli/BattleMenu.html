@@ -101,7 +101,7 @@ reload(Constants)
             <span class="kw">if</span> self.botInfo.battlesDone:
                 self.state = <span class="str">'End'</span>
                 <span class="kw">return</span>
-            battle_button_exists = Constants.MENU_BAR.exists(Constants.BATTLE_CHRISTMAS, <span class="dig">0</span>)
+            battle_button_exists = Constants.MENU_BAR.exists(Constants.BATTLE, <span class="dig">0</span>)
             <span class="kw">if</span> battle_button_exists:
                 self.state = <span class="str">'Scroll'</span>
                 Constants.MENU_BAR.<span class="skw">click</span>(battle_button_exists)
@@ -114,6 +114,7 @@ reload(Constants)
                     next_battle_match = Constants.MAIN_WINDOW.exists(Pattern(<span class="str">'battle_button.png'</span>).similar(<span class="dig">0.89</span>), <span class="dig">0</span>)
                     <span class="kw">if</span> next_battle_match:
                         Constants.MAIN_WINDOW.<span class="skw">click</span>(next_battle_match)
+                        Constants.MAIN_WINDOW.waitVanish(<img src="battle_select_screen.png" />)
                         self.state = <span class="str">'Enter'</span>
                         <span class="kw">return</span>
                 <span class="kw">else</span>:

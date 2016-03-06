@@ -79,181 +79,162 @@ reload(Constants)
 reload(Images)
 
 <span class="kw">class</span> QuestMenu(object):
-    first_unit = Region(<span class="dig">1296</span>,<span class="dig">589</span>,<span class="dig">117</span>,<span class="dig">330</span>)
-    second_unit = Region(<span class="dig">1420</span>,<span class="dig">587</span>,<span class="dig">118</span>,<span class="dig">333</span>)
-    third_unit = Region(<span class="dig">1543</span>,<span class="dig">587</span>,<span class="dig">119</span>,<span class="dig">330</span>)
-    fourth_unit = Region(<span class="dig">1668</span>,<span class="dig">588</span>,<span class="dig">118</span>,<span class="dig">330</span>)
-    fifth_unit = Region(<span class="dig">1792</span>,<span class="dig">588</span>,<span class="dig">119</span>,<span class="dig">332</span>)
     attack = <img src="attack.png" />
-    map1 = Images.Map1()
-    map2 = Images.Map2()
-    map3 = Images.Map3()
-    map4 = Images.Map4()
-    map5 = Images.Map5()
-    map6 = Images.Map6()
-    map7 = Images.Map7()
-
-    states = [
-        <span class="str">'Start'</span>,
-        <span class="str">'PickMap'</span>,
-        <span class="str">'Select'</span>,
-        <span class="str">'Waiting'</span>,
-        <span class="str">'Attacking'</span>,
-        <span class="str">'StatsScreen'</span>,
-        <span class="str">'End'</span>,
-        <span class="str">'Idle'</span>
-    ]
 
     <span class="kw">def</span> __init__(self, botRunner):
         self.botRunner = botRunner
         self.state = <span class="str">'Start'</span>
         self.currentMap = None
 
+        self.first_unit = self.createUnitRegion(<span class="dig">.1</span>, <span class="dig">.73</span>)
+        self.second_unit = self.createUnitRegion(<span class="dig">.3</span>, <span class="dig">.73</span>)
+        self.third_unit = self.createUnitRegion(<span class="dig">.5</span>, <span class="dig">.73</span>)
+        self.fourth_unit = self.createUnitRegion(<span class="dig">.7</span>, <span class="dig">.73</span>)
+        self.fifth_unit = self.createUnitRegion(<span class="dig">.9</span>, <span class="dig">.73</span>)
+
     <span class="kw">def</span> run(self):
+        r = self.botRunner.region
         <span class="kw">print</span> self.state
         <span class="kw">if</span> self.state == <span class="str">'Start'</span>:
             <span class="kw">if</span> self.state == <span class="str">'Idle'</span>:
                 <span class="kw">return</span>
             <span class="kw">else</span>:
-                quest_icon_match = Constants.MAIN_WINDOW.exists(<img src="1456423118705.png" />, <span class="dig">.1</span>)
+                quest_icon_match = r.exists(<img src="quest_icon.png" />, <span class="dig">.1</span>)
                 <span class="kw">if</span> quest_icon_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(quest_icon_match)
+                    r.<span class="skw">click</span>(quest_icon_match)
                     self.state = <span class="str">'PickMap'</span>
 
         <span class="kw">elif</span> self.state == <span class="str">'PickMap'</span>:
-            skip_match = Constants.MAIN_WINDOW.exists(Constants.SKIP, <span class="dig">.1</span>)
+            skip_match = r.exists(Constants.SKIP, <span class="dig">.1</span>)
             <span class="kw">if</span> skip_match:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(skip_match)
+                r.<span class="skw">click</span>(skip_match)
             <span class="kw">else</span>:
-                dunes_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="western_wind_dunes.png" />).targetOffset(<span class="dig">194</span>,<span class="dig">50</span>), <span class="dig">0</span>)
+                dunes_match = r.exists(Pattern(<img src="western_wind_dunes.png" />).targetOffset(<span class="dig">194</span>,<span class="dig">50</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> dunes_match:
                     <span class="cmt">#self.botRunner.state = 'Finished'</span>
                     <span class="cmt">#return</span>
 
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(dunes_match)
-                    self.currentMap = self.map7
+                    r.<span class="skw">click</span>(dunes_match)
+                    self.currentMap = Images.Map7()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                den_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="den_of_the_dragon.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">2</span>), <span class="dig">0</span>)
+                den_match = r.exists(Pattern(<img src="den_of_the_dragon.png" />).targetOffset(<span class="dig">191</span>,<span class="dig">2</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> den_match:
                     <span class="cmt">#self.botRunner.state = 'Finished'</span>
                     <span class="cmt">#return </span>
 
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(den_match)
-                    self.currentMap = self.map6
+                    r.<span class="skw">click</span>(den_match)
+                    self.currentMap = Images.Map6()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                cave_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="cave_of_temptation.png" />).targetOffset(<span class="dig">195</span>,<span class="dig">16</span>), <span class="dig">0</span>)
+                cave_match = r.exists(Pattern(<img src="cave_of_temptation.png" />).targetOffset(<span class="dig">195</span>,<span class="dig">16</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> cave_match:
                     <span class="cmt">#self.botRunner.state = 'Finished'</span>
                     <span class="cmt">#return</span>
 
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(cave_match)
-                    self.currentMap = self.map5
+                    r.<span class="skw">click</span>(cave_match)
+                    self.currentMap = Images.Map5()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                pride_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="pride_of_the_gryffin.png" />).targetOffset(<span class="dig">186</span>,-<span class="dig">8</span>), <span class="dig">0</span>)
+                pride_match = r.exists(Pattern(<img src="pride_of_the_gryffin.png" />).targetOffset(<span class="dig">186</span>,-<span class="dig">8</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> pride_match:
                     <span class="cmt">#self.botRunner.state = 'Finished'</span>
                     <span class="cmt">#return</span>
 
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(pride_match)
-                    self.currentMap = self.map4
+                    r.<span class="skw">click</span>(pride_match)
+                    self.currentMap = Images.Map4()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                lair_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="the_lair_of_fire.png" />).targetOffset(<span class="dig">181</span>,<span class="dig">2</span>), <span class="dig">0</span>)
+                lair_match = r.exists(Pattern(<img src="the_lair_of_fire.png" />).targetOffset(<span class="dig">181</span>,<span class="dig">2</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> lair_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(lair_match)
-                    self.currentMap = self.map3
+                    r.<span class="skw">click</span>(lair_match)
+                    self.currentMap = Images.Map3()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                tower_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">187</span>,-<span class="dig">5</span>), <span class="dig">0</span>)
+                tower_match = r.exists(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">187</span>,-<span class="dig">5</span>), <span class="dig">0</span>)
                 <span class="kw">if</span> tower_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(tower_match)
-                    self.currentMap = self.map2
+                    r.<span class="skw">click</span>(tower_match)
+                    self.currentMap = Images.Map2()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
-                ruins_match = Constants.MAIN_WINDOW.exists(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">190</span>,-<span class="dig">9</span>), <span class="dig">.1</span>)
+                ruins_match = r.exists(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">190</span>,-<span class="dig">9</span>), <span class="dig">.1</span>)
                 <span class="kw">if</span> ruins_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(ruins_match)
-                    self.currentMap = self.map1
+                    r.<span class="skw">click</span>(ruins_match)
+                    self.currentMap = Images.Map1()
                     self.state = <span class="str">'Select'</span>
                     <span class="kw">return</span>
 
         <span class="kw">elif</span> self.state == <span class="str">'Select'</span>:
-            mini_pot = Constants.MAIN_WINDOW.exists(Pattern(<img src="mini_ap_pot.png" />).targetOffset(<span class="dig">196</span>,<span class="dig">9</span>), <span class="dig">.1</span>)
+            mini_pot = r.exists(Pattern(<img src="mini_ap_pot.png" />).targetOffset(<span class="dig">196</span>,<span class="dig">9</span>), <span class="dig">.1</span>)
             <span class="kw">if</span> mini_pot:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(mini_pot)
+                r.<span class="skw">click</span>(mini_pot)
                 self.state = <span class="str">'Pot'</span>
                 <span class="kw">return</span>
 
-            confirm_match = Constants.MAIN_WINDOW.exists(Constants.CONFIRM, <span class="dig">.1</span>)
+            confirm_match = r.exists(Constants.CONFIRM, <span class="dig">.1</span>)
             <span class="kw">if</span> confirm_match:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(confirm_match)
+                r.<span class="skw">click</span>(confirm_match)
                 self.state = <span class="str">'Waiting'</span>
                 <span class="kw">return</span>
 
-            deploy_match = Constants.MAIN_WINDOW.exists(<img src="deploy.png" />, <span class="dig">.1</span>)
+            deploy_match = r.exists(<img src="deploy.png" />, <span class="dig">.1</span>)
             <span class="kw">if</span> deploy_match:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(deploy_match)
+                r.<span class="skw">click</span>(deploy_match)
                 <span class="kw">return</span>
 
-            select_match = Constants.MAIN_WINDOW.exists(Constants.SELECT, <span class="dig">.1</span>)
+            select_match = r.exists(Constants.SELECT, <span class="dig">.1</span>)
             <span class="kw">if</span> select_match:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(select_match)
+                r.<span class="skw">click</span>(select_match)
                 <span class="kw">return</span>
 
         <span class="kw">elif</span> self.state == <span class="str">'Pot'</span>:
-            confirm_match = Constants.MAIN_WINDOW.exists(Pattern(Constants.CONFIRM).similar(<span class="dig">.8</span>), <span class="dig">2</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(confirm_match)
+            confirm_match = r.exists(Pattern(Constants.CONFIRM).similar(<span class="dig">.8</span>), <span class="dig">2</span>)
+            r.<span class="skw">click</span>(confirm_match)
 
-            Constants.MAIN_WINDOW.waitVanish(Pattern(Constants.CONFIRM).similar(<span class="dig">.8</span>), <span class="dig">2</span>)
+            r.waitVanish(Pattern(Constants.CONFIRM).similar(<span class="dig">.8</span>), <span class="dig">2</span>)
 
             <span class="skw">wait</span>(<span class="dig">1</span>)
 
-            close_match = Constants.MAIN_WINDOW.exists(Pattern(Constants.CLOSE).similar(<span class="dig">.8</span>), <span class="dig">2</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(close_match)
+            close_match = r.exists(Pattern(Constants.CLOSE).similar(<span class="dig">.8</span>), <span class="dig">2</span>)
+            r.<span class="skw">click</span>(close_match)
 
-            select_match_pot = Constants.MAIN_WINDOW.exists(Constants.SELECT, <span class="dig">2</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(select_match_pot)
+            select_match_pot = r.exists(Constants.SELECT, <span class="dig">2</span>)
+            r.<span class="skw">click</span>(select_match_pot)
             self.state = <span class="str">'Select'</span>
 
         <span class="kw">elif</span> self.state == <span class="str">'Waiting'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />, <span class="dig">.1</span>):
+            <span class="kw">if</span> r.exists(<img src="quest_clear.png" />, <span class="dig">.1</span>):
                 <span class="skw">wait</span>(<span class="dig">1</span>)
                 <span class="skw">click</span>(Constants.REGION_TOP)
                 self.state = <span class="str">'StatsScreen'</span>
                 <span class="kw">return</span>
-            <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(<img src="quest_end.png" />, <span class="dig">.1</span>):
+            <span class="kw">elif</span> r.exists(<img src="quest_end.png" />, <span class="dig">.1</span>):
                 self.state = <span class="str">'StatsScreen'</span>
                 <span class="kw">return</span>
 
-            <span class="kw">if</span> Constants.FULL_SCREEN.exists(Pattern(<img src="back.png" />).similar(<span class="dig">0.98</span>), <span class="dig">.1</span>):
+            <span class="kw">if</span> r.exists(Pattern(<img src="back.png" />).similar(<span class="dig">0.98</span>), <span class="dig">.1</span>):
                 self.state = <span class="str">'Attacking'</span>
 
         <span class="kw">elif</span> self.state == <span class="str">'Attacking'</span>:
             <span class="kw">for</span> lion <span class="kw">in</span> self.currentMap.lions:
-                lion_match = Constants.MAIN_WINDOW.exists(Pattern(lion).similar(<span class="dig">.8</span>), <span class="dig">1</span>)
+                lion_match = r.exists(Pattern(lion).similar(<span class="dig">.8</span>), <span class="dig">.25</span>)
                 <span class="kw">if</span> lion_match:
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(lion_match)
+                    r.<span class="skw">click</span>(lion_match)
                     self.rend_single()
                     self.state = <span class="str">'Waiting'</span>
                     <span class="kw">return</span>
             <span class="kw">for</span> boss <span class="kw">in</span> self.currentMap.boss:
-                boss_match = Constants.MAIN_WINDOW.exists(boss, <span class="dig">.1</span>)
+                boss_match = r.exists(boss, <span class="dig">.1</span>)
                 <span class="kw">if</span> boss_match:
-                    <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />, <span class="dig">.1</span>):
-                        self.state = <span class="str">'StatsScreen'</span>
-                        <span class="kw">return</span>
                     <span class="kw">print</span> <span class="str">"found boss match!"</span>
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(boss_match)
-                    burst_match = Constants.MAIN_WINDOW.exists(<img src="burst.png" />, <span class="dig">.1</span>)
+                    r.<span class="skw">click</span>(boss_match)
+                    burst_match = r.exists(<img src="burst.png" />, <span class="dig">.1</span>)
                     <span class="kw">if</span> burst_match:
                         <span class="str">"with burst!"</span>
                         self.burst(burst_match)
@@ -263,145 +244,95 @@ reload(Images)
                     <span class="kw">return</span>
 
             <span class="kw">for</span> norm_enemy <span class="kw">in</span> self.currentMap.normal:
-                norm_enemy_match = Constants.MAIN_WINDOW.exists(Pattern(norm_enemy).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
+                norm_enemy_match = r.exists(Pattern(norm_enemy).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
                 <span class="kw">if</span> norm_enemy_match:
-                    <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />, <span class="dig">.1</span>):
-                        self.state = <span class="str">'StatsScreen'</span>
-                        <span class="kw">return</span>
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(norm_enemy_match)
+                    r.<span class="skw">click</span>(norm_enemy_match)
                     <span class="kw">print</span> <span class="str">"found normal enemy match!"</span>
                     self.norm_aoe()
                     self.state = <span class="str">'Waiting'</span>
                     <span class="kw">return</span>
 
             <span class="kw">for</span> armored_enemy <span class="kw">in</span> self.currentMap.armored:
-                armored_enemy_match = Constants.MAIN_WINDOW.exists(Pattern(armored_enemy).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
+                armored_enemy_match = r.exists(Pattern(armored_enemy).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
                 <span class="kw">if</span> armored_enemy_match:
-                    <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />, <span class="dig">.1</span>):
-                        self.state = <span class="str">'StatsScreen'</span>
-                        <span class="kw">return</span>
                     <span class="kw">print</span> <span class="str">"found armored match!"</span>
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(armored_enemy_match)
+                    r.<span class="skw">click</span>(armored_enemy_match)
                     self.rend_single()
                     self.state = <span class="str">'Waiting'</span>
                     <span class="kw">return</span>
 
             <span class="kw">for</span> strong_enemy <span class="kw">in</span> self.currentMap.strong:
-                strong_enemy_match = Constants.MAIN_WINDOW.exists(Pattern(strong_enemy).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
+                strong_enemy_match = r.exists(Pattern(strong_enemy).similar(<span class="dig">.8</span>), <span class="dig">.1</span>)
                 <span class="kw">if</span> strong_enemy_match:
-                    <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />, <span class="dig">.1</span>):
-                        self.state = <span class="str">'StatsScreen'</span>
-                        <span class="kw">return</span>
                     <span class="kw">print</span> <span class="str">"found strong match!"</span>
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(strong_enemy_match)
+                    r.<span class="skw">click</span>(strong_enemy_match)
                     self.norm_single()
                     self.state = <span class="str">'Waiting'</span>
                     <span class="kw">return</span>
 
             <span class="kw">print</span> <span class="str">"didnt find any match!"</span>
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_clear.png" />, <span class="dig">2</span>):
-                self.state = <span class="str">'StatsScreen'</span>
-                <span class="kw">return</span>
             self.rend_single()
             self.state = <span class="str">'Waiting'</span>
         <span class="kw">elif</span> self.state == <span class="str">'StatsScreen'</span>:
-            <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="quest_end.png" />, <span class="dig">.1</span>):
+            <span class="kw">if</span> r.exists(<img src="quest_end.png" />, <span class="dig">.1</span>):
                 <span class="kw">print</span> <span class="str">"finished quest. looking for Next!"</span>
-                <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="level_up.png" />, <span class="dig">.1</span>):
+                <span class="kw">if</span> r.exists(<img src="level_up.png" />, <span class="dig">.1</span>):
                     self.botRunner.leveledUp = True
 
-                next_match = Constants.MENU_BAR.exists(Constants.NEXT, <span class="dig">.1</span>)
+                next_match = r.exists(Constants.NEXT, <span class="dig">.1</span>)
                 <span class="kw">if</span> next_match:
-                    Constants.MENU_BAR.<span class="skw">click</span>(next_match)
+                    r.<span class="skw">click</span>(next_match)
                     self.state = <span class="str">'End'</span>
             <span class="kw">else</span>:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.REGION_TOP)
+                r.<span class="skw">click</span>(Constants.REGION_TOP)
         <span class="kw">elif</span> self.state == <span class="str">'End'</span>:
-            skip_match = Constants.MAIN_WINDOW.exists(Constants.SKIP, <span class="dig">2</span>)
+            skip_match = r.exists(Constants.SKIP, <span class="dig">2</span>)
             <span class="kw">if</span> skip_match:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(skip_match)
+                r.<span class="skw">click</span>(skip_match)
                 <span class="skw">wait</span>(<span class="dig">.75</span>)
                 <span class="kw">return</span>
-            <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Pattern(<img src="1452272299241.png" />).similar(<span class="dig">0.50</span>), <span class="dig">.1</span>) <span class="kw">or</span> Constants.MAIN_WINDOW.exists(<img src="1452272332929.png" />, <span class="dig">.1</span>):
-                <span class="kw">while</span> <span class="kw">not</span> Constants.MAIN_WINDOW.exists(<img src="raid_battles.png" />, <span class="dig">.1</span>):
-                    Constants.MAIN_WINDOW.<span class="skw">click</span>(Constants.REGION_TOP)
-                home_match = Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, <span class="dig">.1</span>)
+            <span class="kw">elif</span> r.exists(Pattern(<img src="an_enemy_appears.png" />).similar(<span class="dig">0.50</span>), <span class="dig">.1</span>) <span class="kw">or</span> r.exists(<img src="bottom_raid_area.png" />, <span class="dig">.1</span>):
+                <span class="kw">while</span> <span class="kw">not</span> r.exists(<img src="raid_battles.png" />, <span class="dig">.1</span>):
+                    r.<span class="skw">click</span>(Constants.REGION_TOP)
+                home_match = r.exists(Constants.HOME_CHRISTMAS, <span class="dig">.1</span>)
                 <span class="kw">if</span> home_match:
                     self.botRunner.state = <span class="str">'Battle'</span>
                     self.botRunner.battleMenu.state = <span class="str">'Start'</span>
                     <span class="kw">return</span>
             <span class="kw">elif</span> self.botRunner.leveledUp:
-                home_match = Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, <span class="dig">.1</span>)
+                home_match = r.exists(Constants.HOME_CHRISTMAS, <span class="dig">.1</span>)
                 <span class="kw">if</span> home_match:
-                    Constants.MENU_BAR.<span class="skw">click</span>(home_match)
+                    r.<span class="skw">click</span>(home_match)
                     self.botRunner.state = <span class="str">'Battle'</span>
                     self.botRunner.battleMenu.state = <span class="str">'Start'</span>
-            <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(Constants.SELECT, <span class="dig">.1</span>):
+            <span class="kw">elif</span> r.exists(Constants.SELECT, <span class="dig">.1</span>):
                 self.state = <span class="str">'Select'</span>
                 <span class="kw">return</span>
 
-    <span class="kw">def</span> purify_start(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(<img src="1456423177912.png" />)
-        <span class="skw">wait</span>(<img src="select_area.png" />, <span class="dig">3</span>)
-
-        self.purify(Pattern(<img src="ruins_of_purity.png" />).targetOffset(<span class="dig">197</span>,<span class="dig">43</span>))
-
-        <span class="skw">click</span>(<img src="back_button.png" />)
-        <span class="skw">wait</span>(<span class="dig">1</span>)
-        <span class="skw">click</span>(<img src="back_button.png" />)
-
-        self.purify(Pattern(<img src="stronghold_of_peace.png" />).targetOffset(<span class="dig">188</span>,<span class="dig">54</span>))
-
-    <span class="kw">def</span> purify(self, pattern):
-        <span class="skw">dragDrop</span>(Constants.REGION_BOT, Constants.REGION_TOP)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(pattern)
-        <span class="skw">wait</span>(<img src="purify_button.png" />, <span class="dig">3</span>)
-        <span class="skw">click</span>(<img src="purify_button.png" />)
-        <span class="kw">for</span> aura <span class="kw">in</span> [<img src="attack_aura.png" />, <img src="life_aura.png" />, <img src="prep_aura.png" />, <img src="skill_aura.png" />]:
-            <span class="kw">for</span> j <span class="kw">in</span> range(<span class="dig">3</span>):
-                <span class="skw">click</span>(aura)
-                <span class="skw">wait</span>(Constants.CONFIRM)
-                <span class="skw">click</span>(Constants.CONFIRM)
-                <span class="skw">wait</span>(<img src="purified.png" />, <span class="dig">12</span>)
-                <span class="skw">wait</span>(Constants.CLOSE)
-                <span class="skw">click</span>(Constants.CLOSE)
-
     <span class="kw">def</span> norm_aoe(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fifth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.third_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-        Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
+        r = self.botRunner.region
+        self.clickSequence([<span class="dig">5</span>, <span class="dig">4</span>, <span class="dig">3</span>, <span class="dig">2</span>, <span class="dig">1</span>])
+        r.<span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> rend_aoe(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fifth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.third_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-        Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
+        r = self.botRunner.region
+        self.clickSequence([<span class="dig">1</span>, <span class="dig">4</span>, <span class="dig">5</span>, <span class="dig">3</span>, <span class="dig">2</span>])
+        r.<span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> norm_single(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.third_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fifth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-        Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
+        r = self.botRunner.region
+        self.clickSequence([<span class="dig">2</span>, <span class="dig">3</span>, <span class="dig">4</span>, <span class="dig">5</span>, <span class="dig">1</span>])
+        r.<span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> rend_single(self):
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.third_unit)
-        Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fifth_unit)
-        Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
+        r = self.botRunner.region
+        self.clickSequence([<span class="dig">1</span>, <span class="dig">4</span>, <span class="dig">2</span>, <span class="dig">3</span>, <span class="dig">5</span>])
+        r.<span class="skw">click</span>(self.attack)
 
     <span class="kw">def</span> attack_boss(self):
         map_num = self.currentMap
         <span class="kw">if</span> isinstance(map_num, Images.Map1):
-            self.norm_single()
+            self.norm_aoe()
         <span class="kw">elif</span> isinstance(map_num, Images.Map2):
             self.norm_single()
         <span class="kw">elif</span> isinstance(map_num, Images.Map3):
@@ -418,90 +349,41 @@ reload(Images)
             self.norm_single()
 
     <span class="kw">def</span> burst(self, burst_match):
-        <span class="kw">if</span> Constants.MAIN_WINDOW.exists(<img src="idun.png" />, <span class="dig">.25</span>):
-            <span class="kw">print</span> <span class="str">"Idun burst"</span>
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
+        r = self.botRunner.region
+        <span class="kw">print</span> isinstance(self.currentMap, Images.Map3)
+        <span class="kw">if</span> isinstance(self.currentMap, Images.Map3):
+            r.<span class="skw">click</span>(burst_match)
             <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
-        <span class="kw">elif</span> Constants.MAIN_WINDOW.exists(<img src="hel.png" />, <span class="dig">.25</span>):
-            <span class="kw">print</span> <span class="str">"Hel burst"</span>
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-            <span class="skw">wait</span>(<span class="dig">.1</span>)
-            Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
+            self.clickSequence([<span class="dig">1</span>, <span class="dig">4</span>, <span class="dig">2</span>, <span class="dig">2</span>, <span class="dig">4</span>, <span class="dig">4</span>, <span class="dig">4</span>, <span class="dig">4</span>])
+            r.<span class="skw">click</span>(self.attack)
         <span class="kw">else</span>:
-            <span class="kw">print</span> isinstance(self.currentMap, Images.Map3)
-            <span class="kw">if</span> isinstance(self.currentMap, Images.Map3):
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.first_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
-            <span class="kw">else</span>:
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(burst_match)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.second_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MAIN_WINDOW.<span class="skw">click</span>(self.fourth_unit)
-                <span class="skw">wait</span>(<span class="dig">.1</span>)
-                Constants.MENU_BAR.<span class="skw">click</span>(self.attack)
+            r.<span class="skw">click</span>(burst_match)
+            <span class="skw">wait</span>(<span class="dig">.1</span>)
+            self.clickSequence([<span class="dig">2</span>, <span class="dig">2</span>, <span class="dig">4</span>, <span class="dig">4</span>, <span class="dig">4</span>, <span class="dig">4</span>, <span class="dig">4</span>, <span class="dig">4</span>])
+            r.<span class="skw">click</span>(self.attack)
+
+    <span class="kw">def</span> createUnitRegion(self, x_mod, y_mod):
+        width = self.botRunner.region.getW()
+        height = self.botRunner.region.getH()
+        x = self.botRunner.region.getX()
+        y = self.botRunner.region.getY()
+
+        <span class="kw">return</span> Region(x + width * x_mod, y + height * y_mod, <span class="dig">2</span>, <span class="dig">2</span>)
+
+    <span class="kw">def</span> clickSequence(self, list, wait_amt=<span class="dig">.1</span>):
+        r = self.botRunner.region
+        <span class="kw">for</span> token <span class="kw">in</span> list:
+            <span class="kw">if</span> token == <span class="dig">1</span>:
+                r.<span class="skw">click</span>(self.first_unit)
+            <span class="kw">elif</span> token == <span class="dig">2</span>:
+                r.<span class="skw">click</span>(self.second_unit)
+            <span class="kw">elif</span> token == <span class="dig">3</span>:
+                r.<span class="skw">click</span>(self.third_unit)
+            <span class="kw">elif</span> token == <span class="dig">4</span>:
+                r.<span class="skw">click</span>(self.fourth_unit)
+            <span class="kw">elif</span> token == <span class="dig">5</span>:
+                r.<span class="skw">click</span>(self.fifth_unit)
+            <span class="skw">wait</span>(wait_amt)
 </pre>
 </body>
 </html>

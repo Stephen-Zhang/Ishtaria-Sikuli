@@ -1,41 +1,35 @@
 from sikuli import *
-FULL_SCREEN = Region(1290,30,623,970)
-MENU_BAR = Region(1283,897,637,140)
-HOME = "HOME.png" 
-HOME_CHRISTMAS = "HOME_CHRISTMAS.png"
-MENU = "MENU.png"
-MENU_CHRISTMAS = "MENU_CHRISTMAS.png"
-BATTLE = "1456423363758.png"
-BATTLE_CHRISTMAS = "BATTLE.png"
-PACKS = "PACKS.png"
 
-MAIN_WINDOW = Region(1289,29,629,868)
-CONFIRM = "CONFIRM.png"
-CLOSE = "CLOSE.png"
-RECEIVE_ALL = "RECEIVE_ALL.png"
-NEXT = "NEXT.png"
-SELECT = "SELECT.png"
-DETAILS = "DETAILS.png"
-SKIP = "SKIP.png"
-REGION_TOP = Region(1579,214,38,35)
-REGION_BOT = Region(1583,706,39,25)
+class ConstantsManager(object):
+    def __init__(self, region):
+        self.region = region
 
-State = {
-    'MainMenu' : 0,
-    'Quests' : 1,
-    'Battle' : 2
-}
+        self.init_main_buttons()
+        self.init_regions()
 
-MainMenu_State = {
-    'Leveled' : 0,
-    'NotLeveled' : 1
-}
+    def init_main_buttons(self):
+        self.HOME = "HOME.png"
+        self.BATTLE = "BATTLE.png"
+        self.CONFIRM = "CONFIRM.png"
+        self.CLOSE = "CLOSE.png"
+        self.NEXT = "NEXT.png"
+        self.SELECT = "SELECT.png"
+        self.SKIP = "SKIP.png"
 
-Quests_State = {
-    'Start' : 0,
-    'Pick' : 1,
-    'Select' : 2,
-    'Wait' : 3,
-    'Attack' : 4,
-    'End' : 5
-}
+    def init_regions(self):
+        self.REGION_TOP = self.create_click_region(.5, .19)
+        self.REGION_BOT = self.create_click_region(.5, .65)
+
+
+    def create_click_region(self, x_mod, y_mod):
+        width = self.region.getW()
+        height = self.region.getH()
+        x = self.region.getX()
+        y = self.region.getY()
+
+        print 'x: {}'.format(x)
+        print 'y: {}'.format(y)
+        print 'width: {}'.format(width)
+        print 'height: {}'.format(height)
+
+        return Region(int(x + width * x_mod), int(y + height * y_mod), 2, 2)

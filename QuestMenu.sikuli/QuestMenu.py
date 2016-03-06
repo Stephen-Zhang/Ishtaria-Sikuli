@@ -1,187 +1,165 @@
 from sikuli import *
 
-import Constants
-reload(Constants)
-
 import Images
 reload(Images)
 
 class QuestMenu(object):
-    first_unit = Region(1296,589,117,330)
-    second_unit = Region(1420,587,118,333)
-    third_unit = Region(1543,587,119,330)
-    fourth_unit = Region(1668,588,118,330)
-    fifth_unit = Region(1792,588,119,332)
     attack = "attack.png"
-    map1 = Images.Map1()
-    map2 = Images.Map2()
-    map3 = Images.Map3()
-    map4 = Images.Map4()
-    map5 = Images.Map5()
-    map6 = Images.Map6()
-    map7 = Images.Map7()
-
-    states = [
-        'Start',
-        'PickMap',
-        'Select',
-        'Waiting',
-        'Attacking',
-        'StatsScreen',
-        'End',
-        'Idle'
-    ]
 
     def __init__(self, botRunner):
-        self.botRunner = botRunner
+        self.bot = botRunner
         self.state = 'Start'
         self.currentMap = None
 
+        self.first_unit = self.createUnitRegion(.1, .73)
+        self.second_unit = self.createUnitRegion(.3, .73)
+        self.third_unit = self.createUnitRegion(.5, .73)
+        self.fourth_unit = self.createUnitRegion(.7, .73)
+        self.fifth_unit = self.createUnitRegion(.9, .73)
+
     def run(self):
+        r = self.bot.region
         print self.state
         if self.state == 'Start':
             if self.state == 'Idle':
                 return
             else:
-                quest_icon_match = Constants.MAIN_WINDOW.exists("1456423118705.png", .1)
+                quest_icon_match = r.exists("quest_icon.png", .1)
                 if quest_icon_match:
-                    Constants.MAIN_WINDOW.click(quest_icon_match)
+                    r.click(quest_icon_match)
                     self.state = 'PickMap'
 
         elif self.state == 'PickMap':
-            skip_match = Constants.MAIN_WINDOW.exists(Constants.SKIP, .1)
+            skip_match = r.exists(self.bot.constants.SKIP, .1)
             if skip_match:
-                Constants.MAIN_WINDOW.click(skip_match)
+                r.click(skip_match)
             else:
-                dunes_match = Constants.MAIN_WINDOW.exists(Pattern("western_wind_dunes.png").targetOffset(194,50), 0)
+                dunes_match = r.exists(Pattern("western_wind_dunes.png").targetOffset(194,50), 0)
                 if dunes_match:
-                    #self.botRunner.state = 'Finished'
+                    #self.bot.state = 'Finished'
                     #return
 
-                    Constants.MAIN_WINDOW.click(dunes_match)
-                    self.currentMap = self.map7
+                    r.click(dunes_match)
+                    self.currentMap = Images.Map7()
                     self.state = 'Select'
                     return
 
-                den_match = Constants.MAIN_WINDOW.exists(Pattern("den_of_the_dragon.png").targetOffset(191,2), 0)
+                den_match = r.exists(Pattern("den_of_the_dragon.png").targetOffset(191,2), 0)
                 if den_match:
-                    #self.botRunner.state = 'Finished'
+                    #self.bot.state = 'Finished'
                     #return 
 
-                    Constants.MAIN_WINDOW.click(den_match)
-                    self.currentMap = self.map6
+                    r.click(den_match)
+                    self.currentMap = Images.Map6()
                     self.state = 'Select'
                     return
 
-                cave_match = Constants.MAIN_WINDOW.exists(Pattern("cave_of_temptation.png").targetOffset(195,16), 0)
+                cave_match = r.exists(Pattern("cave_of_temptation.png").targetOffset(195,16), 0)
                 if cave_match:
-                    #self.botRunner.state = 'Finished'
+                    #self.bot.state = 'Finished'
                     #return
 
-                    Constants.MAIN_WINDOW.click(cave_match)
-                    self.currentMap = self.map5
+                    r.click(cave_match)
+                    self.currentMap = Images.Map5()
                     self.state = 'Select'
                     return
 
-                pride_match = Constants.MAIN_WINDOW.exists(Pattern("pride_of_the_gryffin.png").targetOffset(186,-8), 0)
+                pride_match = r.exists(Pattern("pride_of_the_gryffin.png").targetOffset(186,-8), 0)
                 if pride_match:
-                    #self.botRunner.state = 'Finished'
+                    #self.bot.state = 'Finished'
                     #return
 
-                    Constants.MAIN_WINDOW.click(pride_match)
-                    self.currentMap = self.map4
+                    r.click(pride_match)
+                    self.currentMap = Images.Map4()
                     self.state = 'Select'
                     return
 
-                lair_match = Constants.MAIN_WINDOW.exists(Pattern("the_lair_of_fire.png").targetOffset(181,2), 0)
+                lair_match = r.exists(Pattern("the_lair_of_fire.png").targetOffset(181,2), 0)
                 if lair_match:
-                    Constants.MAIN_WINDOW.click(lair_match)
-                    self.currentMap = self.map3
+                    r.click(lair_match)
+                    self.currentMap = Images.Map3()
                     self.state = 'Select'
                     return
 
-                tower_match = Constants.MAIN_WINDOW.exists(Pattern("stronghold_of_peace.png").targetOffset(187,-5), 0)
+                tower_match = r.exists(Pattern("stronghold_of_peace.png").targetOffset(187,-5), 0)
                 if tower_match:
-                    Constants.MAIN_WINDOW.click(tower_match)
-                    self.currentMap = self.map2
+                    r.click(tower_match)
+                    self.currentMap = Images.Map2()
                     self.state = 'Select'
                     return
 
-                ruins_match = Constants.MAIN_WINDOW.exists(Pattern("ruins_of_purity.png").targetOffset(190,-9), .1)
+                ruins_match = r.exists(Pattern("ruins_of_purity.png").targetOffset(190,-9), .1)
                 if ruins_match:
-                    Constants.MAIN_WINDOW.click(ruins_match)
-                    self.currentMap = self.map1
+                    r.click(ruins_match)
+                    self.currentMap = Images.Map1()
                     self.state = 'Select'
                     return
 
         elif self.state == 'Select':
-            mini_pot = Constants.MAIN_WINDOW.exists(Pattern("mini_ap_pot.png").targetOffset(196,9), .1)
+            mini_pot = r.exists(Pattern("mini_ap_pot.png").targetOffset(196,9), .1)
             if mini_pot:
-                Constants.MAIN_WINDOW.click(mini_pot)
+                r.click(mini_pot)
                 self.state = 'Pot'
                 return
 
-            confirm_match = Constants.MAIN_WINDOW.exists(Constants.CONFIRM, .1)
+            confirm_match = r.exists(self.bot.constants.CONFIRM, .1)
             if confirm_match:
-                Constants.MAIN_WINDOW.click(confirm_match)
+                r.click(confirm_match)
                 self.state = 'Waiting'
                 return
 
-            deploy_match = Constants.MAIN_WINDOW.exists("deploy.png", .1)
+            deploy_match = r.exists("deploy.png", .1)
             if deploy_match:
-                Constants.MAIN_WINDOW.click(deploy_match)
+                r.click(deploy_match)
                 return
 
-            select_match = Constants.MAIN_WINDOW.exists(Constants.SELECT, .1)
+            select_match = r.exists(self.bot.constants.SELECT, .1)
             if select_match:
-                Constants.MAIN_WINDOW.click(select_match)
+                r.click(select_match)
                 return
 
         elif self.state == 'Pot':
-            confirm_match = Constants.MAIN_WINDOW.exists(Pattern(Constants.CONFIRM).similar(.8), 2)
-            Constants.MAIN_WINDOW.click(confirm_match)
+            confirm_match = r.exists(Pattern(self.bot.constants.CONFIRM).similar(.8), 2)
+            r.click(confirm_match)
 
-            Constants.MAIN_WINDOW.waitVanish(Pattern(Constants.CONFIRM).similar(.8), 2)
+            r.waitVanish(Pattern(self.bot.constants.CONFIRM).similar(.8), 2)
 
             wait(1)
 
-            close_match = Constants.MAIN_WINDOW.exists(Pattern(Constants.CLOSE).similar(.8), 2)
-            Constants.MAIN_WINDOW.click(close_match)
+            close_match = r.exists(Pattern(self.bot.constants.CLOSE).similar(.8), 2)
+            r.click(close_match)
 
-            select_match_pot = Constants.MAIN_WINDOW.exists(Constants.SELECT, 2)
-            Constants.MAIN_WINDOW.click(select_match_pot)
+            select_match_pot = r.exists(self.bot.constants.SELECT, 2)
+            r.click(select_match_pot)
             self.state = 'Select'
 
         elif self.state == 'Waiting':
-            if Constants.MAIN_WINDOW.exists("quest_clear.png", .1):
+            if r.exists("quest_clear.png", .1):
                 wait(1)
-                click(Constants.REGION_TOP)
+                click(self.bot.constants.REGION_TOP)
                 self.state = 'StatsScreen'
                 return
-            elif Constants.MAIN_WINDOW.exists("quest_end.png", .1):
+            elif r.exists("quest_end.png", .1):
                 self.state = 'StatsScreen'
                 return
 
-            if Constants.FULL_SCREEN.exists(Pattern("back.png").similar(0.98), .1):
+            if r.exists(Pattern("back.png").similar(0.98), .1):
                 self.state = 'Attacking'
 
         elif self.state == 'Attacking':
             for lion in self.currentMap.lions:
-                lion_match = Constants.MAIN_WINDOW.exists(Pattern(lion).similar(.8), 1)
+                lion_match = r.exists(Pattern(lion).similar(.8), .25)
                 if lion_match:
-                    Constants.MAIN_WINDOW.click(lion_match)
+                    r.click(lion_match)
                     self.rend_single()
-                    self.state = 'Waiting'            
+                    self.state = 'Waiting'
                     return
             for boss in self.currentMap.boss:
-                boss_match = Constants.MAIN_WINDOW.exists(boss, .1)
+                boss_match = r.exists(boss, .1)
                 if boss_match:
-                    if Constants.MAIN_WINDOW.exists("quest_clear.png", .1):
-                        self.state = 'StatsScreen'
-                        return
                     print "found boss match!"
-                    Constants.MAIN_WINDOW.click(boss_match)
-                    burst_match = Constants.MAIN_WINDOW.exists("burst.png", .1)
+                    r.click(boss_match)
+                    burst_match = r.exists("burst.png", .1)
                     if burst_match:
                         "with burst!"
                         self.burst(burst_match)
@@ -191,145 +169,95 @@ class QuestMenu(object):
                     return
 
             for norm_enemy in self.currentMap.normal:
-                norm_enemy_match = Constants.MAIN_WINDOW.exists(Pattern(norm_enemy).similar(.8), .1)
+                norm_enemy_match = r.exists(Pattern(norm_enemy).similar(.8), .1)
                 if norm_enemy_match:
-                    if Constants.MAIN_WINDOW.exists("quest_clear.png", .1):
-                        self.state = 'StatsScreen'
-                        return
-                    Constants.MAIN_WINDOW.click(norm_enemy_match)
+                    r.click(norm_enemy_match)
                     print "found normal enemy match!"
                     self.norm_aoe()
                     self.state = 'Waiting'
                     return
 
             for armored_enemy in self.currentMap.armored:
-                armored_enemy_match = Constants.MAIN_WINDOW.exists(Pattern(armored_enemy).similar(.8), .1)
+                armored_enemy_match = r.exists(Pattern(armored_enemy).similar(.8), .1)
                 if armored_enemy_match:
-                    if Constants.MAIN_WINDOW.exists("quest_clear.png", .1):
-                        self.state = 'StatsScreen'
-                        return
                     print "found armored match!"
-                    Constants.MAIN_WINDOW.click(armored_enemy_match)
+                    r.click(armored_enemy_match)
                     self.rend_single()
                     self.state = 'Waiting'
                     return
 
             for strong_enemy in self.currentMap.strong:
-                strong_enemy_match = Constants.MAIN_WINDOW.exists(Pattern(strong_enemy).similar(.8), .1)
+                strong_enemy_match = r.exists(Pattern(strong_enemy).similar(.8), .1)
                 if strong_enemy_match:
-                    if Constants.MAIN_WINDOW.exists("quest_clear.png", .1):
-                        self.state = 'StatsScreen'
-                        return
                     print "found strong match!"
-                    Constants.MAIN_WINDOW.click(strong_enemy_match)
+                    r.click(strong_enemy_match)
                     self.norm_single()
                     self.state = 'Waiting'
                     return
 
             print "didnt find any match!"
-            if Constants.MAIN_WINDOW.exists("quest_clear.png", 2):
-                self.state = 'StatsScreen'
-                return
             self.rend_single()
             self.state = 'Waiting'
         elif self.state == 'StatsScreen':
-            if Constants.MAIN_WINDOW.exists("quest_end.png", .1):
+            if r.exists("quest_end.png", .1):
                 print "finished quest. looking for Next!"
-                if Constants.MAIN_WINDOW.exists("level_up.png", .1):
-                    self.botRunner.leveledUp = True
+                if r.exists("level_up.png", .1):
+                    self.bot.leveledUp = True
 
-                next_match = Constants.MENU_BAR.exists(Constants.NEXT, .1)
+                next_match = r.exists(self.bot.constants.NEXT, .1)
                 if next_match:
-                    Constants.MENU_BAR.click(next_match)
+                    r.click(next_match)
                     self.state = 'End'
             else:
-                Constants.MAIN_WINDOW.click(Constants.REGION_TOP)
+                r.click(self.bot.constants.REGION_TOP)
         elif self.state == 'End':
-            skip_match = Constants.MAIN_WINDOW.exists(Constants.SKIP, 2)
+            skip_match = r.exists(self.bot.constants.SKIP, 2)
             if skip_match:
-                Constants.MAIN_WINDOW.click(skip_match)
+                r.click(skip_match)
                 wait(.75)
                 return
-            elif Constants.MAIN_WINDOW.exists(Pattern("1452272299241.png").similar(0.50), .1) or Constants.MAIN_WINDOW.exists("1452272332929.png", .1):
-                while not Constants.MAIN_WINDOW.exists("raid_battles.png", .1):
-                    Constants.MAIN_WINDOW.click(Constants.REGION_TOP)
-                home_match = Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, .1)
+            elif r.exists(Pattern("an_enemy_appears.png").similar(0.50), .1) or r.exists("bottom_raid_area.png", .1):
+                while not r.exists("raid_battles.png", .1):
+                    r.click(self.bot.constants.REGION_TOP)
+                home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, .1)
                 if home_match:
-                    self.botRunner.state = 'Battle'
-                    self.botRunner.battleMenu.state = 'Start'
+                    self.bot.state = 'Battle'
+                    self.bot.battleMenu.state = 'Start'
                     return
-            elif self.botRunner.leveledUp:
-                home_match = Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, .1)
+            elif self.bot.leveledUp:
+                home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, .1)
                 if home_match:
-                    Constants.MENU_BAR.click(home_match)
-                    self.botRunner.state = 'Battle'
-                    self.botRunner.battleMenu.state = 'Start'
-            elif Constants.MAIN_WINDOW.exists(Constants.SELECT, .1):
+                    r.click(home_match)
+                    self.bot.state = 'Battle'
+                    self.bot.battleMenu.state = 'Start'
+            elif r.exists(self.bot.constants.SELECT, .1):
                 self.state = 'Select'
                 return
 
-    def purify_start(self):
-        Constants.MAIN_WINDOW.click("1456423177912.png")
-        wait("select_area.png", 3)
-
-        self.purify(Pattern("ruins_of_purity.png").targetOffset(197,43))
-
-        click("back_button.png")
-        wait(1)
-        click("back_button.png")
-
-        self.purify(Pattern("stronghold_of_peace.png").targetOffset(188,54))
-
-    def purify(self, pattern):
-        dragDrop(Constants.REGION_BOT, Constants.REGION_TOP)
-        Constants.MAIN_WINDOW.click(pattern)
-        wait("purify_button.png", 3)
-        click("purify_button.png")
-        for aura in ["attack_aura.png", "life_aura.png", "prep_aura.png", "skill_aura.png"]:
-            for j in range(3):
-                click(aura)
-                wait(Constants.CONFIRM)
-                click(Constants.CONFIRM)
-                wait("purified.png", 12)
-                wait(Constants.CLOSE)
-                click(Constants.CLOSE)
-
     def norm_aoe(self):
-        Constants.MAIN_WINDOW.click(self.fifth_unit)
-        Constants.MAIN_WINDOW.click(self.fourth_unit)
-        Constants.MAIN_WINDOW.click(self.third_unit)
-        Constants.MAIN_WINDOW.click(self.second_unit)
-        Constants.MAIN_WINDOW.click(self.first_unit)
-        Constants.MENU_BAR.click(self.attack)
+        r = self.bot.region
+        self.clickSequence([5, 4, 3, 2, 1])
+        r.click(self.attack)
 
     def rend_aoe(self):
-        Constants.MAIN_WINDOW.click(self.first_unit)
-        Constants.MAIN_WINDOW.click(self.fourth_unit)
-        Constants.MAIN_WINDOW.click(self.fifth_unit)
-        Constants.MAIN_WINDOW.click(self.third_unit)
-        Constants.MAIN_WINDOW.click(self.second_unit)
-        Constants.MENU_BAR.click(self.attack)
+        r = self.bot.region
+        self.clickSequence([1, 4, 5, 3, 2])
+        r.click(self.attack)
 
     def norm_single(self):
-        Constants.MAIN_WINDOW.click(self.second_unit)
-        Constants.MAIN_WINDOW.click(self.third_unit)
-        Constants.MAIN_WINDOW.click(self.fourth_unit)
-        Constants.MAIN_WINDOW.click(self.fifth_unit)
-        Constants.MAIN_WINDOW.click(self.first_unit)
-        Constants.MENU_BAR.click(self.attack)
+        r = self.bot.region
+        self.clickSequence([2, 3, 4, 5, 1])
+        r.click(self.attack)
 
     def rend_single(self):
-        Constants.MAIN_WINDOW.click(self.first_unit)
-        Constants.MAIN_WINDOW.click(self.fourth_unit)
-        Constants.MAIN_WINDOW.click(self.second_unit)
-        Constants.MAIN_WINDOW.click(self.third_unit)
-        Constants.MAIN_WINDOW.click(self.fifth_unit)
-        Constants.MENU_BAR.click(self.attack)
+        r = self.bot.region
+        self.clickSequence([1, 4, 2, 3, 5])
+        r.click(self.attack)
 
     def attack_boss(self):
         map_num = self.currentMap
         if isinstance(map_num, Images.Map1):
-            self.norm_single()
+            self.norm_aoe()
         elif isinstance(map_num, Images.Map2):
             self.norm_single()
         elif isinstance(map_num, Images.Map3):
@@ -346,87 +274,38 @@ class QuestMenu(object):
             self.norm_single()
 
     def burst(self, burst_match):
-        if Constants.MAIN_WINDOW.exists("idun.png", .25):
-            print "Idun burst"
-            Constants.MAIN_WINDOW.click(burst_match)
+        r = self.bot.region
+        print isinstance(self.currentMap, Images.Map3)
+        if isinstance(self.currentMap, Images.Map3):
+            r.click(burst_match)
             wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.fourth_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MENU_BAR.click(self.attack)
-        elif Constants.MAIN_WINDOW.exists("hel.png", .25):
-            print "Hel burst"
-            Constants.MAIN_WINDOW.click(burst_match)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.fourth_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.second_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
-            wait(.1)
-            Constants.MAIN_WINDOW.click(self.first_unit)
-            wait(.1)
-            Constants.MENU_BAR.click(self.attack)
+            self.clickSequence([1, 4, 2, 2, 4, 4, 4, 4])
+            r.click(self.attack)
         else:
-            print isinstance(self.currentMap, Images.Map3)
-            if isinstance(self.currentMap, Images.Map3):
-                Constants.MAIN_WINDOW.click(burst_match)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.first_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.second_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.second_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MENU_BAR.click(self.attack)
-            else:
-                Constants.MAIN_WINDOW.click(burst_match)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.second_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.second_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MAIN_WINDOW.click(self.fourth_unit)
-                wait(.1)
-                Constants.MENU_BAR.click(self.attack)
+            r.click(burst_match)
+            wait(.1)
+            self.clickSequence([2, 2, 4, 4, 4, 4, 4, 4])
+            r.click(self.attack)
+
+    def createUnitRegion(self, x_mod, y_mod):
+        width = self.bot.region.getW()
+        height = self.bot.region.getH()
+        x = self.bot.region.getX()
+        y = self.bot.region.getY()
+
+        return Region(int(x + width * x_mod), int(y + height * y_mod), 2, 2)
+
+    def clickSequence(self, list, wait_amt=.1):
+        r = self.bot.region
+        for token in list:
+            if token == 1:
+                r.click(self.first_unit)
+            elif token == 2:
+                r.click(self.second_unit)
+            elif token == 3:
+                r.click(self.third_unit)
+            elif token == 4:
+                r.click(self.fourth_unit)
+            elif token == 5:
+                r.click(self.fifth_unit)
+            wait(wait_amt)

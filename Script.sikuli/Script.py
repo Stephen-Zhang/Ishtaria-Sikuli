@@ -5,22 +5,13 @@ myPath = os.path.dirname(getBundlePath())
 if not myPath in sys.path: sys.path.append(myPath)
 
 import BotRunner
-reload(BotRunner) 
-
-import Constants
-reload(Constants)
-
-import Images
-reload(Images)
+reload(BotRunner)
 
 def main():
-    bot = BotRunner.BotObject()
-    
-    #'''
-    bot.state = 'Quest'
-    bot.questMenu.currentMap = Images.Map3()
-    bot.questMenu.state = 'Waiting'
-    #'''
+    bluestacks = App.focus('BlueStacks App Player')
+    region = Region(App.focusedWindow())
+    print region
+    bot = BotRunner.BotObject(region)
     
     while bot.state != 'Finished':
         bot.run()

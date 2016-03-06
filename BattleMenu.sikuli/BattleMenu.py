@@ -1,3 +1,12 @@
+"""
+Pictures To Move:
+"join_battle.png"
+battle_select_screen.png
+has_bp.png
+battle_button.png
+
+"""
+
 from sikuli import *
 
 import Constants
@@ -12,69 +21,70 @@ class BattleMenu(object):
         'End'
     ]
     def __init__(self, botInfo):
-        self.botInfo = botInfo
+        self.bot = botInfo
         self.state = 'Start'
 
     def run(self):
+        r = self.bot.region
         print(self.state)
-        next_exists = Constants.MAIN_WINDOW.exists(Constants.NEXT, 0)
+        next_exists = r.exists(self.bot.constants.NEXT, 0)
         if next_exists:
-            Constants.MAIN_WINDOW.click(next_exists)
+            r.click(next_exists)
             return
-        join_battle_match = Constants.MAIN_WINDOW.exists('join_battle.png', 0)
+        join_battle_match = r.exists('join_battle.png', 0)
         if join_battle_match:
-            Constants.MAIN_WINDOW.click(join_battle_match)
+            r.click(join_battle_match)
             return
         if self.state == 'Start':
-            if self.botInfo.battlesDone:
+            if self.bot.battlesDone:
                 self.state = 'End'
                 return
-            battle_button_exists = Constants.MENU_BAR.exists(Constants.BATTLE_CHRISTMAS, 0)
+            battle_button_exists = r.exists(self.bot.constants.BATTLE, 0)
             if battle_button_exists:
                 self.state = 'Scroll'
-                Constants.MENU_BAR.click(battle_button_exists)
+                r.click(battle_button_exists)
                 return
         elif self.state == 'Scroll':
-            if Constants.MAIN_WINDOW.exists("battle_select_screen.png", 0):
-                if Constants.MAIN_WINDOW.exists('has_bp.png', .1):
+            if r.exists("battle_select_screen.png", 0):
+                if r.exists('has_bp.png', .1):
                     for i in range(4):
-                        dragDrop(Constants.REGION_BOT, Constants.REGION_TOP)
-                    next_battle_match = Constants.MAIN_WINDOW.exists(Pattern('battle_button.png').similar(0.89), 0)
+                        r.dragDrop(self.bot.constants.REGION_BOT, self.bot.constants.REGION_TOP)
+                    next_battle_match = r.exists(Pattern('battle_button.png').similar(0.89), 0)
                     if next_battle_match:
-                        Constants.MAIN_WINDOW.click(next_battle_match)
-                        Constants.MAIN_WINDOW.waitVanish("battle_select_screen.png")
+                        r.click(next_battle_match)
+                        r.waitVanish("battle_select_screen.png")
                         self.state = 'Enter'
                         return
                 else:
                     self.state = 'End'
         elif self.state == 'Enter':
-            if Constants.MAIN_WINDOW.exists(Pattern('50_wins.png').similar(0.95), 0):
-                self.botInfo.battlesDone = True
+            if r.exists(Pattern('50_wins.png').similar(0.95), 0):
+                self.bot.battlesDone = True
                 self.state = 'End'
             else:
-                fancy_battle_match = Constants.MAIN_WINDOW.exists('battle_normal.png', 0)
+                fancy_battle_match = r.exists('battle_normal.png', 0)
                 if fancy_battle_match:
-                    Constants.MAIN_WINDOW.click(fancy_battle_match)
+                    r.click(fancy_battle_match)
                     self.state = 'During'
                     return
-                last_battle_match = Constants.MAIN_WINDOW.exists(Pattern('battle_button.png').similar(0.54), 0)
+                last_battle_match = r.exists(Pattern('battle_button.png').similar(0.54), 0)
                 if last_battle_match:
-                    Constants.MAIN_WINDOW.click(last_battle_match)
+                    r.click(last_battle_match)
         elif self.state == 'During':
-            if Constants.MAIN_WINDOW.exists('victory_points.png', 0):
-                next_match = Constants.MAIN_WINDOW.exists(Pattern('next_battle.png').similar(.8), 0)
+            if r.exists('victory_points.png', 0):
+                next_match = r.exists(Pattern('next_battle.png').similar(.8), 0)
                 if next_match:
-                    Constants.MAIN_WINDOW.click(next_match)
+                    r.click(next_match)
                     self.state = 'Next'
             else:
-                Constants.MAIN_WINDOW.click(Constants.REGION_TOP)
+                r.click(self.bot.constants.REGION_TOP)
         elif self.state == 'Next':
-            if Constants.MAIN_WINDOW.exists('battle_bar.png', 0):
+            if r.exists('battle_bar.png', 0):
                 self.state = 'Scroll'
         elif self.state == 'End':
-            home_match = Constants.MENU_BAR.exists(Constants.HOME_CHRISTMAS, 0)
+            home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, 0)
             if home_match:
-                Constants.MENU_BAR.click(home_match)
-                self.botInfo.state = 'MainMenu'
-                self.botInfo.leveledUp = False
-                self.botInfo.mainMenu.state = 'Start'
+                r.click(home_match)
+                self.bot.state = 'MainMenu'
+                self.bot.leveledUp = False
+                self.bot.mainMenu.state = 'Start'
