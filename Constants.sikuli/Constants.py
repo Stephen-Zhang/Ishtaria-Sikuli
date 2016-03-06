@@ -10,6 +10,7 @@ class ConstantsManager(object):
         self.init_battle_menu_images()
         self.init_quest_map_images()
         self.init_quest_menu_images()
+        self.init_leveling_images()
 
     def init_main_buttons(self):
         self.HOME = "HOME.png"
@@ -63,6 +64,10 @@ class ConstantsManager(object):
         self.ENEMY_APPEARS = Pattern("ENEMY_APPEARS.png").similar(0.50)
         self.RAID_AREA = "RAID_AREA.png"
         self.RAID_BANNER = "RAID_BANNER.png"
+
+    def init_leveling_images(self):
+        self.STANDING_IN_WAY_2 = Pattern("STANDING_IN_WAY_2.png").targetOffset(196,74)
+        self.ALL_OUT_ATTACK = "ALL_OUT_ATTACK.png"
 
     def create_click_region(self, x_mod, y_mod):
         width = self.region.getW()

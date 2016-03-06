@@ -3,11 +3,11 @@ from sikuli import *
 import Images
 reload(Images)
 
-class QuestMenu(object):
+class LevelQuestMenu(object):
     def __init__(self, botRunner):
         self.bot = botRunner
         self.state = 'Start'
-        self.currentMap = None
+        self.currentMap = Images.Map6()
 
         self.first_unit = self.createUnitRegion(.1, .73)
         self.second_unit = self.createUnitRegion(.3, .73)
@@ -15,10 +15,14 @@ class QuestMenu(object):
         self.fourth_unit = self.createUnitRegion(.7, .73)
         self.fifth_unit = self.createUnitRegion(.9, .73)
 
+        self.count = 0
+        
+
     def run(self):
         r = self.bot.region
         print self.state
         if self.state == 'Start':
+            self.count = 0
             if self.state == 'Idle':
                 return
             else:
@@ -32,54 +36,25 @@ class QuestMenu(object):
             if skip_match:
                 r.click(skip_match)
             else:
-                dunes_match = r.exists(self.bot.constants.DUNE, 0)
-                if dunes_match:
-                    r.click(dunes_match)
-                    self.currentMap = Images.Map7()
-                    self.state = 'Select'
-                    return
-
                 den_match = r.exists(self.bot.constants.DEN, 0)
                 if den_match:
                     r.click(den_match)
                     self.currentMap = Images.Map6()
-                    self.state = 'Select'
+                    self.state = 'Find Standing'
                     return
+                r.dragDrop(self.bot.constants.REGION_BOT, self.bot.constants.REGION_TOP)
+                self.count += 1
 
-                cave_match = r.exists(self.bot.constants.CAVE, 0)
-                if cave_match:
-                    r.click(cave_match)
-                    self.currentMap = Images.Map5()
-                    self.state = 'Select'
-                    return
+                if self.count > 4:
+                    self.bot.finished = True
 
-                pride_match = r.exists(self.bot.constants.PRIDE, 0)
-                if pride_match:
-                    r.click(pride_match)
-                    self.currentMap = Images.Map4()
-                    self.state = 'Select'
-                    return
-
-                lair_match = r.exists(self.bot.constants.LAIR, 0)
-                if lair_match:
-                    r.click(lair_match)
-                    self.currentMap = Images.Map3()
-                    self.state = 'Select'
-                    return
-
-                tower_match = r.exists(self.bot.constants.TOWER, 0)
-                if tower_match:
-                    r.click(tower_match)
-                    self.currentMap = Images.Map2()
-                    self.state = 'Select'
-                    return
-
-                ruins_match = r.exists(self.bot.constants.RUINS, 0)
-                if ruins_match:
-                    r.click(ruins_match)
-                    self.currentMap = Images.Map1()
-                    self.state = 'Select'
-                    return
+        elif self.state == 'Find Standing':
+            standing_match = r.exists(self.bot.constants.STANDING_IN_WAY_2, .25)
+            if not standing_match:
+                r.dragDrop(self.bot.constants.REGION_BOT, self.bot.constants.REGION_TOP)
+            else:
+                r.click(standing_match)
+                self.state = 'Select'
 
         elif self.state == 'Select':
             mini_pot = r.exists(self.bot.constants.MINI_POT, 0)
@@ -94,9 +69,9 @@ class QuestMenu(object):
                 self.state = 'Waiting'
                 return
 
-            deploy_match = r.exists(self.bot.constants.DEPLOY, 0)
-            if deploy_match:
-                r.click(deploy_match)
+            all_out_match = r.exists(self.bot.constants.ALL_OUT_ATTACK, .1)
+            if all_out_match:
+                r.click(all_out_match)
                 return
 
             select_match = r.exists(self.bot.constants.SELECT, .1)
@@ -105,19 +80,26 @@ class QuestMenu(object):
                 return
 
         elif self.state == 'Pot':
-            confirm_match = r.exists(Pattern(self.bot.constants.CONFIRM).similar(self.bot.constants.enemy_similarity), 2)
-            r.click(confirm_match)
-
-            r.waitVanish(Pattern(self.bot.constants.CONFIRM).similar(self.bot.constants.enemy_similarity), 2)
-
-            wait(1)
-
-            close_match = r.exists(Pattern(self.bot.constants.CLOSE).similar(self.bot.constants.enemy_similarity), 2)
-            r.click(close_match)
-
-            select_match_pot = r.exists(self.bot.constants.SELECT, 2)
-            r.click(select_match_pot)
-            self.state = 'Select'
+            inventory_match = r.exists("Inventory.png", .1)
+            if inventory_match:
+                r.click(inventory_match)
+                self.state = 'Inventory'
+                return
+            menu_match = r.exists("menu_button.png", .1)
+            if menu_match:
+                r.click(menu_match)
+                return
+        elif self.state == 'Inventory':
+            while not r.exists("AP_FULL.png", .1):
+                inventory_mini_pot = r.exists(Pattern("INVENTORY_MINI_POT.png").similar(0.88).targetOffset(214,40), .1)
+                if inventory_mini_pot:
+                    r.click(inventory_mini_pot)
+                    r.wait(.5)
+                    r.click(self.bot.constants.CONFIRM)
+                    r.wait(.5)
+                    r.click(self.bot.constants.CLOSE)
+            r.click(self.bot.constants.HOME)
+            self.state = 'Start'
 
         elif self.state == 'Waiting':
             if r.exists(self.bot.constants.QUEST_CLEAR, .1):

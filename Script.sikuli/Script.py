@@ -7,10 +7,24 @@ if not myPath in sys.path: sys.path.append(myPath)
 import BotRunner
 reload(BotRunner)
 
+import LevelRunner
+reload(LevelRunner)
+
+
 def main():
     bluestacks = App.focus('BlueStacks App Player')
     region = Region(App.focusedWindow())
-    bot = BotRunner.BotObject(region)
+
+    bot = None
+
+    bot_options = ('3k Crowns', 'Level To 50')
+    selected = select('What do you want to do?', options=bot_options)
+    if selected == bot_options[0]:
+        bot = BotRunner.BotObject(region)
+    elif selected == bot_options[1]:
+        bot = LevelRunner.BotObject(region)
+    else:
+        return
 
     bot.selectStrong()
     

@@ -82,7 +82,7 @@ class BattleMenu(object):
             if r.exists(self.bot.constants.BATTLE_BAR, 0):
                 self.state = 'Scroll'
         elif self.state == 'End':
-            home_match = r.exists(self.bot.constants.HOME_CHRISTMAS, 0)
+            home_match = r.exists(self.bot.constants.HOME, 0)
             if home_match:
                 r.click(home_match)
                 self.bot.state = 'MainMenu'
