@@ -31,7 +31,7 @@ def main():
         return
 
     bot.selectStrong()
-    
+
     while not bot.finished:
         bot.run()
     
