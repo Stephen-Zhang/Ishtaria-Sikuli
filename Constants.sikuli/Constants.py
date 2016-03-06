@@ -55,9 +55,9 @@ class ConstantsManager(object):
         self.enemy_similarity = .8
         self.MINI_POT = Pattern("MINI_POT.png").targetOffset(196,9)
         self.DEPLOY = "DEPLOY.png"
-        self.QUEST_CLEAR = "QUEST_CLEAR.png"
-        self.QUEST_END = "QUEST_END.png"
-        self.BACK = Pattern("back.png").similar(0.98)
+        self.QUEST_CLEAR = Pattern("QUEST_CLEAR.png").similar(0.90)        
+        self.QUEST_END = Pattern("QUEST_END.png").similar(0.90)
+        self.BACK = Pattern("back.png").similar(0.95)
         self.ATTACK = "ATTACK.png"
         self.BURST = "BURST.png"
         self.LEVEL_UP = "LEVEL_UP.png"
