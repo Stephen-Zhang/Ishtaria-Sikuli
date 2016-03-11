@@ -25,6 +25,7 @@ class LevelQuestMenu(object):
                 self.state = 'PickMap'
 
         elif self.state == 'PickMap':
+            r.wait("1457578873945.png", 1)
             skip_match = r.exists(self.bot.constants.SKIP, .1)
             if skip_match:
                 r.click(skip_match)
@@ -103,13 +104,6 @@ class LevelQuestMenu(object):
                 self.state = 'Attacking'
 
         elif self.state == 'Attacking':
-            for lion in self.currentMap.lions:
-                lion_match = r.exists(Pattern(lion).similar(self.bot.constants.enemy_similarity), .25)
-                if lion_match:
-                    r.click(lion_match)
-                    self.attack(type='REND_MULTI')
-                    self.state = 'Waiting'
-                    return
             for boss in self.currentMap.boss:
                 boss_match = r.exists(boss, .1)
                 if boss_match:
@@ -174,20 +168,6 @@ class LevelQuestMenu(object):
                 r.click(skip_match)
                 wait(.75)
                 return
-            elif r.exists(self.bot.constants.ENEMY_APPEARS, .1) or r.exists(self.bot.constants.RAID_AREA, .1):
-                while not r.exists(self.bot.constants.RAID_BANNER, .1):
-                    r.click(self.bot.constants.REGION_TOP)
-                home_match = r.exists(self.bot.constants.HOME, .1)
-                if home_match:
-                    self.bot.state = 'Battle'
-                    self.bot.battleMenu.state = 'Start'
-                    return
-            elif self.bot.leveledUp:
-                home_match = r.exists(self.bot.constants.HOME, .1)
-                if home_match:
-                    r.click(home_match)
-                    self.bot.state = 'Battle'
-                    self.bot.battleMenu.state = 'Start'
             elif r.exists(self.bot.constants.SELECT, .1):
                 self.state = 'Select'
                 return
