@@ -34,7 +34,11 @@ class BotObject(object):
         login_screen = r.exists(self.constants.LOGIN, 0)
         if login_screen:
             while not r.exists(self.constants.HOME, 0):
-                r.click(self.constants.REGION_TOP)
+                low_match = r.exists(self.constants.LOGIN, 0)
+                if low_match:
+                    r.click(low_match)
+                else:
+                    r.click(self.constants.REGION_TOP)
             r.click(self.constants.HOME)
         if r.exists(self.constants.CONNECT_FAILED, 0):
             r.click(self.constants.CONFIRM)

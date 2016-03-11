@@ -133,13 +133,6 @@ class QuestMenu(object):
                 self.state = 'Attacking'
 
         elif self.state == 'Attacking':
-            for lion in self.currentMap.lions:
-                lion_match = r.exists(Pattern(lion).similar(self.bot.constants.enemy_similarity), .25)
-                if lion_match:
-                    r.click(lion_match)
-                    self.attack(type='REND_MULTI')
-                    self.state = 'Waiting'
-                    return
             for boss in self.currentMap.boss:
                 boss_match = r.exists(boss, .1)
                 if boss_match:
