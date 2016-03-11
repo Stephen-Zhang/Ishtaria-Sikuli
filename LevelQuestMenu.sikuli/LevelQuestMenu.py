@@ -169,7 +169,7 @@ class LevelQuestMenu(object):
                 wait(.75)
                 return
             elif r.exists(self.bot.constants.SELECT, .1):
-                self.state = 'Select'
+                self.state = 'Find Standing'
                 return
 
     def attack(self, type):
