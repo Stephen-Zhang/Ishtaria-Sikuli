@@ -63,11 +63,11 @@ class LevelQuestMenu(object):
                 r.click(all_out_match)
                 return
 
-            select_match = r.exists(self.bot.constants.SELECT, .1)
-            if select_match:
-                r.click(select_match)
-                return
-
+            standing_match = r.exists(self.bot.constants.STANDING_IN_WAY_2, .25)
+            if standing_match:
+                r.click(standing_match)
+                self.state = 'Select'
+                
         elif self.state == 'Pot':
             inventory_match = r.exists("Inventory.png", .1)
             if inventory_match:
