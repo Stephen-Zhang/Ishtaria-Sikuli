@@ -26,7 +26,7 @@ class ConstantsManager(object):
         self.REGION_BOT = self.create_click_region(.5, .65)
 
     def init_login_images(self):
-        self.LOGIN = Pattern("LOGIN.png").similar(0.50)
+        self.LOGIN = Pattern("1457666385845.png").similar(0.90).targetOffset(158,-2)
         self.CONNECT_FAILED = "CONNECT_FAILED.png"
 
     def init_battle_menu_images(self):
@@ -66,7 +66,7 @@ class ConstantsManager(object):
         self.RAID_BANNER = "RAID_BANNER.png"
 
     def init_leveling_images(self):
-        self.STANDING_IN_WAY_2 = Pattern("STANDING_IN_WAY_2.png").targetOffset(196,74)
+        self.STANDING_IN_WAY_2 = Pattern("STANDING_IN_WAY_2.png").similar(0.95).targetOffset(170,77)
         self.ALL_OUT_ATTACK = "ALL_OUT_ATTACK.png"
 
     def create_click_region(self, x_mod, y_mod):
