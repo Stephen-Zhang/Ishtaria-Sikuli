@@ -13,13 +13,16 @@ reload(LevelRunner)
 import HopeRunner
 reload(HopeRunner)
 
+import SerpentRunner
+reload(SerpentRunner)
+
 def main():
     bluestacks = App.focus('BlueStacks App Player')
     region = Region(App.focusedWindow())
 
     bot = None
 
-    bot_options = ('3k Crowns', 'Level To 50', 'Deftwo')
+    bot_options = ('3k Crowns', 'Level To 50', 'Deftwo', 'Deftevent')
     selected = select('What do you want to do?', options=bot_options)
     if selected == bot_options[0]:
         bot = BotRunner.BotObject(region)
@@ -27,11 +30,13 @@ def main():
         bot = LevelRunner.BotObject(region)
     elif selected == bot_options[2]:
         bot = HopeRunner.BotObject(region)
+    elif selected == bot_options[3]:
+        bot = SerpentRunner.BotObject(region)
     else:
         return
 
     bot.selectStrong()
-
+    
     while not bot.finished:
         bot.run()
     

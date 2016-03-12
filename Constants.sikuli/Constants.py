@@ -15,6 +15,7 @@ class ConstantsManager(object):
     def init_main_buttons(self):
         self.HOME = "HOME.png"
         self.BATTLE_MENU = "BATTLE.png"
+        self.EVENT_MENU = Pattern("EVENT.png").similar(0.88)
         self.CONFIRM = "CONFIRM.png"
         self.CLOSE = "CLOSE.png"
         self.NEXT = "NEXT.png"
