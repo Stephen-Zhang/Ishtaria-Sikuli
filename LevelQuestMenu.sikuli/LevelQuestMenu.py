@@ -25,11 +25,11 @@ class LevelQuestMenu(object):
                 self.state = 'PickMap'
 
         elif self.state == 'PickMap':
-            r.wait("1457578873945.png", 1)
+            select_screen = r.exists("select_screen.png", 1)
             skip_match = r.exists(self.bot.constants.SKIP, .1)
             if skip_match:
                 r.click(skip_match)
-            else:
+            elif select_screen:
                 den_match = r.exists(self.bot.constants.DEN, 0)
                 if den_match:
                     r.click(den_match)
